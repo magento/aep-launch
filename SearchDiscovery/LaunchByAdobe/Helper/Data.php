@@ -89,6 +89,35 @@ class Data extends AbstractHelper
   }
 
   /**
+   * @param \Magento\Checkout\Model\Cart $cartModel
+   * @return array
+   */
+  public function cartViewedPushData($cartModel) {
+    $collection = $cartModel->getQuote()->getAllVisibleItems();
+    $result = array();
+    $cart = array();
+
+    $items = [];
+    foreach ($collection as $item) {
+      $items[] = [
+        'quantity' => $item->getQty(),
+        'productInfo' => [
+          'sku' => $item->getSku(),
+          'productID' => $item->getProduct()->getData('sku')
+        ],
+        'price' => [
+          'sellingPrice' => $item->getPrice()
+        ]
+      ];
+    }
+    $cart['item'] = $items;
+    $result['event'] = 'Cart Viewed';
+    $result['cart'] = $cart;
+
+    return $result;
+  }
+
+  /**
    * @param int $qty
    * @param \Magento\Catalog\Model\Product $product
    * @return array
