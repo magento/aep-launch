@@ -49,6 +49,19 @@ class Data extends AbstractHelper
     );
   }
 
+  public function pageLoadedPushData($pageTitle, $pageType, $breadcrumbs) {
+    $result = [
+      'event' => 'Page Loaded',
+      'page' => [
+        'pageType' => $pageType,
+        'pageName' => $pageTitle,
+        'breadcrumbs' => $breadcrumbs
+      ]
+    ];
+
+    return $result;
+  }
+
   public function productViewedPushData($product)
   {
       $result = [];

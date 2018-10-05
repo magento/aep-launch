@@ -5,7 +5,6 @@ class Page extends \Magento\Framework\View\Element\Template
 {
 
   protected $helper;
-  protected $_logger;
   protected $pageTitle;
   protected $catalogHelper;
 
@@ -13,41 +12,22 @@ class Page extends \Magento\Framework\View\Element\Template
     \Magento\Framework\View\Element\Template\Context $context,
     \SearchDiscovery\LaunchByAdobe\Helper\Data $helper,
     \Magento\Catalog\Helper\Data $catalogHelper,
-    \Psr\Log\LoggerInterface $logger,
     \Magento\Framework\View\Page\Title $pageTitle,
     array $data
   )
   {
     parent::__construct($context, $data);
     $this->helper = $helper;
-    $this->_logger = $logger;
     $this->pageTitle = $pageTitle;
     $this->catalogHelper = $catalogHelper;
   }
 
-  public function pageTitle() {
-    return $this->pageTitle->getShort();
-  }
-
-  public function pageType() {
-    return $this->_request->getFullActionName();
-  }
-
-  public function breadcrumbs() {
-    return $this->getBreadCrumbPath();
-  }
-
   public function datalayerPage() {
-    $datalayerPage = array(
-      'event' => 'Page Loaded',
-      'page' => array(
-        'pageType' => $this->pageType(),
-        'pageName' => $this->pageTitle(),
-        'breadcrumbs' => $this->breadcrumbs()
-      )
-    );
+    $title = $this->pageTitle();
+    $type = $this->pageType();
+    $crumbs = $this->getBreadCrumbPath();
 
-    return $datalayerPage;
+    return $this->helper->pageLoadedPushData($title, $type, $crumbs);
   }
 
   public function datalayerPageJson() {
@@ -69,4 +49,14 @@ class Page extends \Magento\Framework\View\Element\Template
 
     return $titleArray;
   }
+
+  protected function pageTitle() {
+    return $this->pageTitle->getShort();
+  }
+
+  protected function pageType() {
+    return $this->_request->getFullActionName();
+  }
+
+
 }
