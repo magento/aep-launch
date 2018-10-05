@@ -118,6 +118,17 @@ class Data extends AbstractHelper
   }
 
   /**
+   * @param \Magento\Checkout\Model\Cart $cartModel
+   * @return array
+   */
+  public function checkoutStartedPushData($cartModel) {
+    $result = $this->cartViewedPushData($cartModel);
+    $result['event'] = 'Checkout Started';
+
+    return $result;
+  }
+
+  /**
    * @param int $qty
    * @param \Magento\Catalog\Model\Product $product
    * @return array
