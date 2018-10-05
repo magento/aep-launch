@@ -64,16 +64,18 @@ class Data extends AbstractHelper
 
   public function productViewedPushData($product)
   {
-      $result = [];
+      $result = [
+        'event' => 'Product Viewed',
+        'product' => []
+      ];
 
-      $result['event'] = 'Product Viewed';
-      $result['product'] = [];
+      $item = [
+        'productInfo' => [
+          'productID' => $product->getSku()
+        ]
+      ];
 
-      $item = [];
-      $item['productInfo'] = [];
-      $item['productInfo']['productID'] = $product->getId(); 
-
-      array_push($result['product'], $item);
+      $result['product'][] = $item;
 
       return $result;
   }
