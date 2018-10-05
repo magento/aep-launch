@@ -36,7 +36,7 @@ class Data extends AbstractHelper
   public function isEnabled($scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT)
   {
     return $this->scopeConfig->isSetFlag(
-      'launchbyadobe_backend_config/general/enable',
+      'axpconnector_backend_config/general/enable',
       $scope
     );
   }
@@ -44,7 +44,7 @@ class Data extends AbstractHelper
   public function getScriptUrl($scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT)
   {
     return $this->scopeConfig->getValue(
-      'launchbyadobe_backend_config/general/launch_script_url',
+      'axpconnector_backend_config/general/launch_script_url',
       $scope
     );
   }

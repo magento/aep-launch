@@ -3,7 +3,7 @@ $_helper = $this->helper('SearchDiscovery\AxpConnector\Helper\Data');
 ?>
 
 <?php if ($_helper->isEnabled()) : ?>
-  <script type="text/javascript" id="launchbyadobe-datalayer-container">
+  <script type="text/javascript" id="axpconnector-datalayer-container">
     // Datalayer goes here
     window.AppEventData = window.AppEventData || [];
     <?php foreach($block->encodedDatalayerEvents() as $eventJson) : ?>
@@ -15,7 +15,7 @@ $_helper = $this->helper('SearchDiscovery\AxpConnector\Helper\Data');
   <script type="text/x-magento-init">
     {
         "*": {
-            "launchbyadobe": {}
+            "axpconnector": {}
         }
     }
   </script>

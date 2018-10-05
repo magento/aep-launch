@@ -2,7 +2,7 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="after.body.start">
-            <block class="SearchDiscovery\AxpConnector\Block\Cart" name="launchbyadobe_cart_block" template="SearchDiscovery_AxpConnector::cart.phtml" after="-" />
+            <block class="SearchDiscovery\AxpConnector\Block\Cart" name="axpconnector_cart_block" template="SearchDiscovery_AxpConnector::cart.phtml" after="-" />
         </referenceContainer>
     </body>
 </page>

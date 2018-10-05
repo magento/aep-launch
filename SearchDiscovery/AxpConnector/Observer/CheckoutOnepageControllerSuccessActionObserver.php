@@ -5,7 +5,7 @@ use Magento\Framework\Event\ObserverInterface;
 
 class CheckoutOnepageControllerSuccessActionObserver implements ObserverInterface
 {
-    const COOKIE_NAME = 'launchbyadobe_checkout_success';
+    const COOKIE_NAME = 'axpconnector_checkout_success';
 
     // Short duration, it just has to survive a page load
     const COOKIE_DURATION_SECS = 180;

@@ -6,7 +6,7 @@
         <resource id="Magento_Backend::stores">
           <resource id="Magento_Backend::stores_settings">
             <resource id="Magento_Config::config">
-              <resource id="SearchDiscovery_AxpConnector::launchbyadobe_config" title="Launch By Adobe" sortOrder="310" />
+              <resource id="SearchDiscovery_AxpConnector::axpconnector_config" title="Launch By Adobe" sortOrder="310" />
             </resource>
           </resource>
         </resource>

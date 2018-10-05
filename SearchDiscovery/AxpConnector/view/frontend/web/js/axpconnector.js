@@ -8,7 +8,7 @@ define([
     return function(opts) {
       window.AppEventData = window.AppEventData || [];
 
-      var checkoutJson = $.cookie('launchbyadobe_checkout_success');
+      var checkoutJson = $.cookie('axpconnector_checkout_success');
       if(checkoutJson) {
         var events = JSON.parse(checkoutJson);
         events.forEach(function(event) {
@@ -17,7 +17,7 @@ define([
       }
 
       // Delete the cookie
-      $.cookie('launchbyadobe_checkout_success', '', {path: '/', expires: -1});
+      $.cookie('axpconnector_checkout_success', '', {path: '/', expires: -1});
     }
   }
 );
