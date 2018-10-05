@@ -4,7 +4,7 @@
     <type name="Magento\Customer\CustomerData\SectionPoolInterface">
         <arguments>
             <argument name="sectionSourceMap" xsi:type="array">
-                <item name="launch" xsi:type="string">SearchDiscovery\LaunchByAdobe\CustomerData\Launch</item>
+                <item name="launch" xsi:type="string">SearchDiscovery\AxpConnector\CustomerData\Launch</item>
             </argument>
         </arguments>
     </type>

@@ -1,5 +1,5 @@
 <?php
-namespace SearchDiscovery\LaunchByAdobe\Observer;
+namespace SearchDiscovery\AxpConnector\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
 
@@ -19,7 +19,7 @@ class CheckoutOnepageControllerSuccessActionObserver implements ObserverInterfac
     protected $cookieMetadataFactory;
 
 
-    public function __construct(\SearchDiscovery\LaunchByAdobe\Helper\Data $helper,
+    public function __construct(\SearchDiscovery\AxpConnector\Helper\Data $helper,
                                 \Psr\Log\LoggerInterface $logger,
                                 \Magento\Framework\Stdlib\CookieManagerInterface $cookieManager,
                                 \Magento\Framework\Stdlib\Cookie\CookieMetadataFactory $cookieMetadataFactory)

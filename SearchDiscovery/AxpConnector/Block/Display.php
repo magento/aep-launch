@@ -1,5 +1,5 @@
 <?php
-namespace SearchDiscovery\LaunchByAdobe\Block;
+namespace SearchDiscovery\AxpConnector\Block;
 
 class Display extends \Magento\Framework\View\Element\Template
 {
@@ -10,7 +10,7 @@ class Display extends \Magento\Framework\View\Element\Template
 
   public function __construct(
     \Magento\Framework\View\Element\Template\Context $context,
-    \SearchDiscovery\LaunchByAdobe\Helper\Data $helper,
+    \SearchDiscovery\AxpConnector\Helper\Data $helper,
     \Psr\Log\LoggerInterface $logger
   )
   {

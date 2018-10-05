@@ -1,12 +1,12 @@
 <?php
-namespace SearchDiscovery\LaunchByAdobe\Observer;
+namespace SearchDiscovery\AxpConnector\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
 
 class SalesQuoteRemoveItemObserver implements ObserverInterface
 {
     /**
-     * @var \SearchDiscovery\LaunchByAdobe\Helper\Data
+     * @var \SearchDiscovery\AxpConnector\Helper\Data
      */
     protected $helper;
 
@@ -24,11 +24,11 @@ class SalesQuoteRemoveItemObserver implements ObserverInterface
 
 
     /**
-     * @param \SearchDiscovery\LaunchByAdobe\Helper\Data $helper
+     * @param \SearchDiscovery\AxpConnector\Helper\Data $helper
      * @param \Magento\Catalog\Model\ProductRepository $productRepository,
      * @param \Magento\Checkout\Model\Session $_checkoutSession
      */
-    public function __construct(\SearchDiscovery\LaunchByAdobe\Helper\Data $helper,
+    public function __construct(\SearchDiscovery\AxpConnector\Helper\Data $helper,
                                 \Magento\Catalog\Model\ProductRepository $productRepository,
                                 \Psr\Log\LoggerInterface $logger,
                                 \Magento\Checkout\Model\Session $_checkoutSession)

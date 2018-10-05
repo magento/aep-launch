@@ -1,5 +1,5 @@
 <?php
-namespace SearchDiscovery\LaunchByAdobe\CustomerData;
+namespace SearchDiscovery\AxpConnector\CustomerData;
 
 use Magento\Customer\CustomerData\SectionSourceInterface;
 

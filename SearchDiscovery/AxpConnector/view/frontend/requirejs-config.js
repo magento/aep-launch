@@ -1,7 +1,7 @@
 var config = {
     map: {
         '*': {
-            launchbyadobe: 'SearchDiscovery_LaunchByAdobe/js/launchbyadobe'
+            launchbyadobe: 'SearchDiscovery_AxpConnector/js/launchbyadobe'
         }
     }
 };

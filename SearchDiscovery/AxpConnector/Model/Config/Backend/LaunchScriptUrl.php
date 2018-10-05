@@ -1,6 +1,6 @@
 <?php
 
-namespace SearchDiscovery\LaunchByAdobe\Model\Config\Backend;
+namespace SearchDiscovery\AxpConnector\Model\Config\Backend;
 
 class LaunchScriptUrl extends \Magento\Framework\App\Config\Value
 {

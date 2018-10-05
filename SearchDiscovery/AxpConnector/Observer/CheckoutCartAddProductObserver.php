@@ -1,12 +1,12 @@
 <?php
-namespace SearchDiscovery\LaunchByAdobe\Observer;
+namespace SearchDiscovery\AxpConnector\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
 
 class CheckoutCartAddProductObserver implements ObserverInterface
 {
     /**
-     * @var \SearchDiscovery\LaunchByAdobe\Helper\Data
+     * @var \SearchDiscovery\AxpConnector\Helper\Data
      */
     protected $helper;
 
@@ -21,11 +21,11 @@ class CheckoutCartAddProductObserver implements ObserverInterface
     protected $_checkoutSession;
 
     /**
-     * @param \SearchDiscovery\LaunchByAdobe\Helper\Data $helper
+     * @param \SearchDiscovery\AxpConnector\Helper\Data $helper
      * @param \Magento\Framework\ObjectManagerInterface $objectManager
      * @param \Magento\Checkout\Model\Session $_checkoutSession
      */
-    public function __construct(\SearchDiscovery\LaunchByAdobe\Helper\Data $helper,
+    public function __construct(\SearchDiscovery\AxpConnector\Helper\Data $helper,
                                 \Magento\Framework\ObjectManagerInterface $objectManager,
                                 \Magento\Checkout\Model\Session $_checkoutSession)
     {

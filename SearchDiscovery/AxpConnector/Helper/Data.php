@@ -1,6 +1,6 @@
 <?php
 
-namespace SearchDiscovery\LaunchByAdobe\Helper;
+namespace SearchDiscovery\AxpConnector\Helper;
 use \Magento\Framework\App\Helper\AbstractHelper;
 use \Magento\Framework\App\Config\ScopeConfigInterface;
 

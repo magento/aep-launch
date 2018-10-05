@@ -1,11 +1,11 @@
 <?php
-namespace SearchDiscovery\LaunchByAdobe\Block;
+namespace SearchDiscovery\AxpConnector\Block;
 
 class Cart extends \Magento\Framework\View\Element\Template
 {
   public function __construct(
     \Magento\Framework\View\Element\Template\Context $context,
-    \SearchDiscovery\LaunchByAdobe\Helper\Data $helper,
+    \SearchDiscovery\AxpConnector\Helper\Data $helper,
     \Magento\Checkout\Model\Cart $cartModel,
     array $data
   )

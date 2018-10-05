@@ -1,5 +1,5 @@
 <?php
-namespace SearchDiscovery\LaunchByAdobe\Block;
+namespace SearchDiscovery\AxpConnector\Block;
 
 class Product extends \Magento\Framework\View\Element\Template
 {
@@ -9,7 +9,7 @@ class Product extends \Magento\Framework\View\Element\Template
 
   public function __construct(
     \Magento\Framework\View\Element\Template\Context $context,
-    \SearchDiscovery\LaunchByAdobe\Helper\Data $helper,
+    \SearchDiscovery\AxpConnector\Helper\Data $helper,
     \Magento\Framework\Registry $registry,
     array $data
   )
