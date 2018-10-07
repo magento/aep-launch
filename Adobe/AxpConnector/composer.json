@@ -1,0 +1,12 @@
+{
+    "name": "adobe/module-axp-connector",
+    "type": "magento2-module",
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Adobe\\AxpConnector\\": ""
+        }
+    }
+}

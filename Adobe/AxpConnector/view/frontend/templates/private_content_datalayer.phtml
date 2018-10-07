@@ -1,0 +1,15 @@
+<?php
+$_helper = $this->helper('Adobe\AxpConnector\Helper\Data');
+?>
+
+<?php if ($_helper->isEnabled()) : ?>
+  <div data-role="launch" data-bind="scope: 'launch'">
+    <div class="content-type" data-bind="html: launch().datalayerScript"></div>
+  </div>
+
+  <script type="text/x-magento-init">
+    {
+      "[data-role=launch]": { "Magento_Ui/js/core/app": <?php /* @escapeNotVerified */ echo $block->getJsLayout(); ?> }
+    }
+  </script>
+<?php endif; ?>
