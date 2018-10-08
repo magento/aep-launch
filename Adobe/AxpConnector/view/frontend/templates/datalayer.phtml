@@ -1,0 +1,22 @@
+<?php
+$_helper = $this->helper('Adobe\AxpConnector\Helper\Data');
+?>
+
+<?php if ($_helper->isEnabled()) : ?>
+  <script type="text/javascript" id="axpconnector-datalayer-container">
+    // Datalayer goes here
+    window.AppEventData = window.AppEventData || [];
+    <?php foreach($block->encodedDatalayerEvents() as $eventJson) : ?>
+      window.AppEventData.push(<?php echo $eventJson ?>);
+    <?php endforeach; ?>
+  </script>
+
+
+  <script type="text/x-magento-init">
+    {
+        "*": {
+            "axpconnector": {}
+        }
+    }
+  </script>
+<?php endif; ?>

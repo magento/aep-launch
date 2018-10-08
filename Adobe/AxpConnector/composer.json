@@ -1,0 +1,15 @@
+{
+    "name": "adobe/module-axp-connector",
+    "require": {
+        "php": "~7.1.3||~7.2.0"
+    },
+    "type": "magento2-module",
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Adobe\\AxpConnector\\": ""
+        }
+    }
+}
