@@ -1,0 +1,7 @@
+{
+  "name": "adobe/axp-connector",
+  "type": "metapackage",
+  "require": {
+    "adobe/module-axp-connector": "@dev"
+  }
+}
