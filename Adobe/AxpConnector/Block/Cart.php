@@ -6,13 +6,11 @@
 namespace Adobe\AxpConnector\Block;
 
 /**
- * Class Cart
- * @package Adobe\AxpConnector\Block
+ * Cart Block.
  */
 class Cart extends \Magento\Framework\View\Element\Template
 {
     /**
-     * Cart constructor.
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Adobe\AxpConnector\Helper\Data $helper
      * @param \Magento\Checkout\Model\Cart $cartModel
@@ -30,6 +28,8 @@ class Cart extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Datalayer.
+     *
      * @return array
      */
     public function datalayer()
@@ -38,6 +38,8 @@ class Cart extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Json Datalayer.
+     *
      * @return string
      */
     public function datalayerJson()

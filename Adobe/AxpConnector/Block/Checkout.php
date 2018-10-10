@@ -3,17 +3,14 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Adobe\AxpConnector\Block;
 
 /**
- * Class Checkout
- * @package Adobe\AxpConnector\Block
+ * Checkout block.
  */
 class Checkout extends \Magento\Framework\View\Element\Template
 {
     /**
-     * Checkout constructor.
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Adobe\AxpConnector\Helper\Data $helper
      * @param \Magento\Checkout\Model\Cart $cartModel
@@ -31,6 +28,8 @@ class Checkout extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Datalayer.
+     *
      * @return array
      */
     public function datalayer()
@@ -39,6 +38,8 @@ class Checkout extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Json Datalayer.
+     *
      * @return string
      */
     public function datalayerJson()

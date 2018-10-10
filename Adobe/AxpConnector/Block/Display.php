@@ -3,16 +3,13 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Adobe\AxpConnector\Block;
 
 /**
- * Class Display
- * @package Adobe\AxpConnector\Block
+ * Display block.
  */
 class Display extends \Magento\Framework\View\Element\Template
 {
-
     /**
      * @var array
      */
@@ -24,7 +21,6 @@ class Display extends \Magento\Framework\View\Element\Template
     protected $_logger;
 
     /**
-     * Display constructor.
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Adobe\AxpConnector\Helper\Data $helper
      * @param \Psr\Log\LoggerInterface $logger
@@ -41,6 +37,8 @@ class Display extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Is enabled.
+     *
      * @return bool
      */
     public function isEnabled()
@@ -49,6 +47,8 @@ class Display extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Push event to datalayer.
+     *
      * @param $eventData
      */
     public function pushDatalayerEvent($eventData)
@@ -57,11 +57,13 @@ class Display extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Encode events.
+     *
      * @return array
      */
     public function encodedDatalayerEvents()
     {
-        $encoded = array_map(array($this->helper, 'jsonify'), $this->datalayerEvents);
+        $encoded = array_map([$this->helper, 'jsonify'], $this->datalayerEvents);
         return $encoded;
     }
 }

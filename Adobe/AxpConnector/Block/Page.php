@@ -3,31 +3,29 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Adobe\AxpConnector\Block;
 
 /**
  * Class Page
- * @package Adobe\AxpConnector\Block
  */
 class Page extends \Magento\Framework\View\Element\Template
 {
-
     /**
      * @var \Adobe\AxpConnector\Helper\Data
      */
     protected $helper;
+
     /**
      * @var \Magento\Framework\View\Page\Title
      */
     protected $pageTitle;
+
     /**
      * @var \Magento\Catalog\Helper\Data
      */
     protected $catalogHelper;
 
     /**
-     * Page constructor.
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Adobe\AxpConnector\Helper\Data $helper
      * @param \Magento\Catalog\Helper\Data $catalogHelper
@@ -48,6 +46,8 @@ class Page extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Datalayer for page.
+     *
      * @return array
      */
     public function datalayerPage()
@@ -60,6 +60,8 @@ class Page extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Json Datalayer for Page.
+     *
      * @return string
      */
     public function datalayerPageJson()
@@ -68,7 +70,9 @@ class Page extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * @param $msg
+     * Add info to log.
+     *
+     * @param mixed $msg
      */
     public function log($msg)
     {
@@ -76,6 +80,8 @@ class Page extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Get breadcrumbs path.
+     *
      * @return array
      */
     protected function getBreadCrumbPath()
@@ -91,6 +97,8 @@ class Page extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Get short page title.
+     *
      * @return mixed
      */
     protected function pageTitle()
@@ -99,12 +107,12 @@ class Page extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Get page type.
+     *
      * @return mixed
      */
     protected function pageType()
     {
         return $this->_request->getFullActionName();
     }
-
-
 }

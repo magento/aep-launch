@@ -3,25 +3,22 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Adobe\AxpConnector\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
 
 /**
- * Class CheckoutOnepageControllerSuccessActionObserver
- * @package Adobe\AxpConnector\Observer
+ * Observer for checkout success event
  */
 class CheckoutOnepageControllerSuccessActionObserver implements ObserverInterface
 {
     /**
-     *
+     * @var string
      */
     const COOKIE_NAME = 'axpconnector_checkout_success';
 
-    // Short duration, it just has to survive a page load
     /**
-     *
+     * Short duration, it just has to survive a page load
      */
     const COOKIE_DURATION_SECS = 180;
 
@@ -45,7 +42,6 @@ class CheckoutOnepageControllerSuccessActionObserver implements ObserverInterfac
      */
     protected $cookieMetadataFactory;
 
-
     /**
      * CheckoutOnepageControllerSuccessActionObserver constructor.
      * @param \Adobe\AxpConnector\Helper\Data $helper
@@ -66,6 +62,8 @@ class CheckoutOnepageControllerSuccessActionObserver implements ObserverInterfac
     }
 
     /**
+     * @inheritdoc
+     *
      * @param \Magento\Framework\Event\Observer $observer
      * @throws \Magento\Framework\Exception\InputException
      * @throws \Magento\Framework\Stdlib\Cookie\CookieSizeLimitReachedException

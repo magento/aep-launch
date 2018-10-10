@@ -3,12 +3,10 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Adobe\AxpConnector\Block;
 
 /**
- * Class Product
- * @package Adobe\AxpConnector\Block
+ * Product block.
  */
 class Product extends \Magento\Framework\View\Element\Template
 {
@@ -23,7 +21,6 @@ class Product extends \Magento\Framework\View\Element\Template
     protected $registry;
 
     /**
-     * Product constructor.
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Adobe\AxpConnector\Helper\Data $helper
      * @param \Magento\Framework\Registry $registry
@@ -38,10 +35,11 @@ class Product extends \Magento\Framework\View\Element\Template
         parent::__construct($context, $data);
         $this->registry = $registry;
         $this->helper = $helper;
-
     }
 
     /**
+     * Product datalayer.
+     *
      * @return array
      */
     public function datalayerProduct()
@@ -50,6 +48,8 @@ class Product extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Json product data layer.
+     *
      * @return string
      */
     public function datalayerProductJson()
@@ -59,11 +59,12 @@ class Product extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Getter for current product.
+     *
      * @return mixed
      */
     protected function getCurrentProduct()
     {
         return $this->registry->registry('current_product');
     }
-
 }

@@ -12,7 +12,6 @@ use Magento\Customer\CustomerData\SectionSourceInterface;
  */
 class Launch extends \Magento\Framework\DataObject implements SectionSourceInterface
 {
-
     /**
      * @var \Magento\Framework\Json\Helper\Data
      */
@@ -34,17 +33,16 @@ class Launch extends \Magento\Framework\DataObject implements SectionSourceInter
     protected $logger;
 
     /**
-     * Constructor
      * @param \Magento\Framework\Json\Helper\Data $jsonHelper
      * @param \Magento\Checkout\Model\Session $_checkoutSession
      * @param \Magento\Customer\Model\Session $customerSession
+     * @param \Psr\Log\LoggerInterface $logger
      * @param array $data
      */
     public function __construct(
         \Magento\Framework\Json\Helper\Data $jsonHelper,
         \Magento\Checkout\Model\Session $_checkoutSession,
         \Magento\Customer\Model\Session $customerSession,
-        \Magento\Customer\Api\GroupRepositoryInterface $groupRepository,
         \Psr\Log\LoggerInterface $logger,
         array $data = []
     ) {
@@ -56,6 +54,8 @@ class Launch extends \Magento\Framework\DataObject implements SectionSourceInter
     }
 
     /**
+     * Get section data.
+     *
      * @return array
      */
     public function getSectionData()

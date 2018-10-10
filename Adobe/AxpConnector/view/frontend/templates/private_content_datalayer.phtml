@@ -1,5 +1,10 @@
 <?php
-$_helper = $this->helper('Adobe\AxpConnector\Helper\Data');
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+$_helper = $this->helper(\Adobe\AxpConnector\Helper\Data::class);
 ?>
 
 <?php if ($_helper->isEnabled()) : ?>
@@ -9,8 +14,7 @@ $_helper = $this->helper('Adobe\AxpConnector\Helper\Data');
 
     <script type="text/x-magento-init">
     {
-      "[data-role=launch]": { "Magento_Ui/js/core/app": <?php /* @escapeNotVerified */
-        echo $block->getJsLayout(); ?> }
+      "[data-role=launch]": { "Magento_Ui/js/core/app": <?= /* @escapeNotVerified */ $block->getJsLayout(); ?> }
     }
 
     </script>

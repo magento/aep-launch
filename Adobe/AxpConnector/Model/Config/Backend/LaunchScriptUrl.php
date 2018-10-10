@@ -3,30 +3,28 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Adobe\AxpConnector\Model\Config\Backend;
 
 /**
- * Class LaunchScriptUrl
- * @package Adobe\AxpConnector\Model\Config\Backend
+ * Launch Script Url configuration.
  */
 class LaunchScriptUrl extends \Magento\Framework\App\Config\Value
 {
-
-    // Did they paste the script tag?
-    // Example: <script src="//assets.adobedtm.com/launch-EN5ea69d1bda314cdeacd364e2fXXXXXXX-development.min.js" async></script>
     /**
+     * Did they paste the script tag?
      *
+     * Ex: <script src="//assets.adobedtm.com/launch-EN5ea69d1bda314cdeacd364XXXXXXX-development.min.js" async></script>
      */
     const SCRIPT_TAG_REGEX = '/<script src="(.*)"/';
 
-    // Matches URLs, even those that are protocol-relative (ie. "//" without http(s))
     /**
-     *
+     * Matches URLs, even those that are protocol-relative (ie. "//" without http(s)).
      */
     const MISSING_SCHEME_REGEX = '/^(http(s)?:)?\/\/(.*)/';
 
     /**
+     * @inheritdoc
+     *
      * @return \Magento\Framework\App\Config\Value|void
      * @throws \Magento\Framework\Exception\ValidatorException
      */
@@ -54,7 +52,11 @@ class LaunchScriptUrl extends \Magento\Framework\App\Config\Value
         }
 
         if (!filter_var($testVal, FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED | FILTER_FLAG_PATH_REQUIRED)) {
-            throw new \Magento\Framework\Exception\ValidatorException(__($label . ' must either be a &lt;script&gt; tag for the Launch JavaScript snippet, or the URL to the snippet.'));
+            throw new \Magento\Framework\Exception\ValidatorException(__(
+                $label .
+                ' must either be a &lt;script&gt; tag for the Launch JavaScript snippet, ' .
+                'or the URL to the snippet.'
+            ));
         }
 
         parent::beforeSave();

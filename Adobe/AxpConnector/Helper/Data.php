@@ -3,19 +3,18 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Adobe\AxpConnector\Helper;
 
+use Magento\Catalog\Api\Data\ProductInterface;
 use \Magento\Framework\App\Helper\AbstractHelper;
 use \Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Quote\Api\Data\CartInterface;
 
 /**
- * Class Data
- * @package Adobe\AxpConnector\Helper
+ * Class Data.
  */
 class Data extends AbstractHelper
 {
-
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
@@ -59,6 +58,8 @@ class Data extends AbstractHelper
     }
 
     /**
+     * Check if module is enabled in config.
+     *
      * @param string $scope
      * @return bool
      */
@@ -71,6 +72,8 @@ class Data extends AbstractHelper
     }
 
     /**
+     * Get Url for the Launch script from configuration.
+     *
      * @param string $scope
      * @return mixed
      */
@@ -83,9 +86,11 @@ class Data extends AbstractHelper
     }
 
     /**
-     * @param $pageTitle
-     * @param $pageType
-     * @param $breadcrumbs
+     * Push data whan page is loaded (?)
+     *
+     * @param string $pageTitle
+     * @param string $pageType
+     * @param string $breadcrumbs
      * @return array
      */
     public function pageLoadedPushData($pageTitle, $pageType, $breadcrumbs)
@@ -103,7 +108,9 @@ class Data extends AbstractHelper
     }
 
     /**
-     * @param $product
+     * Data for product view (?)
+     *
+     * @param ProductInterface $product
      * @return array
      */
     public function productViewedPushData($product)
@@ -125,8 +132,10 @@ class Data extends AbstractHelper
     }
 
     /**
+     * Push data on add to cart (?)
+     *
      * @param int $qty
-     * @param \Magento\Catalog\Model\Product $product
+     * @param ProductInterface $product
      * @return array
      */
     public function addToCartPushData($qty, $product)
@@ -148,14 +157,16 @@ class Data extends AbstractHelper
     }
 
     /**
-     * @param \Magento\Checkout\Model\Cart $cartModel
+     * Push data on cart view.
+     *
+     * @param CartInterface $cartModel
      * @return array
      */
     public function cartViewedPushData($cartModel)
     {
         $collection = $cartModel->getQuote()->getAllVisibleItems();
-        $result = array();
-        $cart = array();
+        $result = [];
+        $cart = [];
 
         $items = [];
         foreach ($collection as $item) {
@@ -178,7 +189,9 @@ class Data extends AbstractHelper
     }
 
     /**
-     * @param \Magento\Checkout\Model\Cart $cartModel
+     * Push data on checkout start.
+     *
+     * @param CartInterface $cartModel
      * @return array
      */
     public function checkoutStartedPushData($cartModel)
@@ -190,8 +203,10 @@ class Data extends AbstractHelper
     }
 
     /**
+     * Push data on removal from the cart.
+     *
      * @param int $qty
-     * @param \Magento\Catalog\Model\Product $product
+     * @param ProductInterface $product
      * @return array
      */
     public function removeFromCartPushData($qty, $product)
@@ -204,6 +219,8 @@ class Data extends AbstractHelper
     }
 
     /**
+     * Push data on order placed.
+     *
      * @param $orderIds
      * @return array
      */
@@ -269,7 +286,9 @@ class Data extends AbstractHelper
     }
 
     /**
-     * @param $obj
+     * Json Encode (??)
+     *
+     * @param mixed $obj
      * @return string
      */
     public function jsonify($obj)

@@ -3,14 +3,12 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Adobe\AxpConnector\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
 
 /**
- * Class SalesQuoteRemoveItemObserver
- * @package Adobe\AxpConnector\Observer
+ * Observer for quote item remove.
  */
 class SalesQuoteRemoveItemObserver implements ObserverInterface
 {
@@ -34,10 +32,10 @@ class SalesQuoteRemoveItemObserver implements ObserverInterface
      */
     protected $logger;
 
-
     /**
      * @param \Adobe\AxpConnector\Helper\Data $helper
-     * @param \Magento\Catalog\Model\ProductRepository $productRepository ,
+     * @param \Magento\Catalog\Model\ProductRepository $productRepository
+     * @param \Psr\Log\LoggerInterface $logger
      * @param \Magento\Checkout\Model\Session $_checkoutSession
      */
     public function __construct(
@@ -53,8 +51,11 @@ class SalesQuoteRemoveItemObserver implements ObserverInterface
     }
 
     /**
+     * @inheritdoc
+     *
      * @param \Magento\Framework\Event\Observer $observer
-     * @return self
+     * @return $this|void
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
@@ -72,8 +73,9 @@ class SalesQuoteRemoveItemObserver implements ObserverInterface
         $product = $this->productRepository->getById($productId);
         $qty = $quoteItem->getData('qty');
 
-        $this->_checkoutSession->setRemoveFromCartDatalayerContent($this->helper->removeFromCartPushData($qty,
-            $product));
+        $this->_checkoutSession->setRemoveFromCartDatalayerContent(
+            $this->helper->removeFromCartPushData($qty, $product)
+        );
         $this->logger->addInfo('Remove From Cart Observer');
 
         return $this;

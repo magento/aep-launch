@@ -1,7 +1,12 @@
 <?php
-$_helper = $this->helper('Adobe\AxpConnector\Helper\Data');
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+$_helper = $this->helper(\Adobe\AxpConnector\Helper\Data::class);
 ?>
 
 <?php if ($_helper->isEnabled()) : ?>
-    <script src="<?php echo $_helper->getScriptUrl(); ?>" async></script>
+    <script src="<?= $_helper->getScriptUrl(); ?>" async></script>
 <?php endif; ?>

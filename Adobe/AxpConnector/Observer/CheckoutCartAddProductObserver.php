@@ -3,14 +3,13 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 namespace Adobe\AxpConnector\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
+use Magento\Framework\Locale\ResolverInterface;
 
 /**
- * Class CheckoutCartAddProductObserver
- * @package Adobe\AxpConnector\Observer
+ * Observer for Product Add to Cart.
  */
 class CheckoutCartAddProductObserver implements ObserverInterface
 {
@@ -45,6 +44,8 @@ class CheckoutCartAddProductObserver implements ObserverInterface
     }
 
     /**
+     * @inheritdoc
+     *
      * @param \Magento\Framework\Event\Observer $observer
      * @return self
      */
@@ -61,7 +62,7 @@ class CheckoutCartAddProductObserver implements ObserverInterface
 
         if (isset($params['qty'])) {
             $filter = new \Zend_Filter_LocalizedToNormalized(
-                ['locale' => $this->_objectManager->get('Magento\Framework\Locale\ResolverInterface')->getLocale()]
+                ['locale' => $this->_objectManager->get(ResolverInterface::class)->getLocale()]
             );
             $qty = $filter->filter($params['qty']);
         } else {
