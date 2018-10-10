@@ -1,0 +1,10 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<script type="text/javascript" id="axpconnector-datalayer-product-viewed">
+    window.AppEventData = window.AppEventData || [];
+    window.AppEventData.push(<?= /* @escapeNotVerified */ $block->datalayerProductJson() ?>);
+</script>

@@ -35,8 +35,8 @@ jobs:
         name: Installing axp-connector
         command: |
             composer config minimum-stability dev
-            composer config repositories.meta path ./axp-connector
-            composer config repositories.modules path ./axp-connector/*/*
+            composer config repositories.meta path ./*
+            composer config repositories.modules path ./*/*/
             composer require adobe/axp-connector
 
     - persist_to_workspace:
