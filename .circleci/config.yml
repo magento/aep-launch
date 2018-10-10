@@ -1,0 +1,85 @@
+defaults: &defaults
+  working_directory: ~/magento
+  docker:
+  - image: ishakhsuvarov/axp-connector-testing:0.9
+
+version: 2
+
+jobs:
+  build:
+    <<: *defaults
+    steps:
+    - run: 
+        name: Building Magento 2.3-develop
+        command: |
+          git clone https://github.com/magento/magento2.git --depth 1 --single-branch --branch 2.3-develop .
+          mkdir axp-connector
+
+    - checkout:
+        path: axp-connector
+     
+    - restore_cache:
+        keys:
+          - magento-dependencies-{{ checksum "composer.lock" }}
+
+    - run:
+        name: Installing dependencies
+        command: composer install -n
+        
+    - save_cache:
+        key: magento-dependencies-{{ checksum "composer.lock" }}
+        paths:
+          - "vendor"
+    
+    - run:
+        name: Installing axp-connector
+        command: |
+            composer config minimum-stability dev
+            composer config repositories.meta path ./axp-connector
+            composer config repositories.modules path ./axp-connector/*/*
+            composer require adobe/axp-connector
+
+    - persist_to_workspace:
+        root: workspace
+        paths:
+          - .
+
+  unit_test:
+    <<: *defaults
+    steps:
+
+    - attach_workspace:
+        at: .
+
+    - run:
+        name: Unit Test
+        command: ./vendor/phpunit/phpunit/phpunit -c dev/tests/unit
+
+  static_test:
+    <<: *defaults
+    steps:
+
+    - attach_workspace:
+        at: .
+
+    - run:
+        name: Prepare file list
+        command: |
+          find axp-connector -not -path '*/.*/*' -not -name '.*' -type f -follow -print > dev/tests/static/testsuite/Magento/Test/_files/changed_files_axp.txt
+          find axp-connector -not -path '*/.*/*' -not -name '.*' -type f -follow -print > dev/tests/static/testsuite/Magento/Test/_files/changed_files_axp.added.txt
+
+    - run:
+        name: Static test
+        command: ./vendor/phpunit/phpunit/phpunit -c dev/tests/static
+
+workflows:
+  version: 2
+  build-test:
+    jobs:
+    - build
+    - unit_test:
+        requires:
+        - build
+    - static_test:
+        requires:
+        - build
