@@ -67,6 +67,7 @@ jobs:
         command: |
           find axp-connector -not -path '*/.*/*' -not -name '.*' -type f -follow -print > dev/tests/static/testsuite/Magento/Test/_files/changed_files_axp.txt
           find axp-connector -not -path '*/.*/*' -not -name '.*' -type f -follow -print > dev/tests/static/testsuite/Magento/Test/_files/changed_files_axp.added.txt
+          echo "adobe/module-axp-connector" > dev/tests/static/testsuite/Magento/Test/Integrity/_files/blacklist/composer_root_modules_axp_connector.txt
 
     - run:
         name: Static test
