@@ -1,7 +1,7 @@
 defaults: &defaults
   working_directory: ~/magento
   docker:
-  - image: ishakhsuvarov/axp-connector-testing:0.9
+  - image: ishakhsuvarov/axp-connector-testing:unit-static-0.1
 
 version: 2
 
@@ -20,14 +20,14 @@ jobs:
      
     - restore_cache:
         keys:
-          - magento-dependencies-{{ checksum "composer.lock" }}
+          - magento-dependencies-{{ checksum "composer.lock" }}-v1
 
     - run:
         name: Installing dependencies
         command: composer install -n
         
     - save_cache:
-        key: magento-dependencies-{{ checksum "composer.lock" }}
+        key: magento-dependencies-{{ checksum "composer.lock" }}-v1
         paths:
           - "vendor"
     
@@ -35,8 +35,8 @@ jobs:
         name: Installing axp-connector
         command: |
             composer config minimum-stability dev
-            composer config repositories.meta path ./*
-            composer config repositories.modules path ./*/*/
+            composer config repositories.metapackage path "./*"
+            composer config repositories.modules path "./*/*/"
             composer require adobe/axp-connector
 
     - persist_to_workspace:
