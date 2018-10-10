@@ -1,0 +1,12 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+$_helper = $this->helper(\Adobe\AxpConnector\Helper\Data::class);
+?>
+
+<?php if ($_helper->isEnabled()) : ?>
+    <script src="<?= /* @escapeNotVerified */ $_helper->getScriptUrl(); ?>" async></script>
+<?php endif; ?>
