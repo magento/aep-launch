@@ -3,10 +3,15 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace Adobe\AxpConnector\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
 
+/**
+ * Class CheckoutCartAddProductObserver
+ * @package Adobe\AxpConnector\Observer
+ */
 class CheckoutCartAddProductObserver implements ObserverInterface
 {
     /**
@@ -29,15 +34,16 @@ class CheckoutCartAddProductObserver implements ObserverInterface
      * @param \Magento\Framework\ObjectManagerInterface $objectManager
      * @param \Magento\Checkout\Model\Session $_checkoutSession
      */
-    public function __construct(\Adobe\AxpConnector\Helper\Data $helper,
-                                \Magento\Framework\ObjectManagerInterface $objectManager,
-                                \Magento\Checkout\Model\Session $_checkoutSession)
-    {
+    public function __construct(
+        \Adobe\AxpConnector\Helper\Data $helper,
+        \Magento\Framework\ObjectManagerInterface $objectManager,
+        \Magento\Checkout\Model\Session $_checkoutSession
+    ) {
         $this->helper = $helper;
         $this->_objectManager = $objectManager;
         $this->_checkoutSession = $_checkoutSession;
     }
-    
+
     /**
      * @param \Magento\Framework\Event\Observer $observer
      * @return self

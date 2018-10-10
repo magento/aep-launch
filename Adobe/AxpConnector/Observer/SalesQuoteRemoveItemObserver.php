@@ -3,10 +3,15 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 namespace Adobe\AxpConnector\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
 
+/**
+ * Class SalesQuoteRemoveItemObserver
+ * @package Adobe\AxpConnector\Observer
+ */
 class SalesQuoteRemoveItemObserver implements ObserverInterface
 {
     /**
@@ -24,25 +29,29 @@ class SalesQuoteRemoveItemObserver implements ObserverInterface
      */
     protected $productRepository;
 
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
     protected $logger;
 
 
     /**
      * @param \Adobe\AxpConnector\Helper\Data $helper
-     * @param \Magento\Catalog\Model\ProductRepository $productRepository,
+     * @param \Magento\Catalog\Model\ProductRepository $productRepository ,
      * @param \Magento\Checkout\Model\Session $_checkoutSession
      */
-    public function __construct(\Adobe\AxpConnector\Helper\Data $helper,
-                                \Magento\Catalog\Model\ProductRepository $productRepository,
-                                \Psr\Log\LoggerInterface $logger,
-                                \Magento\Checkout\Model\Session $_checkoutSession)
-    {
+    public function __construct(
+        \Adobe\AxpConnector\Helper\Data $helper,
+        \Magento\Catalog\Model\ProductRepository $productRepository,
+        \Psr\Log\LoggerInterface $logger,
+        \Magento\Checkout\Model\Session $_checkoutSession
+    ) {
         $this->helper = $helper;
         $this->_checkoutSession = $_checkoutSession;
         $this->productRepository = $productRepository;
         $this->logger = $logger;
     }
-    
+
     /**
      * @param \Magento\Framework\Event\Observer $observer
      * @return self
@@ -63,7 +72,8 @@ class SalesQuoteRemoveItemObserver implements ObserverInterface
         $product = $this->productRepository->getById($productId);
         $qty = $quoteItem->getData('qty');
 
-        $this->_checkoutSession->setRemoveFromCartDatalayerContent($this->helper->removeFromCartPushData($qty, $product));
+        $this->_checkoutSession->setRemoveFromCartDatalayerContent($this->helper->removeFromCartPushData($qty,
+            $product));
         $this->logger->addInfo('Remove From Cart Observer');
 
         return $this;

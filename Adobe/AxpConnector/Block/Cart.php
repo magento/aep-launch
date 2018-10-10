@@ -5,26 +5,44 @@
  */
 namespace Adobe\AxpConnector\Block;
 
+/**
+ * Class Cart
+ * @package Adobe\AxpConnector\Block
+ */
 class Cart extends \Magento\Framework\View\Element\Template
 {
-  public function __construct(
-    \Magento\Framework\View\Element\Template\Context $context,
-    \Adobe\AxpConnector\Helper\Data $helper,
-    \Magento\Checkout\Model\Cart $cartModel,
-    array $data
-  )
-  {
-    parent::__construct($context, $data);
-    $this->cartModel = $cartModel;
-    $this->helper = $helper;
-  }
+    /**
+     * Cart constructor.
+     * @param \Magento\Framework\View\Element\Template\Context $context
+     * @param \Adobe\AxpConnector\Helper\Data $helper
+     * @param \Magento\Checkout\Model\Cart $cartModel
+     * @param array $data
+     */
+    public function __construct(
+        \Magento\Framework\View\Element\Template\Context $context,
+        \Adobe\AxpConnector\Helper\Data $helper,
+        \Magento\Checkout\Model\Cart $cartModel,
+        array $data
+    ) {
+        parent::__construct($context, $data);
+        $this->cartModel = $cartModel;
+        $this->helper = $helper;
+    }
 
-  public function datalayer() {
-    return $this->helper->cartViewedPushData($this->cartModel);
-  }
+    /**
+     * @return array
+     */
+    public function datalayer()
+    {
+        return $this->helper->cartViewedPushData($this->cartModel);
+    }
 
-  public function datalayerJson() {
-    $datalayer = $this->datalayer();
-    return $this->helper->jsonify($datalayer);
-  }
+    /**
+     * @return string
+     */
+    public function datalayerJson()
+    {
+        $datalayer = $this->datalayer();
+        return $this->helper->jsonify($datalayer);
+    }
 }

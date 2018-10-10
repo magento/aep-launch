@@ -28,6 +28,9 @@ class Launch extends \Magento\Framework\DataObject implements SectionSourceInter
      */
     protected $customerSession;
 
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
     protected $logger;
 
     /**
@@ -44,8 +47,7 @@ class Launch extends \Magento\Framework\DataObject implements SectionSourceInter
         \Magento\Customer\Api\GroupRepositoryInterface $groupRepository,
         \Psr\Log\LoggerInterface $logger,
         array $data = []
-    )
-    {
+    ) {
         parent::__construct($data);
         $this->jsonHelper = $jsonHelper;
         $this->_checkoutSession = $_checkoutSession;
@@ -53,16 +55,19 @@ class Launch extends \Magento\Framework\DataObject implements SectionSourceInter
         $this->logger = $logger;
     }
 
+    /**
+     * @return array
+     */
     public function getSectionData()
     {
         $data = [];
 
-        if($this->_checkoutSession->getAddToCartDatalayerContent()) {
+        if ($this->_checkoutSession->getAddToCartDatalayerContent()) {
             $data[] = $this->_checkoutSession->getAddToCartDatalayerContent();
         }
         $this->_checkoutSession->setAddToCartDatalayerContent(null);
 
-        if($this->_checkoutSession->getRemoveFromCartDatalayerContent()) {
+        if ($this->_checkoutSession->getRemoveFromCartDatalayerContent()) {
             $data[] = $this->_checkoutSession->getRemoveFromCartDatalayerContent();
         }
         $this->_checkoutSession->setRemoveFromCartDatalayerContent(null);
@@ -71,12 +76,12 @@ class Launch extends \Magento\Framework\DataObject implements SectionSourceInter
         $data = array_filter($data);
 
         $script = "";
-        if(count($data) > 0) {
+        if (count($data) > 0) {
             $jsonData = $this->jsonHelper->jsonEncode($data);
 
             // So awful...
             $script = "<script type=\"text/javascript\">\nwindow.AppEventData =  window.AppEventData || [];\n";
-            foreach($data as $event) {
+            foreach ($data as $event) {
                 $jsonData = $this->jsonHelper->jsonEncode($event);
                 $this->logger->addInfo($jsonData);
                 $script = $script . "window.AppEventData.push({$jsonData});\n";
