@@ -40,7 +40,7 @@ jobs:
             composer require adobe/axp-connector
 
     - persist_to_workspace:
-        root: workspace
+        root: .
         paths:
           - .
 
