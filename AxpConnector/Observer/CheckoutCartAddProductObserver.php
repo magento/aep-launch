@@ -8,7 +8,6 @@ declare(strict_types=1);
 namespace Adobe\AxpConnector\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
-use Magento\Framework\Locale\ResolverInterface;
 
 /**
  * Observer for Product Add to Cart.
@@ -18,31 +17,32 @@ class CheckoutCartAddProductObserver implements ObserverInterface
     /**
      * @var \Adobe\AxpConnector\Helper\Data
      */
-    protected $helper;
+    private $helper;
 
     /**
-     * @var \Magento\Framework\ObjectManagerInterface
+     * @var \Magento\Framework\Locale\ResolverInterface
      */
-    protected $_objectManager;
+    private $resolverInterface;
 
     /**
      * @var \Magento\Checkout\Model\Session
      */
-    protected $_checkoutSession;
+    private $checkoutSession;
 
     /**
+     * CheckoutCartAddProductObserver constructor.
      * @param \Adobe\AxpConnector\Helper\Data $helper
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager
-     * @param \Magento\Checkout\Model\Session $_checkoutSession
+     * @param \Magento\Framework\Locale\ResolverInterface $resolverInterface
+     * @param \Magento\Checkout\Model\Session $checkoutSession
      */
     public function __construct(
         \Adobe\AxpConnector\Helper\Data $helper,
-        \Magento\Framework\ObjectManagerInterface $objectManager,
-        \Magento\Checkout\Model\Session $_checkoutSession
+        \Magento\Framework\Locale\ResolverInterface $resolverInterface,
+        \Magento\Checkout\Model\Session $checkoutSession
     ) {
         $this->helper = $helper;
-        $this->_objectManager = $objectManager;
-        $this->_checkoutSession = $_checkoutSession;
+        $this->resolverInterface = $resolverInterface;
+        $this->checkoutSession = $checkoutSession;
     }
 
     /**
@@ -64,7 +64,7 @@ class CheckoutCartAddProductObserver implements ObserverInterface
 
         if (isset($params['qty'])) {
             $filter = new \Zend_Filter_LocalizedToNormalized(
-                ['locale' => $this->_objectManager->get(ResolverInterface::class)->getLocale()]
+                ['locale' => $this->resolverInterface->getLocale()]
             );
             $qty = $filter->filter($params['qty']);
         } else {
@@ -72,7 +72,7 @@ class CheckoutCartAddProductObserver implements ObserverInterface
         }
 
         $datalayerContent = $this->helper->addToCartPushData($qty, $product);
-        $this->_checkoutSession->setAddToCartDatalayerContent($datalayerContent);
+        $this->checkoutSession->setAddToCartDatalayerContent($datalayerContent);
 
         return $this;
     }
