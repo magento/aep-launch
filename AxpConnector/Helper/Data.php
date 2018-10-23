@@ -191,6 +191,44 @@ class Data extends AbstractHelper
     }
 
     /**
+     * Push data on search results page view.
+     *
+     * @param int $resultsShown
+     * @param int $resultsCount
+     * @param string $listOrder
+     * @param string $sortDirection
+     * @param string $queryText
+     * @return array
+     *
+     */
+    public function searchResultsPushData($resultsShown, $resultsCount, $listOrder, $sortDirection, $queryText)
+    {
+        $result = [
+            'event' => 'Listing Viewed',
+            'listing' => [
+                'listingResults' => [
+                    'resultsShown' => $resultsShown,
+                    'resultsCount' => $resultsCount
+                ],
+                'listingParams' => [
+                    'sorts' => [],
+                    'searchInfo' => [
+                        'searchTermEntered' => $queryText,
+                        'searchTermCorrected' => $queryText
+                    ]
+                ]
+            ]
+        ];
+
+        $result['listing']['listingParams']['sorts'][] = [
+            'sortOrder' => $sortDirection,
+            'sortKey' => $listOrder
+        ];
+
+        return $result;
+    }
+
+    /**
      * Push data on checkout start.
      *
      * @param CartInterface $cartModel
