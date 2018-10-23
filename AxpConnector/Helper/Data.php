@@ -228,6 +228,39 @@ class Data extends AbstractHelper
         return $result;
     }
 
+
+    /**
+     * Push data on category page view.
+     *
+     * @param int $resultsShown
+     * @param int $resultsCount
+     * @param string $listOrder
+     * @param string $sortDirection
+     * @return array
+     *
+     */
+    public function categoryViewedPushData($resultsShown, $resultsCount, $listOrder, $sortDirection) {
+        $result = [
+            'event' => 'Listing Viewed',
+            'listing' => [
+                'listingResults' => [
+                    'resultsShown' => $resultsShown,
+                    'resultsCount' => $resultsCount
+                ],
+                'listingParams' => [
+                    'sorts' => []
+                ]
+            ]
+        ];
+
+        $result['listing']['listingParams']['sorts'][] = [
+            'sortOrder' => $sortDirection,
+            'sortKey' => $listOrder
+        ];
+
+        return $result;
+    }
+
     /**
      * Push data on checkout start.
      *
