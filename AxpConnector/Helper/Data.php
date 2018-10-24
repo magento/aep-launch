@@ -199,7 +199,6 @@ class Data extends AbstractHelper
      * @param string $sortDirection
      * @param string $queryText
      * @return array
-     *
      */
     public function searchResultsPushData($resultsShown, $resultsCount, $listOrder, $sortDirection, $queryText)
     {
@@ -228,7 +227,6 @@ class Data extends AbstractHelper
         return $result;
     }
 
-
     /**
      * Push data on category page view.
      *
@@ -237,9 +235,9 @@ class Data extends AbstractHelper
      * @param string $listOrder
      * @param string $sortDirection
      * @return array
-     *
      */
-    public function categoryViewedPushData($resultsShown, $resultsCount, $listOrder, $sortDirection) {
+    public function categoryViewedPushData($resultsShown, $resultsCount, $listOrder, $sortDirection)
+    {
         $result = [
             'event' => 'Listing Viewed',
             'listing' => [

@@ -15,8 +15,8 @@ namespace Adobe\AxpConnector\Block;
 class Listing extends \Magento\Framework\View\Element\Template
 {
     /**
-    * @var \Adobe\AxpConnector\Helper\Data
-    */
+     * @var \Adobe\AxpConnector\Helper\Data
+     */
     protected $helper;
 
     /**
@@ -34,14 +34,14 @@ class Listing extends \Magento\Framework\View\Element\Template
     }
 
     /**
-    * Product listing sort direction
-    *
-    * @return string
-    */
+     * Product listing sort direction
+     *
+     * @return string
+     */
     public function getListDirection()
     {
         $sortOrder = $this->_request->getParam('product_list_dir');
-        if($sortOrder) {
+        if ($sortOrder) {
             return $sortOrder;
         } else {
             return 'asc';
@@ -49,14 +49,14 @@ class Listing extends \Magento\Framework\View\Element\Template
     }
 
     /**
-    * Product listing order
-    *
-    * @return string
-    */
+     * Product listing order
+     *
+     * @return string
+     */
     public function getListOrder()
     {
         $listOrder = $this->_request->getParam('product_list_order');
-        if($listOrder) {
+        if ($listOrder) {
             return $listOrder;
         } else {
             return 'position';
@@ -64,15 +64,15 @@ class Listing extends \Magento\Framework\View\Element\Template
     }
 
     /**
-    * Category page datalayer.
-    *
-    * @return array
-    */
+     * Category page datalayer.
+     *
+     * @return array
+     */
     public function datalayer()
     {
         $categoryBlock = $this->_layout->getBlock('category.products.list');
 
-        if(empty($categoryBlock)) {
+        if (empty($categoryBlock)) {
             return null;
         }
 
@@ -86,10 +86,10 @@ class Listing extends \Magento\Framework\View\Element\Template
     }
 
     /**
-    * Json search results datalayer.
-    *
-    * @return array
-    */
+     * Json search results datalayer.
+     *
+     * @return array
+     */
     public function datalayerJson()
     {
         $datalayer = $this->datalayer();

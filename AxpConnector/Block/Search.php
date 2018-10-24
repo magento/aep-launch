@@ -16,15 +16,14 @@ class Search extends \Magento\Framework\View\Element\Template
 {
 
     /**
-    * @var \Adobe\AxpConnector\Helper\Data
-    */
+     * @var \Adobe\AxpConnector\Helper\Data
+     */
     protected $helper;
 
     /**
-    * @var \Magento\CatalogSearch\Helper\Data
-    */
+     * @var \Magento\CatalogSearch\Helper\Data
+     */
     protected $catalogSearchHelper;
-
 
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
@@ -45,6 +44,7 @@ class Search extends \Magento\Framework\View\Element\Template
 
     /**
      * User query text
+     *
      * @return string
      */
     public function getQueryText()
@@ -53,14 +53,14 @@ class Search extends \Magento\Framework\View\Element\Template
     }
 
     /**
-    * Product listing sort direction
-    *
-    * @return string
-    */
+     * Product listing sort direction
+     *
+     * @return string
+     */
     public function getListDirection()
     {
         $sortOrder = $this->_request->getParam('product_list_dir');
-        if($sortOrder) {
+        if ($sortOrder) {
             return $sortOrder;
         } else {
             return 'desc';
@@ -68,30 +68,30 @@ class Search extends \Magento\Framework\View\Element\Template
     }
 
     /**
-    * Product listing order
-    *
-    * @return string
-    */
+     * Product listing order
+     *
+     * @return string
+     */
     public function getListOrder()
     {
         $listOrder = $this->_request->getParam('product_list_order');
-        if($listOrder) {
+        if ($listOrder) {
             return $listOrder;
         } else {
-        return 'relevance';
+            return 'relevance';
         }
     }
 
     /**
-    * Search results datalayer.
-    *
-    * @return array
-    */
+     * Search results datalayer.
+     *
+     * @return array
+     */
     public function datalayer()
     {
         $searchResultListBlock = $this->_layout->getBlock('search_result_list');
 
-        if(empty($searchResultListBlock)) {
+        if (empty($searchResultListBlock)) {
             return null;
         }
 
@@ -102,14 +102,20 @@ class Search extends \Magento\Framework\View\Element\Template
         $listOrder = $this->getListOrder();
         $listDirection = $this->getListDirection();
 
-        return $this->helper->searchResultsPushData($resultsShown, $resultsCount, $listOrder, $listDirection, $queryText);
+        return $this->helper->searchResultsPushData(
+            $resultsShown,
+            $resultsCount,
+            $listOrder,
+            $listDirection,
+            $queryText
+        );
     }
 
     /**
-    * Json search results datalayer.
-    *
-    * @return array
-    */
+     * Json search results datalayer.
+     *
+     * @return array
+     */
     public function datalayerJson()
     {
         $datalayer = $this->datalayer();

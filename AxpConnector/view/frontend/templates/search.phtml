@@ -7,7 +7,7 @@
 <script type="text/javascript" id="axpconnector-datalayer-search-results">
     window.AppEventData = window.AppEventData || [];
     <?php $datalayerJson = $block->datalayerJson(); ?>
-    <?php if($datalayerJson): ?>
+    <?php if ($datalayerJson) : ?>
         window.AppEventData.push(<?= /* @escapeNotVerified */ $datalayerJson ?>);
     <?php endif; ?>
 </script>
