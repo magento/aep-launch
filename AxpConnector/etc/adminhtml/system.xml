@@ -25,5 +25,20 @@
                 </field>
             </group>
         </section>
+        <section id="axpconnector_backend_config_advanced" translate="label" type="text" sortOrder="0" showInDefault="1"
+                 showInWebsite="1" showInStore="1">
+            <label>Advanced</label>
+            <tab>axpconnector</tab>
+            <resource>Adobe_AxpConnector::axpconnector_config</resource>
+            <class>separator-top</class>
+            <group id="advanced" translate="label" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="datalayer_name" translate="label" type="text" sortOrder="200" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Datalayer Name</label>
+                    <comment>The name of the JavaScript variable used for the datalayer.</comment>
+                    <backend_model>Adobe\AxpConnector\Model\Config\Backend\DatalayerName</backend_model>
+                </field>
+            </group>
+        </section>
     </system>
 </config>
