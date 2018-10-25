@@ -9,7 +9,8 @@
     "magento/module-catalog": "*",
     "magento/module-quote": "*",
     "magento/module-sales": "*",
-    "magento/module-store": "*"
+    "magento/module-store": "*",
+    "magento/module-catalog-search": "*"
   },
   "type": "magento2-module",
   "license": [
