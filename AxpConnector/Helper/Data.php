@@ -88,6 +88,20 @@ class Data extends AbstractHelper
     }
 
     /**
+     * Get datalayer name from configuration.
+     *
+     * @param sring $scope
+     * @return mixed
+     */
+    public function getDatalayerName($scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT)
+    {
+        return $this->scopeConfig->getValue(
+            'axpconnector_backend_config_advanced/advanced/datalayer_name',
+            $scope
+        );
+    }
+
+    /**
      * Push data whan page is loaded (?)
      *
      * @param string $pageTitle

@@ -12,13 +12,8 @@ namespace Adobe\AxpConnector\Block;
  *
  * @api
  */
-class Listing extends \Magento\Framework\View\Element\Template
+class Listing extends Base
 {
-    /**
-     * @var \Adobe\AxpConnector\Helper\Data
-     */
-    protected $helper;
-
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Adobe\AxpConnector\Helper\Data $helper
@@ -29,8 +24,7 @@ class Listing extends \Magento\Framework\View\Element\Template
         \Adobe\AxpConnector\Helper\Data $helper,
         array $data
     ) {
-        parent::__construct($context, $data);
-        $this->helper = $helper;
+        parent::__construct($context, $helper, $data);
     }
 
     /**

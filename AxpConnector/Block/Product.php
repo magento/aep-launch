@@ -12,13 +12,8 @@ namespace Adobe\AxpConnector\Block;
  *
  * @api
  */
-class Product extends \Magento\Framework\View\Element\Template
+class Product extends Base
 {
-    /**
-     * @var \Adobe\AxpConnector\Helper\Data
-     */
-    protected $helper;
-
     /**
      * @var \Magento\Framework\Registry
      */
@@ -36,7 +31,7 @@ class Product extends \Magento\Framework\View\Element\Template
         \Magento\Framework\Registry $registry,
         array $data
     ) {
-        parent::__construct($context, $data);
+        parent::__construct($context, $helper, $data);
         $this->registry = $registry;
         $this->helper = $helper;
     }

@@ -12,7 +12,7 @@ namespace Adobe\AxpConnector\Block;
  *
  * @api
  */
-class Checkout extends \Magento\Framework\View\Element\Template
+class Checkout extends Base
 {
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
@@ -26,9 +26,8 @@ class Checkout extends \Magento\Framework\View\Element\Template
         \Magento\Checkout\Model\Cart $cartModel,
         array $data
     ) {
-        parent::__construct($context, $data);
+        parent::__construct($context, $helper, $data);
         $this->cartModel = $cartModel;
-        $this->helper = $helper;
     }
 
     /**
