@@ -30,11 +30,6 @@ class CheckoutOnepageControllerSuccessActionObserver implements ObserverInterfac
     protected $helper;
 
     /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    protected $logger;
-
-    /**
      * @var \Magento\Framework\Stdlib\CookieManagerInterface
      */
     protected $cookieManager;
@@ -47,17 +42,14 @@ class CheckoutOnepageControllerSuccessActionObserver implements ObserverInterfac
     /**
      * CheckoutOnepageControllerSuccessActionObserver constructor.
      * @param \Adobe\AxpConnector\Helper\Data $helper
-     * @param \Psr\Log\LoggerInterface $logger
      * @param \Magento\Framework\Stdlib\CookieManagerInterface $cookieManager
      * @param \Magento\Framework\Stdlib\Cookie\CookieMetadataFactory $cookieMetadataFactory
      */
     public function __construct(
         \Adobe\AxpConnector\Helper\Data $helper,
-        \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\Stdlib\CookieManagerInterface $cookieManager,
         \Magento\Framework\Stdlib\Cookie\CookieMetadataFactory $cookieMetadataFactory
     ) {
-        $this->logger = $logger;
         $this->helper = $helper;
         $this->cookieManager = $cookieManager;
         $this->cookieMetadataFactory = $cookieMetadataFactory;
@@ -79,13 +71,19 @@ class CheckoutOnepageControllerSuccessActionObserver implements ObserverInterfac
         }
 
         $datalayerContent = $this->helper->orderPlacedPushData($orderIds);
+        $datalayerName = $this->helper->getDatalayerName();
+
+        $cookieContent = [
+            'datalayerName' => $datalayerName,
+            'datalayerContent' => $datalayerContent
+        ];
 
         if (count($datalayerContent) > 0) {
-            $jsonArray = $this->helper->jsonify($datalayerContent);
+            $jsonContent = $this->helper->jsonify($cookieContent);
             $metadata = $this->cookieMetadataFactory
                 ->createPublicCookieMetadata()
                 ->setDuration(self::COOKIE_DURATION_SECS);
-            $this->cookieManager->setPublicCookie(self::COOKIE_NAME, $jsonArray, $metadata);
+            $this->cookieManager->setPublicCookie(self::COOKIE_NAME, $jsonContent, $metadata);
         }
     }
 }
