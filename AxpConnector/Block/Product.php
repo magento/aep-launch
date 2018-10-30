@@ -22,14 +22,14 @@ class Product extends Base
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Adobe\AxpConnector\Helper\Data $helper
-     * @param \Magento\Framework\Registry $registry
      * @param array $data
+     * @param \Magento\Framework\Registry $registry
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Adobe\AxpConnector\Helper\Data $helper,
-        \Magento\Framework\Registry $registry,
-        array $data
+        array $data,
+        \Magento\Framework\Registry $registry
     ) {
         parent::__construct($context, $helper, $data);
         $this->registry = $registry;

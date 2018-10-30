@@ -34,7 +34,6 @@ class Launch extends \Magento\Framework\DataObject implements SectionSourceInter
      */
     protected $customerSession;
 
-
     /**
      * @param \Adobe\AxpConnector\Helper\Data $helper
      * @param \Magento\Framework\Json\Helper\Data $jsonHelper
@@ -78,19 +77,17 @@ class Launch extends \Magento\Framework\DataObject implements SectionSourceInter
         // Get rid of nulls and empties
         $data = array_filter($data);
 
-        $dln = $this->helper->getDatalayerName();
-
         $script = "";
         if (count($data) > 0) {
             $jsonData = $this->jsonHelper->jsonEncode($data);
 
             // So awful...
             $script = "<script type=\"text/javascript\">"
-                . "window.${dln} = window.${dln} || [];";
+                . "window.${$this->helper->getDatalayerName()} = window.${$this->helper->getDatalayerName()} || [];";
 
             foreach ($data as $event) {
                 $jsonData = $this->jsonHelper->jsonEncode($event);
-                $script = $script . "window.${dln}.push({$jsonData});\n";
+                $script = $script . "window.${$this->helper->getDatalayerName()}.push({$jsonData});\n";
             }
             $script = $script . "</script>";
         }

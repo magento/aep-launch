@@ -24,7 +24,6 @@ class DatalayerName extends \Magento\Framework\App\Config\Value
      */
     const JS_VARIABLE_REGEX = '/^[a-zA-Z_$][0-9a-zA-Z_$]*$/';
 
-
     /**
      * @inheritdoc
      *
@@ -35,7 +34,7 @@ class DatalayerName extends \Magento\Framework\App\Config\Value
     {
         $label = $this->getData('field_config/label');
 
-        if (!preg_match(self::JS_VARIABLE_REGEX, $this->getValue(), $matches)) {
+        if (!preg_match(self::JS_VARIABLE_REGEX, $this->getValue())) {
             throw new \Magento\Framework\Exception\ValidatorException(__(
                 $label .
                 ' must be a valid JavaScript identifier'

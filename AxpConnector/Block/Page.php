@@ -27,16 +27,16 @@ class Page extends Base
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Adobe\AxpConnector\Helper\Data $helper
+     * @param array $data
      * @param \Magento\Catalog\Helper\Data $catalogHelper
      * @param \Magento\Framework\View\Page\Title $pageTitle
-     * @param array $data
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Adobe\AxpConnector\Helper\Data $helper,
+        array $data,
         \Magento\Catalog\Helper\Data $catalogHelper,
-        \Magento\Framework\View\Page\Title $pageTitle,
-        array $data
+        \Magento\Framework\View\Page\Title $pageTitle
     ) {
         parent::__construct($context, $helper, $data);
         $this->pageTitle = $pageTitle;

@@ -22,14 +22,14 @@ class Search extends Base
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Adobe\AxpConnector\Helper\Data $helper
-     * @param \Magento\CatalogSearch\Helper\Data $catalogSearchHelper
      * @param array $data
+     * @param \Magento\CatalogSearch\Helper\Data $catalogSearchHelper
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Adobe\AxpConnector\Helper\Data $helper,
-        \Magento\CatalogSearch\Helper\Data $catalogSearchHelper,
-        array $data
+        array $data,
+        \Magento\CatalogSearch\Helper\Data $catalogSearchHelper
     ) {
         parent::__construct($context, $helper, $data);
         $this->helper = $helper;
