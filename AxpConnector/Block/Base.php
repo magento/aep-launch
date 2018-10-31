@@ -35,6 +35,16 @@ class Base extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * AxpConnector Helper
+     *
+     * @return \Adobe\AxpConnector\Helper\Data
+     */
+    public function helper()
+    {
+        return $this->helper;
+    }
+
+    /**
      * Datalayer name
      *
      * @return string

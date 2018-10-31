@@ -6,11 +6,13 @@
 
 $dln = $block->datalayerName();
 ?>
-<script type="text/javascript" id="axpconnector-datalayer-search-results">
-    window.<?= /* @escapeNotVerified */ $dln ?> = window.<?= /* @escapeNotVerified */ $dln ?> || [];
+<?php if ($block->helper()->isEnabled()) : ?>
+    <script type="text/javascript" id="axpconnector-datalayer-search-results">
+        window.<?= /* @escapeNotVerified */ $dln ?> = window.<?= /* @escapeNotVerified */ $dln ?> || [];
 
-    <?php $datalayerJson = $block->datalayerJson(); ?>
-    <?php if ($datalayerJson) : ?>
-        window.<?= /* @escapeNotVerified */ $dln ?>.push(<?= /* @escapeNotVerified */ $datalayerJson ?>);
-    <?php endif; ?>
-</script>
+        <?php $datalayerJson = $block->datalayerJson(); ?>
+        <?php if ($datalayerJson) : ?>
+            window.<?= /* @escapeNotVerified */ $dln ?>.push(<?= /* @escapeNotVerified */ $datalayerJson ?>);
+        <?php endif; ?>
+    </script>
+<?php endif; ?>

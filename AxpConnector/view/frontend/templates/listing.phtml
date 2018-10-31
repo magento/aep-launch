@@ -6,10 +6,12 @@
 
 $dln = $block->datalayerName();
 ?>
-<script type="text/javascript" id="axpconnector-datalayer-category-viewed">
-    window.<?= /* @escapeNotVerified */ $dln ?> = window.<?= /* @escapeNotVerified */ $dln ?> || [];
-    <?php $datalayerJson = $block->datalayerJson(); ?>
-    <?php if ($datalayerJson) : ?>
-        window.<?= /* @escapeNotVerified */ $dln ?>.push(<?= /* @escapeNotVerified */ $block->datalayerJson() ?>);
-    <?php endif; ?>
-</script>
+<?php if ($block->helper()->isEnabled()) : ?>
+    <script type="text/javascript" id="axpconnector-datalayer-category-viewed">
+        window.<?= /* @escapeNotVerified */ $dln ?> = window.<?= /* @escapeNotVerified */ $dln ?> || [];
+        <?php $datalayerJson = $block->datalayerJson(); ?>
+        <?php if ($datalayerJson) : ?>
+            window.<?= /* @escapeNotVerified */ $dln ?>.push(<?= /* @escapeNotVerified */ $block->datalayerJson() ?>);
+        <?php endif; ?>
+    </script>
+<?php endif; ?>
