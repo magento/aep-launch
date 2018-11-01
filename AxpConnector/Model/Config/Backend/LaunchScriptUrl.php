@@ -55,9 +55,9 @@ class LaunchScriptUrl extends \Magento\Framework\App\Config\Value
 
         if (!filter_var($testVal, FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED | FILTER_FLAG_PATH_REQUIRED)) {
             throw new \Magento\Framework\Exception\ValidatorException(__(
-                $label .
-                ' must either be a &lt;script&gt; tag for the Launch JavaScript snippet, ' .
-                'or the URL to the snippet.'
+                '%1 must either be a &lt;script&gt; tag for the Launch JavaScript snippet, ' .
+                'or the URL to the snippet.',
+                $label
             ));
         }
 
