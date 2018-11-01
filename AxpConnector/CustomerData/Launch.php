@@ -15,6 +15,11 @@ use Magento\Customer\CustomerData\SectionSourceInterface;
 class Launch extends \Magento\Framework\DataObject implements SectionSourceInterface
 {
     /**
+     * @var \Adobe\AxpConnector\Helper\Data
+     */
+    protected $helper;
+
+    /**
      * @var \Magento\Framework\Json\Helper\Data
      */
     protected $jsonHelper;
@@ -30,29 +35,24 @@ class Launch extends \Magento\Framework\DataObject implements SectionSourceInter
     protected $customerSession;
 
     /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    protected $logger;
-
-    /**
+     * @param \Adobe\AxpConnector\Helper\Data $helper
      * @param \Magento\Framework\Json\Helper\Data $jsonHelper
      * @param \Magento\Checkout\Model\Session $_checkoutSession
      * @param \Magento\Customer\Model\Session $customerSession
-     * @param \Psr\Log\LoggerInterface $logger
      * @param array $data
      */
     public function __construct(
+        \Adobe\AxpConnector\Helper\Data $helper,
         \Magento\Framework\Json\Helper\Data $jsonHelper,
         \Magento\Checkout\Model\Session $_checkoutSession,
         \Magento\Customer\Model\Session $customerSession,
-        \Psr\Log\LoggerInterface $logger,
         array $data = []
     ) {
         parent::__construct($data);
+        $this->helper = $helper;
         $this->jsonHelper = $jsonHelper;
         $this->_checkoutSession = $_checkoutSession;
         $this->customerSession = $customerSession;
-        $this->logger = $logger;
     }
 
     /**
@@ -82,11 +82,12 @@ class Launch extends \Magento\Framework\DataObject implements SectionSourceInter
             $jsonData = $this->jsonHelper->jsonEncode($data);
 
             // So awful...
-            $script = "<script type=\"text/javascript\">\nwindow.AppEventData =  window.AppEventData || [];\n";
+            $script = "<script type=\"text/javascript\">"
+                . "window.${$this->helper->getDatalayerName()} = window.${$this->helper->getDatalayerName()} || [];";
+
             foreach ($data as $event) {
                 $jsonData = $this->jsonHelper->jsonEncode($event);
-                $this->logger->addInfo($jsonData);
-                $script = $script . "window.AppEventData.push({$jsonData});\n";
+                $script = $script . "window.${$this->helper->getDatalayerName()}.push({$jsonData});\n";
             }
             $script = $script . "</script>";
         }

@@ -12,23 +12,27 @@ namespace Adobe\AxpConnector\Block;
  *
  * @api
  */
-class Cart extends \Magento\Framework\View\Element\Template
+class Cart extends Base
 {
+    /**
+     * @var \Magento\Checkout\Model\Cart $cartModel
+     */
+    protected $cartModel;
+
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Adobe\AxpConnector\Helper\Data $helper
-     * @param \Magento\Checkout\Model\Cart $cartModel
      * @param array $data
+     * @param \Magento\Checkout\Model\Cart $cartModel
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Adobe\AxpConnector\Helper\Data $helper,
-        \Magento\Checkout\Model\Cart $cartModel,
-        array $data
+        array $data,
+        \Magento\Checkout\Model\Cart $cartModel
     ) {
-        parent::__construct($context, $data);
+        parent::__construct($context, $helper, $data);
         $this->cartModel = $cartModel;
-        $this->helper = $helper;
     }
 
     /**

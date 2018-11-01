@@ -12,14 +12,8 @@ namespace Adobe\AxpConnector\Block;
  *
  * @api
  */
-class Search extends \Magento\Framework\View\Element\Template
+class Search extends Base
 {
-
-    /**
-     * @var \Adobe\AxpConnector\Helper\Data
-     */
-    protected $helper;
-
     /**
      * @var \Magento\CatalogSearch\Helper\Data
      */
@@ -28,16 +22,16 @@ class Search extends \Magento\Framework\View\Element\Template
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Adobe\AxpConnector\Helper\Data $helper
-     * @param \Magento\CatalogSearch\Helper\Data $catalogSearchHelper
      * @param array $data
+     * @param \Magento\CatalogSearch\Helper\Data $catalogSearchHelper
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Adobe\AxpConnector\Helper\Data $helper,
-        \Magento\CatalogSearch\Helper\Data $catalogSearchHelper,
-        array $data
+        array $data,
+        \Magento\CatalogSearch\Helper\Data $catalogSearchHelper
     ) {
-        parent::__construct($context, $data);
+        parent::__construct($context, $helper, $data);
         $this->helper = $helper;
         $this->catalogSearchHelper = $catalogSearchHelper;
     }

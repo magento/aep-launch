@@ -3,8 +3,10 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+$dln = $block->datalayerName();
 ?>
 <script type="text/javascript" id="axpconnector-datalayer-product-viewed">
-    window.AppEventData = window.AppEventData || [];
-    window.AppEventData.push(<?= /* @escapeNotVerified */ $block->datalayerProductJson() ?>);
+    window.<?= /* @escapeNotVerified */ $dln ?> = window.<?= /* @escapeNotVerified */ $dln ?> || [];
+    window.<?= /* @escapeNotVerified */ $dln ?>.push(<?= /* @escapeNotVerified */ $block->datalayerProductJson() ?>);
 </script>

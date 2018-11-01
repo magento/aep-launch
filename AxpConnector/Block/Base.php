@@ -8,26 +8,40 @@ declare(strict_types=1);
 namespace Adobe\AxpConnector\Block;
 
 /**
- * Checkout block.
+ * Base Block.
  *
  * @api
  */
-class Checkout extends Base
+class Base extends \Magento\Framework\View\Element\Template
 {
+
+    /**
+     * @var \Adobe\AxpConnector\Helper\Data
+     */
+    protected $helper;
+
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Adobe\AxpConnector\Helper\Data $helper
      * @param array $data
-     * @param \Magento\Checkout\Model\Cart $cartModel
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Adobe\AxpConnector\Helper\Data $helper,
-        array $data,
-        \Magento\Checkout\Model\Cart $cartModel
+        array $data
     ) {
-        parent::__construct($context, $helper, $data);
-        $this->cartModel = $cartModel;
+        parent::__construct($context, $data);
+        $this->helper = $helper;
+    }
+
+    /**
+     * Datalayer name
+     *
+     * @return string
+     */
+    public function datalayerName()
+    {
+        return $this->helper->getDatalayerName();
     }
 
     /**
@@ -37,7 +51,7 @@ class Checkout extends Base
      */
     public function datalayer()
     {
-        return $this->helper->checkoutStartedPushData($this->cartModel);
+        return $this->helper->cartViewedPushData($this->cartModel);
     }
 
     /**

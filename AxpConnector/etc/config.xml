@@ -9,5 +9,10 @@
                 </launch_script_url>
             </general>
         </axpconnector_backend_config>
+        <axpconnector_backend_config_advanced>
+            <advanced>
+                <datalayer_name>AppEventData</datalayer_name>
+            </advanced>
+        </axpconnector_backend_config_advanced>
     </default>
 </config>

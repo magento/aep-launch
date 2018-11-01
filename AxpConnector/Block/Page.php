@@ -12,13 +12,8 @@ namespace Adobe\AxpConnector\Block;
  *
  * @api
  */
-class Page extends \Magento\Framework\View\Element\Template
+class Page extends Base
 {
-    /**
-     * @var \Adobe\AxpConnector\Helper\Data
-     */
-    protected $helper;
-
     /**
      * @var \Magento\Framework\View\Page\Title
      */
@@ -32,19 +27,18 @@ class Page extends \Magento\Framework\View\Element\Template
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Adobe\AxpConnector\Helper\Data $helper
+     * @param array $data
      * @param \Magento\Catalog\Helper\Data $catalogHelper
      * @param \Magento\Framework\View\Page\Title $pageTitle
-     * @param array $data
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Adobe\AxpConnector\Helper\Data $helper,
+        array $data,
         \Magento\Catalog\Helper\Data $catalogHelper,
-        \Magento\Framework\View\Page\Title $pageTitle,
-        array $data
+        \Magento\Framework\View\Page\Title $pageTitle
     ) {
-        parent::__construct($context, $data);
-        $this->helper = $helper;
+        parent::__construct($context, $helper, $data);
         $this->pageTitle = $pageTitle;
         $this->catalogHelper = $catalogHelper;
     }
