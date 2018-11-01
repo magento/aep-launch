@@ -165,7 +165,7 @@ class Data extends AbstractHelper
         $item['quantity'] = strval($qty);
         $item['productInfo'] = [];
         $item['productInfo']['sku'] = $product->getSku();
-        $item['productInfo']['productId'] = $product->getData('sku');
+        $item['productInfo']['productID'] = $product->getData('sku');
 
         array_push($result['product'], $item);
 
