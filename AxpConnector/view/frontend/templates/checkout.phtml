@@ -6,7 +6,9 @@
 
 $dln = $block->datalayerName();
 ?>
-<script type="text/javascript" id="axpconnector-datalayer-checkout-started">
-    window.<?= /* @escapeNotVerified */ $dln ?> = window.<?= /* @escapeNotVerified */ $dln ?> || [];
-    window.<?= /* @escapeNotVerified */ $dln ?>.push(<?= /* @escapeNotVerified */ $block->datalayerJson() ?>);
-</script>
+<?php if ($block->helper()->isEnabled()) : ?>
+    <script type="text/javascript" id="axpconnector-datalayer-checkout-started">
+        window.<?= /* @escapeNotVerified */ $dln ?> = window.<?= /* @escapeNotVerified */ $dln ?> || [];
+        window.<?= /* @escapeNotVerified */ $dln ?>.push(<?= /* @escapeNotVerified */ $block->datalayerJson() ?>);
+    </script>
+<?php endif; ?>

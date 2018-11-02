@@ -14,6 +14,8 @@ use Magento\Quote\Api\Data\CartInterface;
 
 /**
  * Class Data.
+ *
+ * @api
  */
 class Data extends AbstractHelper
 {
