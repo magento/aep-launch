@@ -33,5 +33,4 @@ class ProvisionNotes extends Field
     {
         return $this->_toHtml();
     }
-
 }

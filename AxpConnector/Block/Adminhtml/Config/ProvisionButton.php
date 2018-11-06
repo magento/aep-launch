@@ -92,12 +92,11 @@ class ProvisionButton extends Field
     {
         $disabled = $this->isConfigSaved() ? '' : 'disabled';
         $button = $this->getLayout()->createBlock(
-            'Magento\Backend\Block\Widget\Button'
+            '\Magento\Backend\Block\Widget\Button'
         )->setData([
             'id' => 'provision_button',
             'label' => __('Create Launch Property')
         ])->setDisabled($disabled);
         return $button->toHtml();
     }
-
 }

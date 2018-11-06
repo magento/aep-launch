@@ -29,29 +29,35 @@
         jQuery('#provision_button').click(function () {
             jQuery('#provision_button').attr("disabled", true);
             let params = {};
-            new Ajax.Request('<?php echo $block->getAjaxUrl() ?>', {
-                parameters:     params,
-                loaderArea:     false,
-                asynchronous:   true,
-                onCreate: function() {
-                    provisionSpan.find('.processing').show();
-                    provisionMessage.hide();
-                },
-                onInteractive: function(resp) {
-                    console.log(resp.responseText);
-                    update(resp.responseText);
-                },
-                onSuccess: function(response) {
-                    jQuery('#provision_button').attr("disabled", false);
-                    provisionSpan.find('.processing').hide();
-                    let data = JSON.parse(response.responseText);
-                    if (data && data.error !== null) {
-                        message('error', 'An error occurred during provisioning. '+data.error);
-                    } else {
-                        message('success', 'Provisioning has successfully completed.');
+            let uri = encodeURI('<?= $block->getAjaxUrl() ?>');
+            if(uri && uri !== '') {
+                new Ajax.Request(uri, {
+                    parameters:     params,
+                    loaderArea:     false,
+                    asynchronous:   true,
+                    onCreate: function() {
+                        provisionSpan.find('.processing').show();
+                        provisionMessage.hide();
+                    },
+                    onInteractive: function(resp) {
+                        console.log(resp.responseText);
+                        update(resp.responseText);
+                    },
+                    onSuccess: function(response) {
+                        jQuery('#provision_button').attr("disabled", false);
+                        provisionSpan.find('.processing').hide();
+                        let data = JSON.parse(response.responseText);
+                        if (data && data.error !== null) {
+                            message('error', 'An error occurred during provisioning. '+data.error);
+                        } else {
+                            message('success', 'Provisioning has successfully completed.');
+                        }
                     }
-                }
-            });
+                });
+            } else {
+                provisionSpan.find('.processing').hide();
+                message('error', 'An error occurred during provisioning.');
+            }
 
         });
         function message(type, msg) {
@@ -76,7 +82,7 @@
     });
 </script>
 
-<?php echo $block->getButtonHtml() ?>
+<?= $block->getButtonHtml() ?>
 <span class="provision-indicator" id="provision_span">
     <span class="processing" hidden="hidden" >Processing...</span>
 </span>

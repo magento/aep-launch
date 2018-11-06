@@ -446,7 +446,6 @@ class ProvisionHelper extends AbstractHelper
         } else {
             return [];
         }
-
     }
 
     /**
@@ -682,7 +681,8 @@ class ProvisionHelper extends AbstractHelper
             try {
                 $idKey = $componentCall['body']['data']['relationships']['extension']['data']['name'];
                 $componentCall['body']['data']['relationships']['extension']['data']['id'] = $config[$idKey];
-                $request['url'] = 'https://'.self::ADOBE_IO_LAUNCH_HOSTNAME.$this->replaceValues($componentCall['endpoint'], $config);
+                $request['url'] = 'https://'.self::ADOBE_IO_LAUNCH_HOSTNAME
+                    .$this->replaceValues($componentCall['endpoint'], $config);
                 $request['method'] = 'POST';
                 $request['header'] = $ruleRequest['header'];
                 $request['code'] = 201;
@@ -803,5 +803,4 @@ class ProvisionHelper extends AbstractHelper
         }
         return $str;
     }
-
 }
