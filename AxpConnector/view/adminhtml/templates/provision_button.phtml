@@ -1,0 +1,83 @@
+<style>
+    #provision_message {
+        display: none;
+        padding: 15px;
+        margin: 5px 0 5px;
+        border: 1px solid transparent;
+    }
+    .success {
+        color: #3c763d;
+        background-color: #dff0d8;
+        border-color: #d6e9c6;
+    }
+    .error {
+        color: #a94442;
+        background-color: #f2dede;
+        border-color: #ebccd1;
+    }
+</style>
+<script>
+    require([
+        'jquery',
+        'prototype'
+    ], function(jQuery, prototype){
+
+        let provisionSpan = jQuery('#provision_span');
+        let provisionMessage = jQuery('#provision_message');
+        let ignore = null;
+
+        jQuery('#provision_button').click(function () {
+            jQuery('#provision_button').attr("disabled", true);
+            let params = {};
+            new Ajax.Request('<?php echo $block->getAjaxUrl() ?>', {
+                parameters:     params,
+                loaderArea:     false,
+                asynchronous:   true,
+                onCreate: function() {
+                    provisionSpan.find('.processing').show();
+                    provisionMessage.hide();
+                },
+                onInteractive: function(resp) {
+                    console.log(resp.responseText);
+                    update(resp.responseText);
+                },
+                onSuccess: function(response) {
+                    jQuery('#provision_button').attr("disabled", false);
+                    provisionSpan.find('.processing').hide();
+                    let data = JSON.parse(response.responseText);
+                    if (data && data.error !== null) {
+                        message('error', 'An error occurred during provisioning. '+data.error);
+                    } else {
+                        message('success', 'Provisioning has successfully completed.');
+                    }
+                }
+            });
+
+        });
+        function message(type, msg) {
+            let provisionMessage = jQuery('#provision_message');
+            if(type === 'error') {
+                provisionMessage.addClass('error');
+                provisionMessage.removeClass('success');
+            } else {
+                provisionMessage.addClass('success');
+                provisionMessage.removeClass('error');
+            }
+            provisionMessage.text(msg);
+            provisionMessage.show();
+        }
+
+        function update(msg) {
+            let provisionMessage = jQuery('.processing');
+            provisionMessage.text(msg);
+        }
+
+
+    });
+</script>
+
+<?php echo $block->getButtonHtml() ?>
+<span class="provision-indicator" id="provision_span">
+    <span class="processing" hidden="hidden" >Processing...</span>
+</span>
+<div id="provision_message" hidden="hidden"></div>
