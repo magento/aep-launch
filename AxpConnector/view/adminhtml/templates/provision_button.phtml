@@ -1,9 +1,18 @@
 <style>
-    #provision_message {
+    #provision_result {
         display: none;
         padding: 15px;
         margin: 5px 0 5px;
         border: 1px solid transparent;
+        max-width: 400px;
+        width: 100%;
+    }
+    #provision_status {
+        display: none;
+        padding: 5px;
+        font-size: 12px;
+        max-width: 400px;
+        width: 100%;
     }
     .success {
         color: #3c763d;
@@ -22,46 +31,58 @@
         'prototype'
     ], function(jQuery, prototype){
 
-        let provisionSpan = jQuery('#provision_span');
-        let provisionMessage = jQuery('#provision_message');
+        let provisionStatus = jQuery('#provision_status');
+        let provisionResult = jQuery('#provision_result');
         let ignore = null;
 
         jQuery('#provision_button').click(function () {
             jQuery('#provision_button').attr("disabled", true);
             let params = {};
-            let uri = encodeURI('<?= $block->getAjaxUrl() ?>');
+            let uri = '<?= $block->escapeUrl($block->getAjaxUrl()) ?>';
             if(uri && uri !== '') {
                 new Ajax.Request(uri, {
                     parameters:     params,
                     loaderArea:     false,
                     asynchronous:   true,
                     onCreate: function() {
-                        provisionSpan.find('.processing').show();
-                        provisionMessage.hide();
+                        provisionStatus.show();
+                        provisionResult.hide();
                     },
-                    onInteractive: function(resp) {
-                        console.log(resp.responseText);
-                        update(resp.responseText);
+                    onInteractive: function(response) {
+                        if(response.responseText && response.responseText.indexOf('|') > 0) {
+                            let currentRespArr = response.responseText.split('|');
+                            let currentResp = currentRespArr[currentRespArr.length - 2];
+                            update(currentResp);
+                            console.log(response.responseText);
+                        }
                     },
                     onSuccess: function(response) {
                         jQuery('#provision_button').attr("disabled", false);
-                        provisionSpan.find('.processing').hide();
-                        let data = JSON.parse(response.responseText);
-                        if (data && data.error !== null) {
-                            message('error', 'An error occurred during provisioning. '+data.error);
+                        if(response.responseText && response.responseText.indexOf('|') > 0) {
+                            let currentRespArr = response.responseText.split('|');
+                            let currentResp = currentRespArr[currentRespArr.length-1];
+                            let data = JSON.parse(currentResp);
+                            if (data && data.error !== null) {
+                                message('error', 'An error occurred during provisioning. '+data.error);
+                            } else {
+                                provisionStatus.hide();
+                                message('success', 'Provisioning has successfully completed. You can retrieve the embed' +
+                                    ' code from your environment <a href="'+data.link+'" target="_blank">here</a>. Click' +
+                                    ' the install link next to the environment that you choose.');
+                            }
                         } else {
-                            message('success', 'Provisioning has successfully completed.');
+                            message('error', 'An error occurred during provisioning.');
                         }
                     }
                 });
             } else {
-                provisionSpan.find('.processing').hide();
+                provisionStatus.hide();
                 message('error', 'An error occurred during provisioning.');
             }
 
         });
         function message(type, msg) {
-            let provisionMessage = jQuery('#provision_message');
+            let provisionMessage = jQuery('#provision_result');
             if(type === 'error') {
                 provisionMessage.addClass('error');
                 provisionMessage.removeClass('success');
@@ -69,12 +90,12 @@
                 provisionMessage.addClass('success');
                 provisionMessage.removeClass('error');
             }
-            provisionMessage.text(msg);
+            provisionMessage.html(msg);
             provisionMessage.show();
         }
 
         function update(msg) {
-            let provisionMessage = jQuery('.processing');
+            let provisionMessage = jQuery('#provision_status');
             provisionMessage.text(msg);
         }
 
@@ -83,7 +104,6 @@
 </script>
 
 <?= $block->getButtonHtml() ?>
-<span class="provision-indicator" id="provision_span">
-    <span class="processing" hidden="hidden" >Processing...</span>
-</span>
-<div id="provision_message" hidden="hidden"></div>
+
+<div id="provision_status" hidden="hidden">Processing...</div>
+<div id="provision_result" hidden="hidden"></div>

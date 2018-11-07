@@ -33,7 +33,12 @@ class ProvisionHelper extends AbstractHelper
     /**
      * @var string
      */
-    const ADOBE_IO_LAUNCH_HOSTNAME = 'mc-api-activation-reactor-integration.adobe.io';
+    const ADOBE_IO_LAUNCH_HOSTNAME = 'mc-api-activation-reactor.adobe.io';
+
+    /**
+     * @var string
+     */
+    const ADOBE_LAUNCH_HOSTNAME = 'launch.adobe.com';
 
     /**
      * @var string
@@ -126,32 +131,53 @@ class ProvisionHelper extends AbstractHelper
             'AA_RS_STAGE' => $aa_stage,
             'AA_RS_DEV' => $aa_dev,
             'EXTENSION_IDS' => [],
-            'LAUNCH_PROPERTY_NAME' => $propertyName.' '.date("Y-m-d H:i:s")
+            'LAUNCH_PROPERTY_NAME' => $propertyName.' '.date("Y-m-d H:i:s"),
+            'LAUNCH_COMPANY_ID' => ''
         ];
 
-        $response = [];
         foreach ($conf['item'] as $request) {
             if ($result['complete'] === true) {
                 break;
             }
+            // Send notification to the front end
+            print $request['request']['description'].'|';
+            flush();
+            ob_flush();
             $requestName = $request['name'];
             $this->logger->debug('DebugMakeRequests', ['requestName' => $requestName,
                 'method_exists' => method_exists($this, $requestName)]);
-            if (method_exists($this, $requestName)) {
-                $normRequest = $this->normalizeRequest($request['request'], $config);
-                if (array_key_exists('error', $normRequest)) {
-                    $response = ['error' => $normRequest['error'].' in '.$requestName];
-                } else {
-                    $response = $this->$requestName($normRequest, $config);
-                }
-                if (array_key_exists('error', $response)) {
-                    $result = ['error' => $response['error'], 'success' => false, 'complete' => true,
-                        'method' => $requestName, 'request' => $normRequest];
-                }
-            }
+            $result = $this->executeRequestMethod($requestName, $request['request'], $result, $config);
         }
         if (!$result['complete']) {
-            $result = ['error' => null, 'success' => true, 'complete' => true, 'data' => $response];
+            $link = 'https://'.self::ADOBE_LAUNCH_HOSTNAME.'/companies/'.$config['LAUNCH_COMPANY_ID'].'/properties/'.
+                $config['LAUNCH_PROPERTY_ID'].'/environments';
+            $result = ['error' => null, 'success' => true, 'complete' => true, 'link' => $link];
+        }
+        return $result;
+    }
+
+    /**
+     * Execute the request
+     *
+     * @param string $requestName
+     * @param array $request
+     * @param array $result
+     * @param array $config
+     * @return array
+     */
+    private function executeRequestMethod($requestName, $request, $result, &$config)
+    {
+        if (method_exists($this, $requestName)) {
+            $normRequest = $this->normalizeRequest($request, $config);
+            if (array_key_exists('error', $normRequest)) {
+                $response = ['error' => $normRequest['error'].' in '.$requestName];
+            } else {
+                $response = $this->$requestName($normRequest, $config);
+            }
+            if (array_key_exists('error', $response)) {
+                $result = ['error' => $response['error'], 'success' => false, 'complete' => true,
+                    'method' => $requestName, 'request' => $normRequest];
+            }
         }
         return $result;
     }
@@ -170,6 +196,16 @@ class ProvisionHelper extends AbstractHelper
         $response = $this->makeStandardRequest($request);
         if ($response && array_key_exists('access_token', $response)) {
             $config['ADOBE_IO_ACCESS_TOKEN'] = $response['access_token'];
+        }
+
+        if ($response && array_key_exists('error', $response)) {
+            if (strpos($response['error'], 'client_secret') !== false) {
+                $response = ['error' => 'The Client Secret is invalid.'];
+            } elseif (strpos($response['error'], 'client_id') !== false) {
+                $response = ['error' => 'The Client ID is invalid.'];
+            } elseif (strpos($response['error'], 'JWT') !== false) {
+                $response = ['error' => 'The JWT is invalid.'];
+            }
         }
 
         return $response;
@@ -207,6 +243,9 @@ class ProvisionHelper extends AbstractHelper
     private function createProperty($request, &$config)
     {
         $request['code'] = 201;
+        if ($config['LAUNCH_COMPANY_ID'] === '') {
+            return ['error' => 'The company ID was not found. Please check the Adobe Org ID.'];
+        }
         $response = $this->makeStandardRequest($request);
         if ($response && array_key_exists('data', $response)) {
             $config['LAUNCH_PROPERTY_ID'] = $response['data']['id'];

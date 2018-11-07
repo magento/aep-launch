@@ -50,15 +50,7 @@ class ProvisionClient
             $this->logger->debug('DebugProvisionRequestStart', ['request' => ['uri' => $uri, 'body' => $body,
                 'headers' => $headers, 'method' => $method]]);
             $this->zendClient->resetParameters();
-            if ($body !== null) {
-                if ($enctype === 'multipart/form-data') {
-                    foreach ($body as $key => $val) {
-                        $this->zendClient->setParameterPost($key, $val);
-                    }
-                } elseif ($enctype === 'application/vnd.api+json') {
-                    $this->zendClient->setRawData($body, $enctype);
-                }
-            }
+            $this->makeBody($body, $enctype);
             $this->zendClient->setUri($uri);
             $this->zendClient->setHeaders($headers);
             $this->zendClient->setMethod($method);
@@ -74,18 +66,46 @@ class ProvisionClient
             // send the request
             $response = $this->zendClient->request();
             $this->logger->debug('DebugProvisionRequestEnd', ['response' => $response]);
-            if ($response->getStatus() !== $code) {
-                return ['error' => 'The request failed with code: '.$response->getStatus()];
-            }
             $body = $response->getBody();
-            if ($body !== '') {
-                return $this->helper->jsonDecode($body);
-            } else {
-                return [];
+            try {
+                $respObj = $this->helper->jsonDecode($body);
+            } catch (\Exception $e) {
+                $respObj = [];
             }
+            if ($response->getStatus() !== $code) {
+                $message = '';
+                if (array_key_exists('error', $respObj)) {
+                    $message = $respObj['error'];
+                }
+                if (array_key_exists('error_description', $respObj)) {
+                    $message = $respObj['error_description'];
+                }
+                return ['error' => 'The request failed with code: '.$response->getStatus().' '.$message];
+            }
+            return $respObj;
         } catch (\Exception $runtimeException) {
             $this->logger->critical($runtimeException);
             return ['error' => $runtimeException->getMessage()];
+        }
+    }
+
+    /**
+     * Make request to Launch API.
+     *
+     * @param array $body
+     * @param string $enctype
+     * @return array
+     */
+    private function makeBody($body, $enctype)
+    {
+        if ($body !== null) {
+            if ($enctype === 'multipart/form-data') {
+                foreach ($body as $key => $val) {
+                    $this->zendClient->setParameterPost($key, $val);
+                }
+            } elseif ($enctype === 'application/vnd.api+json') {
+                $this->zendClient->setRawData($body, $enctype);
+            }
         }
     }
 }
