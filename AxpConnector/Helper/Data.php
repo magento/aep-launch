@@ -326,13 +326,13 @@ class Data extends AbstractHelper
                     'transactionID' => $order->getIncrementId(),
                     'total' => [
                         'currency' => $order->getOrderCurrencyCode()
-                    ]
-                ],
-                'shippingGroup' => [],
-                'profile' => [
-                    'address' => []
-                ],
-                'item' => []
+                    ],
+                    'shippingGroup' => [],
+                    'profile' => [
+                        'address' => []
+                    ],
+                    'item' => []
+                ]
             ];
 
             // TODO - Multi-shipping
@@ -341,11 +341,11 @@ class Data extends AbstractHelper
                 'shippingCost' => $order->getShippingAmount(),
                 'groupId' => '1'
             ];
-            $orderObject['shippingGroup'][] = $shippingGroup;
+            $orderObject['transaction']['shippingGroup'][] = $shippingGroup;
 
             $billingAddress = $order->getBillingAddress();
-            $orderObject['profile']['address']['stateProvince'] = $billingAddress->getRegionCode();
-            $orderObject['profile']['address']['postalCode'] = $billingAddress->getPostcode();
+            $orderObject['transaction']['profile']['address']['stateProvince'] = $billingAddress->getRegionCode();
+            $orderObject['transaction']['profile']['address']['postalCode'] = $billingAddress->getPostcode();
 
             foreach ($order->getAllVisibleItems() as $item) {
                 $itemData = [
@@ -360,7 +360,7 @@ class Data extends AbstractHelper
                     ]
                 ];
 
-                $orderObject['item'][] = $itemData;
+                $orderObject['transaction']['item'][] = $itemData;
             }
 
             $result[] = $orderObject;
