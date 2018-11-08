@@ -7,7 +7,7 @@
         </tab>
         <section id="axpconnector_backend_config" translate="label" type="text" sortOrder="0" showInDefault="1"
                  showInWebsite="1" showInStore="1">
-            <label>Configuration</label>
+            <label>Data Layer Configuration</label>
             <tab>axpconnector</tab>
             <resource>Adobe_AxpConnector::axpconnector_config</resource>
             <class>separator-top</class>
@@ -28,7 +28,7 @@
         </section>
         <section id="axpconnector_launch_property_config" translate="label" type="text" sortOrder="1" showInDefault="1"
                  showInWebsite="1" showInStore="1">
-            <label>Launch Property</label>
+            <label>Create Launch Property</label>
             <tab>axpconnector</tab>
             <resource>Adobe_AxpConnector::axpconnector_config</resource>
             <class>separator-top</class>
@@ -82,7 +82,7 @@
                 <field id="start_provision" translate="label" type="button" sortOrder="200" showInDefault="1"
                        showInWebsite="0" showInStore="0">
                     <frontend_model>Adobe\AxpConnector\Block\Adminhtml\Config\ProvisionButton</frontend_model>
-                    <comment>Submit to create a new Launch property. Be sure to save the configuration first.</comment>
+                    <comment>Be sure to save the configuration first if any changes have been made, then click to create a new Launch property.</comment>
                 </field>
                 <field id="req_fields" translate="label" type="note" sortOrder="200" showInDefault="1" showInWebsite="0"
                        showInStore="0">
@@ -92,11 +92,12 @@
         </section>
         <section id="axpconnector_backend_config_advanced" translate="label" type="text" sortOrder="2" showInDefault="1"
                  showInWebsite="1" showInStore="1">
-            <label>Advanced</label>
+            <label>Data Layer Advanced</label>
             <tab>axpconnector</tab>
             <resource>Adobe_AxpConnector::axpconnector_config</resource>
             <class>separator-top</class>
             <group id="advanced" translate="label" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Data Layer Advanced</label>
                 <field id="datalayer_name" translate="label" type="text" sortOrder="200" showInDefault="1"
                        showInWebsite="0" showInStore="0">
                     <label>Datalayer Name</label>
