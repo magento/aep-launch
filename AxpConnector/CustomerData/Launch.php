@@ -82,14 +82,14 @@ class Launch extends \Magento\Framework\DataObject implements SectionSourceInter
             $jsonData = $this->jsonHelper->jsonEncode($data);
 
             // So awful...
-            $script = "<script type=\"text/javascript\">"
-                . "window.${$this->helper->getDatalayerName()} = window.${$this->helper->getDatalayerName()} || [];";
+            $script = '<script type="text/javascript">'
+                . "window.{$this->helper->getDatalayerName()} = window.{$this->helper->getDatalayerName()} || [];";
 
             foreach ($data as $event) {
                 $jsonData = $this->jsonHelper->jsonEncode($event);
-                $script = $script . "window.${$this->helper->getDatalayerName()}.push({$jsonData});\n";
+                $script = $script . "window.{$this->helper->getDatalayerName()}.push(${jsonData});\n";
             }
-            $script = $script . "</script>";
+            $script = $script . '</script>';
         }
 
         return [
