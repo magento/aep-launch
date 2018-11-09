@@ -132,7 +132,8 @@ class ProvisionHelper extends AbstractHelper
             'AA_RS_DEV' => $aa_dev,
             'EXTENSION_IDS' => [],
             'LAUNCH_PROPERTY_NAME' => $propertyName.' '.date("Y-m-d H:i:s"),
-            'LAUNCH_COMPANY_ID' => ''
+            'LAUNCH_COMPANY_ID' => '',
+            'DATA_LAYER_OBJECT_NAME' => $this->helper->getDatalayerName()
         ];
 
         foreach ($conf['item'] as $request) {
