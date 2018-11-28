@@ -183,12 +183,18 @@ class ProvisionHelper extends AbstractHelper
         return $result;
     }
 
+    // =========== Private Methods referenced and called from the provision_config.json file ===========
+    // We suppress the UnusedPrivateMethod warning because they are used, but not in explicit function calls
+    // Instead, they are called via executeRequestMethod
+
     /**
      * Create the token
      *
      * @param array $request
      * @param array $config
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function createBearerToken($request, &$config)
     {
@@ -218,6 +224,8 @@ class ProvisionHelper extends AbstractHelper
      * @param array $request
      * @param array $config
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function getCompanyID($request, &$config)
     {
@@ -240,6 +248,8 @@ class ProvisionHelper extends AbstractHelper
      * @param array $request
      * @param array $config
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function createProperty($request, &$config)
     {
@@ -261,6 +271,8 @@ class ProvisionHelper extends AbstractHelper
      * @param array $request
      * @param array $config
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function createAdapter($request, &$config)
     {
@@ -279,6 +291,8 @@ class ProvisionHelper extends AbstractHelper
      * @param array $request
      * @param array $config
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function createDevEnvironment($request, &$config)
     {
@@ -297,6 +311,8 @@ class ProvisionHelper extends AbstractHelper
      * @param array $request
      * @param array $config
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function createStageEnvironment($request, &$config)
     {
@@ -315,6 +331,8 @@ class ProvisionHelper extends AbstractHelper
      * @param array $request
      * @param array $config
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function createProdEnvironment($request, &$config)
     {
@@ -333,6 +351,8 @@ class ProvisionHelper extends AbstractHelper
      * @param array $request
      * @param array $config
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function createLibrary($request, &$config)
     {
@@ -351,6 +371,8 @@ class ProvisionHelper extends AbstractHelper
      * @param array $request
      * @param array $config
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function setLibraryEnvironmentToDev($request)
     {
@@ -366,6 +388,8 @@ class ProvisionHelper extends AbstractHelper
      * @param array $request
      * @param array $config
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function getExtensionPackageIDs($request, &$config)
     {
@@ -390,6 +414,8 @@ class ProvisionHelper extends AbstractHelper
      * @param array $request
      * @param array $config
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function getCoreExtensionID($request, &$config)
     {
@@ -412,6 +438,8 @@ class ProvisionHelper extends AbstractHelper
      * @param array $request
      * @param array $config
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function createAAExtension($request, &$config)
     {
@@ -430,6 +458,8 @@ class ProvisionHelper extends AbstractHelper
      * @param array $request
      * @param array $config
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function createECIDExtension($request, &$config)
     {
@@ -448,6 +478,8 @@ class ProvisionHelper extends AbstractHelper
      * @param array $request
      * @param array $config
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function getTargetClientCode($request, &$config)
     {
@@ -472,6 +504,8 @@ class ProvisionHelper extends AbstractHelper
      * @param array $request
      * @param array $config
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function createTargetExtension($request, &$config)
     {
@@ -494,6 +528,8 @@ class ProvisionHelper extends AbstractHelper
      * @param array $request
      * @param array $config
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function createSDIToolkitExtension($request, &$config)
     {
@@ -512,6 +548,8 @@ class ProvisionHelper extends AbstractHelper
      * @param array $request
      * @param array $config
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function createSDIProductStringExtension($request, &$config)
     {
@@ -530,6 +568,8 @@ class ProvisionHelper extends AbstractHelper
      * @param array $request
      * @param array $config
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function createSDIDataLayerManagerExtension($request, &$config)
     {
@@ -548,6 +588,8 @@ class ProvisionHelper extends AbstractHelper
      * @param array $request
      * @param array $config
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function createDataElement($request, &$config)
     {
@@ -572,6 +614,8 @@ class ProvisionHelper extends AbstractHelper
      * @param array $request
      * @param array $config
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function createRule($request, $config)
     {
@@ -636,6 +680,8 @@ class ProvisionHelper extends AbstractHelper
      * @param array $request
      * @param array $config
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function getUnpublishedRules($request, &$config)
     {
@@ -652,6 +698,8 @@ class ProvisionHelper extends AbstractHelper
      * @param array $request
      * @param array $config
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function getUnpublishedDataElements($request, &$config)
     {
@@ -667,6 +715,8 @@ class ProvisionHelper extends AbstractHelper
      * @param array $request
      * @param array $config
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function getUnpublishedDataExtensions($request, &$config)
     {
@@ -682,6 +732,8 @@ class ProvisionHelper extends AbstractHelper
      * @param array $request
      * @param array $config
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function setUnpublishedResources($request)
     {
@@ -697,6 +749,8 @@ class ProvisionHelper extends AbstractHelper
      * @param array $request
      * @param array $config
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
     private function buildDevLibrary($request)
     {
