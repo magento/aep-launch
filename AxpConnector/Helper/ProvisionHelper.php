@@ -17,6 +17,8 @@ use \Psr\Log\LoggerInterface;
  * Class ProvisionHelper
  *
  * @package Adobe\AxpConnector\Helper
+ *
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class ProvisionHelper extends AbstractHelper
 {
