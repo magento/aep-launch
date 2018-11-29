@@ -11,6 +11,10 @@ use Magento\Framework\HTTP\ZendClient;
 use Adobe\AxpConnector\Helper\Data;
 use \Psr\Log\LoggerInterface;
 
+/**
+ * Class ProvisionClient
+ * @package Adobe\AxpConnector\Webservice\Client
+ */
 class ProvisionClient
 {
     /**

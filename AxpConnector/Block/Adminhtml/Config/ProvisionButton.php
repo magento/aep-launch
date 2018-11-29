@@ -12,6 +12,10 @@ use Magento\Config\Block\System\Config\Form\Field;
 use Magento\Framework\Data\Form\Element\AbstractElement;
 use Adobe\AxpConnector\Helper\Data;
 
+/**
+ * Class ProvisionButton
+ * @package Adobe\AxpConnector\Block\Adminhtml\Config
+ */
 class ProvisionButton extends Field
 {
     /**

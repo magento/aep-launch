@@ -10,6 +10,10 @@ namespace Adobe\AxpConnector\Block\Adminhtml\Config;
 use Magento\Config\Block\System\Config\Form\Field;
 use Magento\Framework\Data\Form\Element\AbstractElement;
 
+/**
+ * Class ProvisionNotes
+ * @package Adobe\AxpConnector\Block\Adminhtml\Config
+ */
 class ProvisionNotes extends Field
 {
     /**

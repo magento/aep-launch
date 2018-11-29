@@ -16,6 +16,10 @@ use Magento\Framework\Exception\FileSystemException;
 use Adobe\AxpConnector\Helper\ProvisionHelper;
 use Adobe\AxpConnector\Helper\Data;
 
+/**
+ * Class Provision
+ * @package Adobe\AxpConnector\Controller\Adminhtml\Config
+ */
 class Provision extends Action
 {
     /**

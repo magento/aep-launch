@@ -13,6 +13,10 @@ use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use \Psr\Log\LoggerInterface;
 
+/**
+ * Class ProvisionHelper
+ * @package Adobe\AxpConnector\Helper
+ */
 class ProvisionHelper extends AbstractHelper
 {
     /**
