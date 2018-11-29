@@ -32,6 +32,12 @@ class ProvisionClient
      */
     private $logger;
 
+    /**
+     * ProvisionClient constructor.
+     * @param ZendClient $zendClient
+     * @param Data $helper
+     * @param LoggerInterface $logger
+     */
     public function __construct(
         ZendClient $zendClient,
         Data $helper,

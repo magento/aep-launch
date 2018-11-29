@@ -87,6 +87,7 @@ class ProvisionHelper extends AbstractHelper
      * @param Context $context
      * @param ProvisionClient $provisionClient
      * @param Data $helper
+     * @param LoggerInterface $logger
      */
     public function __construct(
         Context $context,
@@ -378,7 +379,6 @@ class ProvisionHelper extends AbstractHelper
      * Set the environment
      *
      * @param array $request
-     * @param array $config
      * @return array
      *
      * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
@@ -739,7 +739,6 @@ class ProvisionHelper extends AbstractHelper
      * Set unpublished resources
      *
      * @param array $request
-     * @param array $config
      * @return array
      *
      * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
@@ -756,7 +755,6 @@ class ProvisionHelper extends AbstractHelper
      * Build the dev library
      *
      * @param array $request
-     * @param array $config
      * @return array
      *
      * @SuppressWarnings(PHPMD.UnusedPrivateMethod)

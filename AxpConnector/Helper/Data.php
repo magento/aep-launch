@@ -103,7 +103,8 @@ class Data extends AbstractHelper
         );
     }
 
-    /** Get Adobe Org ID from configuration.
+    /**
+     * Get Adobe Org ID from configuration.
      *
      * @param string $scope
      * @return mixed
