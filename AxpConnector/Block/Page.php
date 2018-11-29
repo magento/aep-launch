@@ -108,6 +108,8 @@ class Page extends Base
      * Get page type.
      *
      * @return mixed
+     *
+     * @SuppressWarnings(PHPMD.RequestAwareBlockMethod)
      */
     protected function pageType()
     {

@@ -31,6 +31,8 @@ class Listing extends Base
      * Product listing sort direction
      *
      * @return string
+     *
+     * @SuppressWarnings(PHPMD.RequestAwareBlockMethod)
      */
     public function getListDirection()
     {
@@ -46,6 +48,8 @@ class Listing extends Base
      * Product listing order
      *
      * @return string
+     *
+     * @SuppressWarnings(PHPMD.RequestAwareBlockMethod)
      */
     public function getListOrder()
     {
