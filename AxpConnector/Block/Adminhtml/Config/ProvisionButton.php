@@ -30,12 +30,14 @@ class ProvisionButton extends Field
 
     /**
      * Data constructor.
-     * @param Data $helper
+     *
      * @param Context $context
+     * @param Data $helper
+     *
      */
     public function __construct(
-        Data $helper,
-        Context $context
+        Context $context,
+        Data $helper
     ) {
         $this->helper = $helper;
         parent::__construct($context);
