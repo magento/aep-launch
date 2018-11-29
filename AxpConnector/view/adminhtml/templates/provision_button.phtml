@@ -1,0 +1,110 @@
+<style>
+    #provision_result {
+        display: none;
+        padding: 15px;
+        margin: 5px 0 5px;
+        border: 1px solid transparent;
+        max-width: 400px;
+        width: 100%;
+    }
+    #provision_status {
+        display: none;
+        padding: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        max-width: 400px;
+        width: 100%;
+    }
+    .success {
+        color: #3c763d;
+        background-color: #dff0d8;
+        border-color: #d6e9c6;
+    }
+    .error {
+        color: #a94442;
+        background-color: #f2dede;
+        border-color: #ebccd1;
+    }
+</style>
+<script>
+    require([
+        'jquery',
+        'prototype'
+    ], function(jQuery, prototype){
+
+        let provisionStatus = jQuery('#provision_status');
+        let provisionResult = jQuery('#provision_result');
+        let ignore = null;
+
+        jQuery('#provision_button').click(function () {
+            jQuery('#provision_button').attr("disabled", true);
+            let params = {};
+            let uri = '<?= $block->escapeUrl($block->getAjaxUrl()) ?>';
+            if(uri && uri !== '') {
+                new Ajax.Request(uri, {
+                    parameters:     params,
+                    loaderArea:     false,
+                    asynchronous:   true,
+                    onCreate: function() {
+                        provisionStatus.show();
+                        provisionResult.hide();
+                    },
+                    onInteractive: function(response) {
+                        if(response.responseText && response.responseText.indexOf('|') > 0) {
+                            let currentRespArr = response.responseText.split('|');
+                            let currentResp = currentRespArr[currentRespArr.length - 2];
+                            update(currentResp);
+                            console.log(response.responseText);
+                        }
+                    },
+                    onSuccess: function(response) {
+                        jQuery('#provision_button').attr("disabled", false);
+                        if(response.responseText && response.responseText.indexOf('|') > 0) {
+                            let currentRespArr = response.responseText.split('|');
+                            let currentResp = currentRespArr[currentRespArr.length-1];
+                            let data = JSON.parse(currentResp);
+                            if (data && data.error !== null) {
+                                message('error', 'An error occurred during provisioning. '+data.error);
+                            } else {
+                                provisionStatus.hide();
+                                message('success', 'Provisioning has successfully completed. You can retrieve the embed' +
+                                    ' code from your environment <a href="'+data.link+'" target="_blank">here</a>. Click' +
+                                    ' the install link next to the environment that you choose.');
+                            }
+                        } else {
+                            message('error', 'An error occurred during provisioning.');
+                        }
+                    }
+                });
+            } else {
+                provisionStatus.hide();
+                message('error', 'An error occurred during provisioning.');
+            }
+
+        });
+        function message(type, msg) {
+            let provisionMessage = jQuery('#provision_result');
+            if(type === 'error') {
+                provisionMessage.addClass('error');
+                provisionMessage.removeClass('success');
+            } else {
+                provisionMessage.addClass('success');
+                provisionMessage.removeClass('error');
+            }
+            provisionMessage.html(msg);
+            provisionMessage.show();
+        }
+
+        function update(msg) {
+            let provisionMessage = jQuery('#provision_status');
+            provisionMessage.text(msg);
+        }
+
+
+    });
+</script>
+
+<?= $block->getButtonHtml() ?>
+
+<div id="provision_status" hidden="hidden">Processing...</div>
+<div id="provision_result" hidden="hidden"></div>

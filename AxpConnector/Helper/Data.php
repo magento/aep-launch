@@ -104,7 +104,119 @@ class Data extends AbstractHelper
     }
 
     /**
-     * Push data whan page is loaded (?)
+     * Get Adobe Org ID from configuration.
+     *
+     * @param string $scope
+     * @return mixed
+     */
+    public function getOrgID($scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT)
+    {
+        return $this->scopeConfig->getValue(
+            'axpconnector_launch_property_config/launch_property/adobe_org_id',
+            $scope
+        );
+    }
+
+    /**
+     * Get Client ID from configuration.
+     *
+     * @param string $scope
+     * @return mixed
+     */
+    public function getClientID($scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT)
+    {
+        return $this->scopeConfig->getValue(
+            'axpconnector_launch_property_config/launch_property/client_id',
+            $scope
+        );
+    }
+
+    /**
+     * Get Client secret from configuration.
+     *
+     * @param string $scope
+     * @return mixed
+     */
+    public function getClientSecret($scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT)
+    {
+        return $this->scopeConfig->getValue(
+            'axpconnector_launch_property_config/launch_property/client_secret',
+            $scope
+        );
+    }
+
+    /**
+     * Get JWT from configuration.
+     *
+     * @param string $scope
+     * @return mixed
+     */
+    public function getJWT($scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT)
+    {
+        return $this->scopeConfig->getValue(
+            'axpconnector_launch_property_config/launch_property/jwt',
+            $scope
+        );
+    }
+
+    /**
+     * Get Production AA suite from configuration.
+     *
+     * @param string $scope
+     * @return mixed
+     */
+    public function getProdSuite($scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT)
+    {
+        return $this->scopeConfig->getValue(
+            'axpconnector_launch_property_config/launch_property/prod_suite',
+            $scope
+        );
+    }
+
+    /**
+     * Get Stage AA suite from configuration.
+     *
+     * @param string $scope
+     * @return mixed
+     */
+    public function getStageSuite($scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT)
+    {
+        return $this->scopeConfig->getValue(
+            'axpconnector_launch_property_config/launch_property/stage_suite',
+            $scope
+        );
+    }
+
+    /**
+     * Get Dev AA suite from configuration.
+     *
+     * @param string $scope
+     * @return mixed
+     */
+    public function getDevSuite($scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT)
+    {
+        return $this->scopeConfig->getValue(
+            'axpconnector_launch_property_config/launch_property/dev_suite',
+            $scope
+        );
+    }
+
+    /**
+     * Get Launch property name from configuration.
+     *
+     * @param string $scope
+     * @return mixed
+     */
+    public function getPropertyName($scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT)
+    {
+        return $this->scopeConfig->getValue(
+            'axpconnector_launch_property_config/launch_property/property_name',
+            $scope
+        );
+    }
+
+    /**
+     * Push data when page is loaded (?)
      *
      * @param string $pageTitle
      * @param string $pageType
@@ -381,5 +493,16 @@ class Data extends AbstractHelper
     public function jsonify($obj)
     {
         return $this->jsonHelper->jsonEncode($obj);
+    }
+
+    /**
+     * Json Decode (??)
+     *
+     * @param string $str
+     * @return mixed
+     */
+    public function jsonDecode($str)
+    {
+        return $this->jsonHelper->jsonDecode($str);
     }
 }

@@ -9,6 +9,17 @@
                 </launch_script_url>
             </general>
         </axpconnector_backend_config>
+        <axpconnector_launch_property_config>
+            <launch_property>
+                <adobe_org_id>your-org-id-here@AdobeOrg</adobe_org_id>
+                <client_id></client_id>
+                <client_secret></client_secret>
+                <jwt></jwt>
+                <prod_suite></prod_suite>
+                <stage_suite></stage_suite>
+                <dev_suite></dev_suite>
+            </launch_property>
+        </axpconnector_launch_property_config>
         <axpconnector_backend_config_advanced>
             <advanced>
                 <datalayer_name>AppEventData</datalayer_name>
