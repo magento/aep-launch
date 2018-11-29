@@ -9,6 +9,7 @@ namespace Adobe\AxpConnector\Controller\Adminhtml\Config;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Module\Dir\Reader;
 use Magento\Framework\Filesystem\Driver\File;
@@ -21,7 +22,7 @@ use Adobe\AxpConnector\Helper\Data;
  *
  * @package Adobe\AxpConnector\Controller\Adminhtml\Config
  */
-class Provision extends Action
+class Provision extends Action implements HttpPostActionInterface
 {
     /**
      * @var JsonFactory
