@@ -14,6 +14,7 @@ use Adobe\AxpConnector\Helper\Data;
 
 /**
  * Class ProvisionButton
+ *
  * @package Adobe\AxpConnector\Block\Adminhtml\Config
  */
 class ProvisionButton extends Field

@@ -13,6 +13,7 @@ use \Psr\Log\LoggerInterface;
 
 /**
  * Class ProvisionClient
+ *
  * @package Adobe\AxpConnector\Webservice\Client
  */
 class ProvisionClient

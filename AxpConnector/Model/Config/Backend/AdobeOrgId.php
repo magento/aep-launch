@@ -9,6 +9,7 @@ namespace Adobe\AxpConnector\Model\Config\Backend;
 
 /**
  * Class AdobeOrgId
+ *
  * @package Adobe\AxpConnector\Model\Config\Backend
  */
 class AdobeOrgId extends \Magento\Framework\App\Config\Value

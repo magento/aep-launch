@@ -15,6 +15,7 @@ use \Psr\Log\LoggerInterface;
 
 /**
  * Class ProvisionHelper
+ *
  * @package Adobe\AxpConnector\Helper
  */
 class ProvisionHelper extends AbstractHelper

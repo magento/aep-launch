@@ -18,6 +18,7 @@ use Adobe\AxpConnector\Helper\Data;
 
 /**
  * Class Provision
+ *
  * @package Adobe\AxpConnector\Controller\Adminhtml\Config
  */
 class Provision extends Action
