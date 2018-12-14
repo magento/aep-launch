@@ -93,7 +93,7 @@ class Data extends AbstractHelper
     public function getScriptUrl($scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT)
     {
         return $this->scopeConfig->getValue(
-            'axpconnector_backend_config/general/launch_script_url',
+            'axpconnector_backend_config_datalayer/datalayer/launch_script_url',
             $scope
         );
     }
@@ -107,7 +107,7 @@ class Data extends AbstractHelper
     public function getDatalayerName($scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT)
     {
         return $this->scopeConfig->getValue(
-            'axpconnector_backend_config_advanced/advanced/datalayer_name',
+            'axpconnector_backend_config_datalayer/datalayer/datalayer_name',
             $scope
         );
     }
