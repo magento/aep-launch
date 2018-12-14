@@ -47,11 +47,12 @@
                     <validate>required-entry</validate>
                     <comment>The client ID (API Key) associated with the Adobe I/O Integration.</comment>
                 </field>
-                <field id="client_secret" translate="label" type="text" sortOrder="200" showInDefault="1" showInWebsite="0"
+                <field id="client_secret" translate="label" type="obscure" sortOrder="200" showInDefault="1" showInWebsite="0"
                        showInStore="0">
                     <label>Client Secret*</label>
                     <validate>required-entry</validate>
                     <comment>The client secret associated with the Adobe I/O Integration.</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
                 </field>
                 <field id="jwt" translate="label" type="textarea" sortOrder="200" showInDefault="1" showInWebsite="0"
                        showInStore="0">

@@ -7,10 +7,11 @@ declare(strict_types=1);
 
 namespace Adobe\AxpConnector\Helper;
 
-use Magento\Catalog\Api\Data\ProductInterface;
+use \Magento\Catalog\Api\Data\ProductInterface;
 use \Magento\Framework\App\Helper\AbstractHelper;
 use \Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Quote\Api\Data\CartInterface;
+use \Magento\Quote\Api\Data\CartInterface;
+use \Magento\Framework\Encryption\EncryptorInterface;
 
 /**
  * Class Data.
@@ -35,6 +36,11 @@ class Data extends AbstractHelper
     protected $orderRepository;
 
     /**
+     * @var \Magento\Framework\Encryption\EncryptorInterface
+     */
+    protected $encryptor;
+
+    /**
      * @var \Psr\Log\LoggerInterface
      */
     protected $logger;
@@ -45,6 +51,7 @@ class Data extends AbstractHelper
      * @param \Magento\Framework\App\Helper\Context $context
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Sales\Api\OrderRepositoryInterface $orderRepository
+     * @param \Magento\Framework\Encryption\EncryptorInterface $encryptor
      * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
@@ -52,11 +59,13 @@ class Data extends AbstractHelper
         \Magento\Framework\App\Helper\Context $context,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
+        EncryptorInterface $encryptor,
         \Psr\Log\LoggerInterface $logger
     ) {
         $this->jsonHelper = $jsonHelper;
         $this->storeManager = $storeManager;
         $this->orderRepository = $orderRepository;
+        $this->encryptor = $encryptor;
         $this->logger = $logger;
         parent::__construct($context);
     }
@@ -139,10 +148,11 @@ class Data extends AbstractHelper
      */
     public function getClientSecret($scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT)
     {
-        return $this->scopeConfig->getValue(
+        $cypherText = $this->scopeConfig->getValue(
             'axpconnector_launch_property_config/launch_property/client_secret',
             $scope
         );
+        return $this->encryptor->decrypt($cypherText);
     }
 
     /**
