@@ -7,9 +7,9 @@ declare(strict_types=1);
 
 namespace Adobe\AxpConnector\Webservice\Client;
 
-use Magento\Framework\HTTP\ZendClient;
+use Zend\Http\Client as ZendClient;
 use Adobe\AxpConnector\Helper\Data;
-use \Psr\Log\LoggerInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class ProvisionClient
@@ -63,24 +63,29 @@ class ProvisionClient
     public function request($uri, $method, $headers, $code, $body = null, $enctype = null)
     {
         try {
-            $this->logger->debug('DebugProvisionRequestStart', ['request' => ['uri' => $uri, 'body' => $body,
-                'headers' => $headers, 'method' => $method]]);
+            $this->logger->debug(
+                'DebugProvisionRequestStart', [
+                    'request' => [
+                        'uri' => $uri,
+                        'body' => $body,
+                        'headers' => $headers,
+                        'method' => $method
+                    ]
+                ]
+            );
+
             $this->zendClient->resetParameters();
             $this->makeBody($body, $enctype);
             $this->zendClient->setUri($uri);
             $this->zendClient->setHeaders($headers);
             $this->zendClient->setMethod($method);
-            $this->zendClient->setConfig([
-                'timeout' => 60,
-                'keepalive' => true,
-            ]);
         } catch (\Exception $argumentException) {
             $this->logger->critical($argumentException);
             return ['error' => $argumentException->getMessage()];
         }
         try {
-            // send the request
-            $response = $this->zendClient->request();
+            $response = $this->zendClient->send();
+
             $this->logger->debug('DebugProvisionRequestEnd', ['response' => $response]);
             $body = $response->getBody();
             try {
@@ -88,7 +93,7 @@ class ProvisionClient
             } catch (\Exception $e) {
                 $respObj = [];
             }
-            if ($response->getStatus() !== $code) {
+            if ($response->getStatusCode() !== $code) {
                 $message = '';
                 if (array_key_exists('error', $respObj)) {
                     $message = $respObj['error'];
@@ -96,7 +101,7 @@ class ProvisionClient
                 if (array_key_exists('error_description', $respObj)) {
                     $message = $respObj['error_description'];
                 }
-                return ['error' => 'The request failed with code: '.$response->getStatus().' '.$message];
+                return ['error' => 'The request failed with code: ' . $response->getStatusCode() . ' ' . $message];
             }
             return $respObj;
         } catch (\Exception $runtimeException) {
@@ -110,18 +115,19 @@ class ProvisionClient
      *
      * @param array $body
      * @param string $enctype
-     * @return array
+     * @return void
      */
     private function makeBody($body, $enctype)
     {
-        if ($body !== null) {
-            if ($enctype === 'multipart/form-data') {
-                foreach ($body as $key => $val) {
-                    $this->zendClient->setParameterPost($key, $val);
-                }
-            } elseif ($enctype === 'application/vnd.api+json') {
-                $this->zendClient->setRawData($body, $enctype);
-            }
+        if ($body === null) {
+            return;
+        }
+
+        if ($enctype === 'application/x-www-form-urlencoded') {
+            $this->zendClient->setParameterPost($body);
+        } elseif ($enctype === 'application/vnd.api+json') {
+            $this->zendClient->setEncType($enctype);
+            $this->zendClient->setRawBody($body);
         }
     }
 }
