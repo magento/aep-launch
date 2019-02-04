@@ -8,3 +8,4 @@ Adobe Experience Cloud offers products that help merchants become more successfu
 Here is our [ZenHub board](https://app.zenhub.com/workspace/o/magento/axp-connector/boards?repos=151743693), best viewed with the [Chrome ZenHub extension](https://chrome.google.com/webstore/detail/zenhub-for-github/ogcgkffhplmphkaahpmffcafajaocjbd). Otherwise, our backlog is organized as a list of [issues](https://github.com/magento/axp-connector/issues).
 
 To join the project, attend a regular meeting (timing TBD for now) or join [#axp-connector](https://magentocommeng.slack.com/messages/CD4EGUYEB) slack channel (sign up for EngCom Slack workspace [here](https://tinyurl.com/engcom-signup))
+

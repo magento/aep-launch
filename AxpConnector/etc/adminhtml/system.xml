@@ -7,22 +7,16 @@
         </tab>
         <section id="axpconnector_backend_config" translate="label" type="text" sortOrder="0" showInDefault="1"
                  showInWebsite="1" showInStore="1">
-            <label>Data Layer Configuration</label>
+            <label>General</label>
             <tab>axpconnector</tab>
             <resource>Adobe_AxpConnector::axpconnector_config</resource>
             <class>separator-top</class>
             <group id="general" translate="label" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
-                <label>Data Layer Configuration</label>
+                <label>General</label>
                 <field id="enable" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="0"
                        showInStore="0">
                     <label>Module Enabled</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field>
-                <field id="launch_script_url" translate="label" type="text" sortOrder="200" showInDefault="1"
-                       showInWebsite="0" showInStore="0">
-                    <label>Launch Script URL</label>
-                    <comment>The script URL (or script tag) from the Launch interface.</comment>
-                    <backend_model>Adobe\AxpConnector\Model\Config\Backend\LaunchScriptUrl</backend_model>
                 </field>
             </group>
         </section>
@@ -47,11 +41,12 @@
                     <validate>required-entry</validate>
                     <comment>The client ID (API Key) associated with the Adobe I/O Integration.</comment>
                 </field>
-                <field id="client_secret" translate="label" type="text" sortOrder="200" showInDefault="1" showInWebsite="0"
+                <field id="client_secret" translate="label" type="obscure" sortOrder="200" showInDefault="1" showInWebsite="0"
                        showInStore="0">
                     <label>Client Secret*</label>
                     <validate>required-entry</validate>
                     <comment>The client secret associated with the Adobe I/O Integration.</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
                 </field>
                 <field id="jwt" translate="label" type="textarea" sortOrder="200" showInDefault="1" showInWebsite="0"
                        showInStore="0">
@@ -90,14 +85,19 @@
                 </field>
             </group>
         </section>
-        <section id="axpconnector_backend_config_advanced" translate="label" type="text" sortOrder="2" showInDefault="1"
+        <section id="axpconnector_backend_config_datalayer" translate="label" type="text" sortOrder="2" showInDefault="1"
                  showInWebsite="1" showInStore="1">
-            <label>Data Layer Advanced</label>
+            <label>Data Layer</label>
             <tab>axpconnector</tab>
             <resource>Adobe_AxpConnector::axpconnector_config</resource>
             <class>separator-top</class>
-            <group id="advanced" translate="label" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
-                <label>Data Layer Advanced</label>
+            <group id="datalayer" translate="label" sortOrder="2" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="launch_script_url" translate="label" type="text" sortOrder="200" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Launch Script URL</label>
+                    <comment>The script URL (or script tag) from the Launch interface. (Must create Launch property first)</comment>
+                    <backend_model>Adobe\AxpConnector\Model\Config\Backend\LaunchScriptUrl</backend_model>
+                </field>
                 <field id="datalayer_name" translate="label" type="text" sortOrder="200" showInDefault="1"
                        showInWebsite="0" showInStore="0">
                     <label>Datalayer Name</label>
