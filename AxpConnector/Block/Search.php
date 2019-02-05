@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace Adobe\AxpConnector\Block;
 
+use Adobe\AxpConnector\Model\LaunchConfigProvider;
+
 /**
  * Search Block.
  *
@@ -22,16 +24,18 @@ class Search extends Base
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Adobe\AxpConnector\Helper\Data $helper
+     * @param LaunchConfigProvider $launchConfigProvider
      * @param array $data
      * @param \Magento\CatalogSearch\Helper\Data $catalogSearchHelper
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Adobe\AxpConnector\Helper\Data $helper,
+        LaunchConfigProvider $launchConfigProvider,
         array $data,
         \Magento\CatalogSearch\Helper\Data $catalogSearchHelper
     ) {
-        parent::__construct($context, $helper, $data);
+        parent::__construct($context, $helper, $launchConfigProvider, $data);
         $this->helper = $helper;
         $this->catalogSearchHelper = $catalogSearchHelper;
     }

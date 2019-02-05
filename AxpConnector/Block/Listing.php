@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace Adobe\AxpConnector\Block;
 
+use Adobe\AxpConnector\Model\LaunchConfigProvider;
+
 /**
  * Listing Block.
  *
@@ -17,14 +19,16 @@ class Listing extends Base
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Adobe\AxpConnector\Helper\Data $helper
+     * @param LaunchConfigProvider $launchConfigProvider
      * @param array $data
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Adobe\AxpConnector\Helper\Data $helper,
+        LaunchConfigProvider $launchConfigProvider,
         array $data
     ) {
-        parent::__construct($context, $helper, $data);
+        parent::__construct($context, $helper, $launchConfigProvider, $data);
     }
 
     /**

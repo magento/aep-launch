@@ -4,12 +4,13 @@
  * See COPYING.txt for license details.
  */
 
+/**
+ * @var \Adobe\AxpConnector\Block\Product $block
+ */
 $dln = $block->datalayerName();
 $datalayerContent = $block->datalayerProductJson();
 ?>
-<?php if ($block->helper()->isEnabled()) : ?>
-    <script type="text/javascript" id="axpconnector-datalayer-product-viewed">
-        window.<?= /* @escapeNotVerified */ $dln ?> = window.<?= /* @escapeNotVerified */ $dln ?> || [];
-        window.<?= /* @escapeNotVerified */ $dln ?>.push(<?= /* @escapeNotVerified */ $datalayerContent ?>);
-    </script>
-<?php endif; ?>
+
+<script type="text/javascript" id="axpconnector-datalayer-product-viewed">
+    window.<?= /* @escapeNotVerified */ $dln ?>.push(<?= /* @escapeNotVerified */ $datalayerContent ?>);
+</script>

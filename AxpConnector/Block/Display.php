@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace Adobe\AxpConnector\Block;
 
+use Adobe\AxpConnector\Model\LaunchConfigProvider;
+
 /**
  * Display block.
  *
@@ -14,6 +16,17 @@ namespace Adobe\AxpConnector\Block;
  */
 class Display extends \Magento\Framework\View\Element\Template
 {
+    /**
+     * @var LaunchConfigProvider
+     */
+    private $launchConfigProvider;
+
+    /**
+     * @var \Adobe\AxpConnector\Helper\Data
+     * @deprecated
+     */
+    private $helper;
+
     /**
      * @var array
      */
@@ -26,15 +39,18 @@ class Display extends \Magento\Framework\View\Element\Template
 
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
+     * @param LaunchConfigProvider $launchConfigProvider
      * @param \Adobe\AxpConnector\Helper\Data $helper
      * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
+        LaunchConfigProvider $launchConfigProvider,
         \Adobe\AxpConnector\Helper\Data $helper,
         \Psr\Log\LoggerInterface $logger
     ) {
         parent::__construct($context);
+        $this->launchConfigProvider = $launchConfigProvider;
         $this->helper = $helper;
         $this->_logger = $logger;
         $this->datalayerEvents = [];
@@ -47,7 +63,7 @@ class Display extends \Magento\Framework\View\Element\Template
      */
     public function isEnabled()
     {
-        return $this->helper->isEnabled();
+        return $this->launchConfigProvider->isEnabled();
     }
 
     /**

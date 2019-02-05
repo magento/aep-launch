@@ -3,16 +3,17 @@
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceBlock name="head.additional">
-            <block name="axpconnector_launch_head_script" before="-" template="Adobe_AxpConnector::launch_head.phtml"/>
+            <block class="Adobe\AxpConnector\Block\Js" name="axpconnector_launch_head_script" before="-" template="Adobe_AxpConnector::launch_head.phtml" ifconfig="axpconnector_backend_config/general/enable" />
         </referenceBlock>
 
         <referenceContainer name="after.body.start">
             <block class="Adobe\AxpConnector\Block\Display" name="axpconnector_datalayer_block"
-                   as="axpconnector_datalayer_block" template="Adobe_AxpConnector::datalayer.phtml">
-            </block>
+                   as="axpconnector_datalayer_block" template="Adobe_AxpConnector::datalayer.phtml" before=""
+                   ifconfig="axpconnector_backend_config/general/enable" />
 
             <block name="axpconnector_private_content_block"
-                   template="Adobe_AxpConnector::private_content_datalayer.phtml">
+                   template="Adobe_AxpConnector::private_content_datalayer.phtml"
+                   ifconfig="axpconnector_backend_config/general/enable">
                 <arguments>
                     <argument name="jsLayout" xsi:type="array">
                         <item name="components" xsi:type="array">
@@ -25,7 +26,8 @@
             </block>
 
             <block class="Adobe\AxpConnector\Block\Page" name="axpconnector_page_block"
-                   template="Adobe_AxpConnector::page.phtml"/>
+                   template="Adobe_AxpConnector::page.phtml"
+                   ifconfig="axpconnector_backend_config/general/enable" />
         </referenceContainer>
     </body>
 </page>

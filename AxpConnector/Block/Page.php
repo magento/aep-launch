@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace Adobe\AxpConnector\Block;
 
+use Adobe\AxpConnector\Model\LaunchConfigProvider;
+
 /**
  * Class Page.
  *
@@ -27,6 +29,7 @@ class Page extends Base
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Adobe\AxpConnector\Helper\Data $helper
+     * @param LaunchConfigProvider $launchConfigProvider
      * @param array $data
      * @param \Magento\Catalog\Helper\Data $catalogHelper
      * @param \Magento\Framework\View\Page\Title $pageTitle
@@ -34,11 +37,12 @@ class Page extends Base
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Adobe\AxpConnector\Helper\Data $helper,
+        LaunchConfigProvider $launchConfigProvider,
         array $data,
         \Magento\Catalog\Helper\Data $catalogHelper,
         \Magento\Framework\View\Page\Title $pageTitle
     ) {
-        parent::__construct($context, $helper, $data);
+        parent::__construct($context, $helper, $launchConfigProvider, $data);
         $this->pageTitle = $pageTitle;
         $this->catalogHelper = $catalogHelper;
     }

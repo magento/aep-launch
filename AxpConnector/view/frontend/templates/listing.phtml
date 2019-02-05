@@ -4,14 +4,14 @@
  * See COPYING.txt for license details.
  */
 
+/**
+ * @var \Adobe\AxpConnector\Block\Listing $block
+ */
 $dln = $block->datalayerName();
 ?>
-<?php if ($block->helper()->isEnabled()) : ?>
-    <script type="text/javascript" id="axpconnector-datalayer-category-viewed">
-        window.<?= /* @escapeNotVerified */ $dln ?> = window.<?= /* @escapeNotVerified */ $dln ?> || [];
-        <?php $datalayerJson = $block->datalayerJson(); ?>
-        <?php if ($datalayerJson) : ?>
-            window.<?= /* @escapeNotVerified */ $dln ?>.push(<?= /* @escapeNotVerified */ $block->datalayerJson() ?>);
-        <?php endif; ?>
-    </script>
-<?php endif; ?>
+<script type="text/javascript" id="axpconnector-datalayer-category-viewed">
+    <?php $datalayerJson = $block->datalayerJson(); ?>
+    <?php if ($datalayerJson) : ?>
+        window.<?= /* @escapeNotVerified */ $dln ?>.push(<?= /* @escapeNotVerified */ $block->datalayerJson() ?>);
+    <?php endif; ?>
+</script>

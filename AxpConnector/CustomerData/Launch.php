@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Adobe\AxpConnector\CustomerData;
 
 use Magento\Customer\CustomerData\SectionSourceInterface;
+use Adobe\AxpConnector\Model\LaunchConfigProvider;
 
 /**
  * Launch private data section
@@ -15,12 +16,8 @@ use Magento\Customer\CustomerData\SectionSourceInterface;
 class Launch extends \Magento\Framework\DataObject implements SectionSourceInterface
 {
     /**
-     * @var \Adobe\AxpConnector\Helper\Data
-     */
-    protected $helper;
-
-    /**
      * @var \Magento\Framework\Json\Helper\Data
+     * @deprecated
      */
     protected $jsonHelper;
 
@@ -35,24 +32,29 @@ class Launch extends \Magento\Framework\DataObject implements SectionSourceInter
     protected $customerSession;
 
     /**
-     * @param \Adobe\AxpConnector\Helper\Data $helper
+     * @var LaunchConfigProvider
+     */
+    private $launchConfigProvider;
+
+    /**
      * @param \Magento\Framework\Json\Helper\Data $jsonHelper
+     * @param LaunchConfigProvider $launchConfigProvider
      * @param \Magento\Checkout\Model\Session $_checkoutSession
      * @param \Magento\Customer\Model\Session $customerSession
      * @param array $data
      */
     public function __construct(
-        \Adobe\AxpConnector\Helper\Data $helper,
         \Magento\Framework\Json\Helper\Data $jsonHelper,
+        LaunchConfigProvider $launchConfigProvider,
         \Magento\Checkout\Model\Session $_checkoutSession,
         \Magento\Customer\Model\Session $customerSession,
         array $data = []
     ) {
         parent::__construct($data);
-        $this->helper = $helper;
         $this->jsonHelper = $jsonHelper;
         $this->_checkoutSession = $_checkoutSession;
         $this->customerSession = $customerSession;
+        $this->launchConfigProvider = $launchConfigProvider;
     }
 
     /**
@@ -83,11 +85,11 @@ class Launch extends \Magento\Framework\DataObject implements SectionSourceInter
 
             // So awful...
             $script = '<script type="text/javascript">'
-                . "window.{$this->helper->getDatalayerName()} = window.{$this->helper->getDatalayerName()} || [];";
+                . "window.{$this->launchConfigProvider->getDatalayerName()} = window.{$this->launchConfigProvider->getDatalayerName()} || [];";
 
             foreach ($data as $event) {
                 $jsonData = $this->jsonHelper->jsonEncode($event);
-                $script = $script . "window.{$this->helper->getDatalayerName()}.push(${jsonData});\n";
+                $script = $script . "window.{$this->launchConfigProvider->getDatalayerName()}.push(${jsonData});\n";
             }
             $script = $script . '</script>';
         }

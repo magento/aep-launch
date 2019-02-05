@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Adobe\AxpConnector\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
+use Adobe\AxpConnector\Model\LaunchConfigProvider;
 
 /**
  * Observer for quote item remove.
@@ -16,8 +17,14 @@ class SalesQuoteRemoveItemObserver implements ObserverInterface
 {
     /**
      * @var \Adobe\AxpConnector\Helper\Data
+     * @deprecated
      */
     protected $helper;
+
+    /**
+     * @var LaunchConfigProvider
+     */
+    private $launchConfigProvider;
 
     /**
      * @var \Magento\Checkout\Model\Session
@@ -36,17 +43,20 @@ class SalesQuoteRemoveItemObserver implements ObserverInterface
 
     /**
      * @param \Adobe\AxpConnector\Helper\Data $helper
+     * @param LaunchConfigProvider $launchConfigProvider
      * @param \Magento\Catalog\Model\ProductRepository $productRepository
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Magento\Checkout\Model\Session $_checkoutSession
      */
     public function __construct(
         \Adobe\AxpConnector\Helper\Data $helper,
+        LaunchConfigProvider $launchConfigProvider,
         \Magento\Catalog\Model\ProductRepository $productRepository,
         \Psr\Log\LoggerInterface $logger,
         \Magento\Checkout\Model\Session $_checkoutSession
     ) {
         $this->helper = $helper;
+        $this->launchConfigProvider = $launchConfigProvider;
         $this->_checkoutSession = $_checkoutSession;
         $this->productRepository = $productRepository;
         $this->logger = $logger;
@@ -61,7 +71,7 @@ class SalesQuoteRemoveItemObserver implements ObserverInterface
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        if (!$this->helper->isEnabled()) {
+        if (!$this->launchConfigProvider->isEnabled()) {
             return $this;
         }
 

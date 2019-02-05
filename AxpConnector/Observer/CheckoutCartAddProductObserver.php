@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Adobe\AxpConnector\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
+use Adobe\AxpConnector\Model\LaunchConfigProvider;
 
 /**
  * Observer for Product Add to Cart.
@@ -16,8 +17,14 @@ class CheckoutCartAddProductObserver implements ObserverInterface
 {
     /**
      * @var \Adobe\AxpConnector\Helper\Data
+     * @deprecated
      */
     private $helper;
+
+    /**
+     * @var LaunchConfigProvider
+     */
+    private $launchConfigProvider;
 
     /**
      * @var \Magento\Framework\Locale\ResolverInterface
@@ -30,17 +37,19 @@ class CheckoutCartAddProductObserver implements ObserverInterface
     private $checkoutSession;
 
     /**
-     * CheckoutCartAddProductObserver constructor.
      * @param \Adobe\AxpConnector\Helper\Data $helper
+     * @param LaunchConfigProvider $launchConfigProvider
      * @param \Magento\Framework\Locale\ResolverInterface $resolverInterface
      * @param \Magento\Checkout\Model\Session $checkoutSession
      */
     public function __construct(
         \Adobe\AxpConnector\Helper\Data $helper,
+        LaunchConfigProvider $launchConfigProvider,
         \Magento\Framework\Locale\ResolverInterface $resolverInterface,
         \Magento\Checkout\Model\Session $checkoutSession
     ) {
         $this->helper = $helper;
+        $this->launchConfigProvider = $launchConfigProvider;
         $this->resolverInterface = $resolverInterface;
         $this->checkoutSession = $checkoutSession;
     }
@@ -53,7 +62,7 @@ class CheckoutCartAddProductObserver implements ObserverInterface
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        if (!$this->helper->isEnabled()) {
+        if (!$this->launchConfigProvider->isEnabled()) {
             return $this;
         }
 
