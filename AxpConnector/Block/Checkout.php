@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace Adobe\AxpConnector\Block;
 
+use Adobe\AxpConnector\Model\LaunchConfigProvider;
+
 /**
  * Checkout block.
  *
@@ -17,16 +19,18 @@ class Checkout extends Base
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Adobe\AxpConnector\Helper\Data $helper
+     * @param LaunchConfigProvider $launchConfigProvider
      * @param array $data
      * @param \Magento\Checkout\Model\Cart $cartModel
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Adobe\AxpConnector\Helper\Data $helper,
+        LaunchConfigProvider $launchConfigProvider,
         array $data,
         \Magento\Checkout\Model\Cart $cartModel
     ) {
-        parent::__construct($context, $helper, $data);
+        parent::__construct($context, $helper, $launchConfigProvider, $data);
         $this->cartModel = $cartModel;
     }
 

@@ -4,7 +4,8 @@
     <body>
         <referenceContainer name="after.body.start">
             <block class="Adobe\AxpConnector\Block\Product" name="axpconnector_product_block"
-                   template="Adobe_AxpConnector::product.phtml" after="-"/>
+                   template="Adobe_AxpConnector::product.phtml" after="-"
+                   ifconfig="axpconnector_backend_config/general/enable" />
         </referenceContainer>
     </body>
 </page>

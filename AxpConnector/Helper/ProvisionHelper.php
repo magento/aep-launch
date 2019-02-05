@@ -8,10 +8,10 @@ declare(strict_types=1);
 namespace Adobe\AxpConnector\Helper;
 
 use Adobe\AxpConnector\Webservice\Client\ProvisionClient;
-use Adobe\AxpConnector\Helper\Data;
+use Adobe\AxpConnector\Model\LaunchConfigProvider;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
-use \Psr\Log\LoggerInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class ProvisionHelper
@@ -19,6 +19,7 @@ use \Psr\Log\LoggerInterface;
  * @package Adobe\AxpConnector\Helper
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @deprecated
  */
 class ProvisionHelper extends AbstractHelper
 {
@@ -29,6 +30,7 @@ class ProvisionHelper extends AbstractHelper
 
     /**
      * @var Data
+     * @deprecated
      */
     private $helper;
 
@@ -85,22 +87,30 @@ class ProvisionHelper extends AbstractHelper
     ];
 
     /**
+     * @var LaunchConfigProvider
+     */
+    private $launchConfigProvider;
+
+    /**
      * Data constructor.
      *
      * @param Context $context
      * @param ProvisionClient $provisionClient
      * @param Data $helper
+     * @param LaunchConfigProvider $launchConfigProvider
      * @param LoggerInterface $logger
      */
     public function __construct(
         Context $context,
         ProvisionClient $provisionClient,
         Data $helper,
+        LaunchConfigProvider $launchConfigProvider,
         LoggerInterface $logger
     ) {
         $this->provisionClient = $provisionClient;
         $this->helper = $helper;
         $this->logger = $logger;
+        $this->launchConfigProvider = $launchConfigProvider;
         parent::__construct($context);
     }
 
@@ -146,7 +156,7 @@ class ProvisionHelper extends AbstractHelper
             'EXTENSION_IDS' => [],
             'LAUNCH_PROPERTY_NAME' => $propertyName.' '.date("Y-m-d H:i:s"),
             'LAUNCH_COMPANY_ID' => '',
-            'DATA_LAYER_OBJECT_NAME' => $this->helper->getDatalayerName()
+            'DATA_LAYER_OBJECT_NAME' => $this->launchConfigProvider->getDatalayerName()
         ];
 
         foreach ($conf['item'] as $request) {

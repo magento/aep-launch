@@ -7,16 +7,16 @@ declare(strict_types=1);
 
 namespace Adobe\AxpConnector\Helper;
 
-use \Magento\Catalog\Api\Data\ProductInterface;
-use \Magento\Framework\App\Helper\AbstractHelper;
-use \Magento\Framework\App\Config\ScopeConfigInterface;
-use \Magento\Quote\Api\Data\CartInterface;
-use \Magento\Framework\Encryption\EncryptorInterface;
+use Magento\Catalog\Api\Data\ProductInterface;
+use Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Quote\Api\Data\CartInterface;
+use Magento\Framework\Encryption\EncryptorInterface;
 
 /**
  * Class Data.
  *
- * @api
+ * @deprecated
  */
 class Data extends AbstractHelper
 {
@@ -38,7 +38,7 @@ class Data extends AbstractHelper
     /**
      * @var \Magento\Framework\Encryption\EncryptorInterface
      */
-    protected $encryptor;
+    private $encryptor;
 
     /**
      * @var \Psr\Log\LoggerInterface
@@ -68,48 +68,6 @@ class Data extends AbstractHelper
         $this->encryptor = $encryptor;
         $this->logger = $logger;
         parent::__construct($context);
-    }
-
-    /**
-     * Check if module is enabled in config.
-     *
-     * @param string $scope
-     * @return bool
-     */
-    public function isEnabled($scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT)
-    {
-        return $this->scopeConfig->isSetFlag(
-            'axpconnector_backend_config/general/enable',
-            $scope
-        );
-    }
-
-    /**
-     * Get Url for the Launch script from configuration.
-     *
-     * @param string $scope
-     * @return mixed
-     */
-    public function getScriptUrl($scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT)
-    {
-        return $this->scopeConfig->getValue(
-            'axpconnector_backend_config_datalayer/datalayer/launch_script_url',
-            $scope
-        );
-    }
-
-    /**
-     * Get datalayer name from configuration.
-     *
-     * @param sring $scope
-     * @return mixed
-     */
-    public function getDatalayerName($scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT)
-    {
-        return $this->scopeConfig->getValue(
-            'axpconnector_backend_config_datalayer/datalayer/datalayer_name',
-            $scope
-        );
     }
 
     /**

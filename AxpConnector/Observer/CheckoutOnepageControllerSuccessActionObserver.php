@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Adobe\AxpConnector\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
+use Adobe\AxpConnector\Model\LaunchConfigProvider;
 
 /**
  * Observer for checkout success event
@@ -26,6 +27,7 @@ class CheckoutOnepageControllerSuccessActionObserver implements ObserverInterfac
 
     /**
      * @var \Adobe\AxpConnector\Helper\Data
+     * @deprecated
      */
     protected $helper;
 
@@ -40,19 +42,27 @@ class CheckoutOnepageControllerSuccessActionObserver implements ObserverInterfac
     protected $cookieMetadataFactory;
 
     /**
+     * @var LaunchConfigProvider
+     */
+    private $launchConfigProvider;
+
+    /**
      * CheckoutOnepageControllerSuccessActionObserver constructor.
      * @param \Adobe\AxpConnector\Helper\Data $helper
+     * @param LaunchConfigProvider $launchConfigProvider
      * @param \Magento\Framework\Stdlib\CookieManagerInterface $cookieManager
      * @param \Magento\Framework\Stdlib\Cookie\CookieMetadataFactory $cookieMetadataFactory
      */
     public function __construct(
         \Adobe\AxpConnector\Helper\Data $helper,
+        LaunchConfigProvider $launchConfigProvider,
         \Magento\Framework\Stdlib\CookieManagerInterface $cookieManager,
         \Magento\Framework\Stdlib\Cookie\CookieMetadataFactory $cookieMetadataFactory
     ) {
         $this->helper = $helper;
         $this->cookieManager = $cookieManager;
         $this->cookieMetadataFactory = $cookieMetadataFactory;
+        $this->launchConfigProvider = $launchConfigProvider;
     }
 
     /**
@@ -71,7 +81,7 @@ class CheckoutOnepageControllerSuccessActionObserver implements ObserverInterfac
         }
 
         $datalayerContent = $this->helper->orderPlacedPushData($orderIds);
-        $datalayerName = $this->helper->getDatalayerName();
+        $datalayerName = $this->launchConfigProvider->getDatalayerName();
 
         $cookieContent = [
             'datalayerName' => $datalayerName,

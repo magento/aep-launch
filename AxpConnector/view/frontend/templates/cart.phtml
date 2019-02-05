@@ -4,11 +4,11 @@
  * See COPYING.txt for license details.
  */
 
+/**
+ * @var \Adobe\AxpConnector\Block\Cart $block
+ */
 $dln = $block->datalayerName();
 ?>
-<?php if ($block->helper()->isEnabled()) : ?>
-    <script type="text/javascript" id="axpconnector-datalayer-cart-viewed">
-        window.<?= /* @escapeNotVerified */ $dln ?> = window.<?= /* @escapeNotVerified */ $dln ?> || [];
-        window.<?= /* @escapeNotVerified */ $dln ?>.push(<?= /* @escapeNotVerified */ $block->datalayerJson() ?>);
-    </script>
-<?php endif; ?>
+<script type="text/javascript" id="axpconnector-datalayer-cart-viewed">
+    window.<?= /* @escapeNotVerified */ $dln ?>.push(<?= /* @escapeNotVerified */ $block->datalayerJson() ?>);
+</script>

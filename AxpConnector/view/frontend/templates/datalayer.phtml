@@ -3,17 +3,11 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
-$_helper = $this->helper(\Adobe\AxpConnector\Helper\Data::class);
 ?>
-
-<?php if ($_helper->isEnabled()) : ?>
-    <script type="text/x-magento-init">
-    {
-        "*": {
-            "axpconnector": {}
-        }
+<script type="text/x-magento-init">
+{
+    "*": {
+        "axpconnector": {}
     }
-
-    </script>
-<?php endif; ?>
+}
+</script>
