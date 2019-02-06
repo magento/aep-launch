@@ -15,7 +15,7 @@ use Magento\Framework\Module\Dir\Reader;
 use Magento\Framework\Filesystem\Driver\File;
 use Magento\Framework\Exception\FileSystemException;
 use Adobe\AxpConnector\Helper\ProvisionHelper;
-use Adobe\AxpConnector\Helper\Data;
+use Magento\Framework\Serialize\Serializer\Json;
 
 /**
  * Class Provision
@@ -45,9 +45,9 @@ class Provision extends Action implements HttpPostActionInterface
     private $provisionHelper;
 
     /**
-     * @var Data
+     * @var Json
      */
-    private $helper;
+    private $jsonSerializer;
 
     /**
      * @param Context $context
@@ -55,7 +55,7 @@ class Provision extends Action implements HttpPostActionInterface
      * @param Reader $moduleReader
      * @param File $file
      * @param ProvisionHelper $provisionHelper
-     * @param Data $helper
+     * @param Json $jsonSerializer
      */
     public function __construct(
         Context $context,
@@ -63,13 +63,13 @@ class Provision extends Action implements HttpPostActionInterface
         Reader $moduleReader,
         File $file,
         ProvisionHelper $provisionHelper,
-        Data $helper
+        Json $jsonSerializer
     ) {
         $this->resultJsonFactory = $resultJsonFactory;
         $this->moduleReader = $moduleReader;
         $this->file = $file;
         $this->provisionHelper = $provisionHelper;
-        $this->helper = $helper;
+        $this->jsonSerializer = $jsonSerializer;
         parent::__construct($context);
     }
 
@@ -102,7 +102,7 @@ class Provision extends Action implements HttpPostActionInterface
         $file = $etcDir . '/adminhtml/provision_config.json';
         try {
             $string = $this->file->fileGetContents($file);
-            return $this->helper->jsonDecode($string);
+            return $this->jsonSerializer->unserialize($string);
         } catch (FileSystemException $e) {
             return ["error"=>$e->getMessage()];
         }
