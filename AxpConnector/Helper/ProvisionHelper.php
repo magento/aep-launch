@@ -12,6 +12,8 @@ use Adobe\AxpConnector\Model\LaunchConfigProvider;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Psr\Log\LoggerInterface;
+use Adobe\AxpConnector\Model\ProvisioningConfigProvider;
+use Magento\Framework\Serialize\Serializer\Json;
 
 /**
  * Class ProvisionHelper
@@ -27,12 +29,6 @@ class ProvisionHelper extends AbstractHelper
      * @var ProvisionClient
      */
     private $provisionClient;
-
-    /**
-     * @var Data
-     * @deprecated
-     */
-    private $helper;
 
     /**
      * @var LoggerInterface
@@ -92,23 +88,34 @@ class ProvisionHelper extends AbstractHelper
     private $launchConfigProvider;
 
     /**
-     * Data constructor.
-     *
+     * @var ProvisioningConfigProvider
+     */
+    private $provisioningConfigProvider;
+
+    /**
+     * @var Json
+     */
+    private $jsonSerializer;
+
+    /**
      * @param Context $context
      * @param ProvisionClient $provisionClient
-     * @param Data $helper
      * @param LaunchConfigProvider $launchConfigProvider
+     * @param Json $jsonSerializer
+     * @param ProvisioningConfigProvider $provisioningConfigProvider
      * @param LoggerInterface $logger
      */
     public function __construct(
         Context $context,
         ProvisionClient $provisionClient,
-        Data $helper,
         LaunchConfigProvider $launchConfigProvider,
+        Json $jsonSerializer,
+        ProvisioningConfigProvider $provisioningConfigProvider,
         LoggerInterface $logger
     ) {
         $this->provisionClient = $provisionClient;
-        $this->helper = $helper;
+        $this->provisioningConfigProvider = $provisioningConfigProvider;
+        $this->jsonSerializer = $jsonSerializer;
         $this->logger = $logger;
         $this->launchConfigProvider = $launchConfigProvider;
         parent::__construct($context);
@@ -122,32 +129,32 @@ class ProvisionHelper extends AbstractHelper
      */
     public function makeRequests($conf)
     {
-        $propertyName = $this->helper->getPropertyName();
+        $propertyName = $this->provisioningConfigProvider->getPropertyName();
         if ($propertyName === null) {
             $propertyName = self::LAUNCH_PROPERTY_NAME_PREFIX;
         }
-        $aa_prod = $this->helper->getProdSuite();
+        $aa_prod = $this->provisioningConfigProvider->getProdSuite();
         if ($aa_prod === null) {
             $aa_prod = self::AA_RS_PROD;
         }
-        $aa_stage = $this->helper->getStageSuite();
+        $aa_stage = $this->provisioningConfigProvider->getStageSuite();
         if ($aa_stage === null) {
             $aa_stage = self::AA_RS_STAGE;
         }
-        $aa_dev = $this->helper->getDevSuite();
+        $aa_dev = $this->provisioningConfigProvider->getDevSuite();
         if ($aa_dev === null) {
             $aa_dev = self::AA_RS_DEV;
         }
         $result = ['error' => null, 'success' => false, 'complete' => false];
         $config = [
             'TOKEN_URI' => self::TOKEN_URI,
-            'DATA_ELEMENT_CALLS' => $this->helper->jsonDecode($conf['variables']['dataElementAPIcalls']),
-            'RULE_CALLS' => $this->helper->jsonDecode($conf['variables']['ruleAPIcalls']),
-            'RULE_COMPONENT_CALLS' => $this->helper->jsonDecode($conf['variables']['ruleComponentAPIcalls']),
-            'ADOBE_IO_CLIENT_ID' => $this->helper->getClientID(),
-            'ADOBE_IO_CLIENT_SECRET' => $this->helper->getClientSecret(),
-            'ADOBE_IO_JWT' => $this->helper->getJWT(),
-            'ADOBE_EC_ORG_ID' => $this->helper->getOrgID(),
+            'DATA_ELEMENT_CALLS' => $this->jsonSerializer->unserialize($conf['variables']['dataElementAPIcalls']),
+            'RULE_CALLS' => $this->jsonSerializer->unserialize($conf['variables']['ruleAPIcalls']),
+            'RULE_COMPONENT_CALLS' => $this->jsonSerializer->unserialize($conf['variables']['ruleComponentAPIcalls']),
+            'ADOBE_IO_CLIENT_ID' => $this->provisioningConfigProvider->getClientID(),
+            'ADOBE_IO_CLIENT_SECRET' => $this->provisioningConfigProvider->getClientSecret(),
+            'ADOBE_IO_JWT' => $this->provisioningConfigProvider->getJWT(),
+            'ADOBE_EC_ORG_ID' => $this->provisioningConfigProvider->getOrgID(),
             'ADOBE_IO_LAUNCH_HOSTNAME' => self::ADOBE_IO_LAUNCH_HOSTNAME,
             'LAUNCH_PROPERTY_NAME_PREFIX' => $propertyName,
             'AA_RS_PROD' => $aa_prod,
@@ -619,7 +626,7 @@ class ProvisionHelper extends AbstractHelper
         $response = [];
         foreach ($config['DATA_ELEMENT_CALLS'] as $dataElementCall) {
             $newBody = null;
-            $newBody = $this->replaceValues($this->helper->jsonify($dataElementCall['body']), $config);
+            $newBody = $this->replaceValues($this->jsonSerializer->serialize($dataElementCall['body']), $config);
             $request['body'] = $newBody;
             $response = $this->makeStandardRequest($request);
             if ($response && array_key_exists('error', $response)) {
@@ -645,7 +652,7 @@ class ProvisionHelper extends AbstractHelper
         $response = [];
         foreach ($config['RULE_CALLS'] as $ruleCall) {
             $newBody = null;
-            $newBody = $this->replaceValues($this->helper->jsonify($ruleCall['body']), $config);
+            $newBody = $this->replaceValues($this->jsonSerializer->serialize($ruleCall['body']), $config);
             $request['body'] = $newBody;
             $response = $this->makeStandardRequest($request);
 
@@ -800,7 +807,10 @@ class ProvisionHelper extends AbstractHelper
                 $request['method'] = 'POST';
                 $request['header'] = $ruleRequest['header'];
                 $request['code'] = 201;
-                $request['body'] = $this->replaceValues($this->helper->jsonify($componentCall['body']), $config);
+                $request['body'] = $this->replaceValues(
+                    $this->jsonSerializer->serialize($componentCall['body']),
+                    $config
+                );
                 $request['enctype'] = $ruleRequest['enctype'];
             } catch (\Exception $e) {
                 return ['error' => $e->getMessage()];
@@ -840,7 +850,7 @@ class ProvisionHelper extends AbstractHelper
             $config['resources'] = '[]';
         }
 
-        $resources = $this->helper->jsonDecode($config['resources']);
+        $resources = $this->jsonSerializer->unserialize($config['resources']);
 
         if ($response && array_key_exists('data', $response) && !array_key_exists('error', $response)) {
             foreach ($response['data'] as $resource) {
@@ -850,7 +860,7 @@ class ProvisionHelper extends AbstractHelper
                     'meta' => ['action' => 'revise']
                 ];
             }
-            $config['resources'] = $this->helper->jsonify($resources);
+            $config['resources'] = $this->jsonSerializer->serialize($resources);
         }
         return $response;
     }

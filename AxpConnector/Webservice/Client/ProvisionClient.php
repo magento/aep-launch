@@ -7,8 +7,8 @@ declare(strict_types=1);
 
 namespace Adobe\AxpConnector\Webservice\Client;
 
+use Magento\Framework\Serialize\Serializer\Json;
 use Zend\Http\Client as ZendClient;
-use Adobe\AxpConnector\Helper\Data;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -24,9 +24,9 @@ class ProvisionClient
     private $zendClient;
 
     /**
-     * @var Data
+     * @var Json
      */
-    private $helper;
+    private $jsonSerializer;
 
     /**
      * @var LoggerInterface
@@ -36,16 +36,16 @@ class ProvisionClient
     /**
      * ProvisionClient constructor.
      * @param ZendClient $zendClient
-     * @param Data $helper
+     * @param Json $jsonSerializer
      * @param LoggerInterface $logger
      */
     public function __construct(
         ZendClient $zendClient,
-        Data $helper,
+        Json $jsonSerializer,
         LoggerInterface $logger
     ) {
         $this->zendClient = $zendClient;
-        $this->helper = $helper;
+        $this->jsonSerializer = $jsonSerializer;
         $this->logger = $logger;
     }
 
@@ -89,7 +89,7 @@ class ProvisionClient
             $this->logger->debug('DebugProvisionRequestEnd', ['response' => $response]);
             $body = $response->getBody();
             try {
-                $respObj = $this->helper->jsonDecode($body);
+                $respObj = $this->jsonSerializer->unserialize($body);
             } catch (\Exception $e) {
                 $respObj = [];
             }

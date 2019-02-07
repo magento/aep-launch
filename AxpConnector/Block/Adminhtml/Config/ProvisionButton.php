@@ -10,7 +10,7 @@ namespace Adobe\AxpConnector\Block\Adminhtml\Config;
 use Magento\Backend\Block\Template\Context;
 use Magento\Config\Block\System\Config\Form\Field;
 use Magento\Framework\Data\Form\Element\AbstractElement;
-use Adobe\AxpConnector\Helper\Data;
+use Adobe\AxpConnector\Model\ProvisioningConfigProvider;
 
 /**
  * Class ProvisionButton
@@ -25,22 +25,19 @@ class ProvisionButton extends Field
     protected $_template = 'Adobe_AxpConnector::provision_button.phtml';
 
     /**
-     * @var Data
+     * @var ProvisioningConfigProvider
      */
-    private $helper;
+    private $provisioningConfigProvider;
 
     /**
-     * Data constructor.
-     *
      * @param Context $context
-     * @param Data $helper
-     *
+     * @param ProvisioningConfigProvider $provisioningConfigProvider
      */
     public function __construct(
         Context $context,
-        Data $helper
+        ProvisioningConfigProvider $provisioningConfigProvider
     ) {
-        $this->helper = $helper;
+        $this->provisioningConfigProvider = $provisioningConfigProvider;
         parent::__construct($context);
     }
 
@@ -87,10 +84,10 @@ class ProvisionButton extends Field
     public function isConfigSaved()
     {
         $isValid = 0;
-        if ($this->helper->getOrgID() !== null &&
-            $this->helper->getClientID() !== null &&
-            $this->helper->getClientSecret() !== null &&
-            $this->helper->getJWT() !== null
+        if ($this->provisioningConfigProvider->getOrgID() !== null &&
+            $this->provisioningConfigProvider->getClientID() !== null &&
+            $this->provisioningConfigProvider->getClientSecret() !== null &&
+            $this->provisioningConfigProvider->getJWT() !== null
         ) {
             $isValid = 1;
         }
