@@ -7,58 +7,66 @@ declare(strict_types=1);
 
 namespace Adobe\AxpConnector\Block;
 
-use Adobe\AxpConnector\Model\LaunchConfigProvider;
+use Magento\Framework\View\Element\Template;
+use Adobe\AxpConnector\Model\Datalayer;
+use Magento\Framework\View\Element\Template\Context;
 
 /**
  * Class Page.
  *
  * @api
  */
-class Page extends Base
+class Page extends Template
 {
     /**
      * @var \Magento\Framework\View\Page\Title
      */
-    protected $pageTitle;
+    private $pageTitle;
 
     /**
      * @var \Magento\Catalog\Helper\Data
+     * @deprecated Public APIs should be used instead of helpers where possible.
      */
-    protected $catalogHelper;
+    private $catalogHelper;
 
     /**
-     * @param \Magento\Framework\View\Element\Template\Context $context
-     * @param \Adobe\AxpConnector\Helper\Data $helper
-     * @param LaunchConfigProvider $launchConfigProvider
-     * @param array $data
+     * @var Datalayer
+     */
+    private $datalayer;
+
+    /**
+     * @param Context $context
      * @param \Magento\Catalog\Helper\Data $catalogHelper
      * @param \Magento\Framework\View\Page\Title $pageTitle
+     * @param Datalayer $datalayer
+     * @param array $data
      */
     public function __construct(
-        \Magento\Framework\View\Element\Template\Context $context,
-        \Adobe\AxpConnector\Helper\Data $helper,
-        LaunchConfigProvider $launchConfigProvider,
-        array $data,
+        Context $context,
         \Magento\Catalog\Helper\Data $catalogHelper,
-        \Magento\Framework\View\Page\Title $pageTitle
+        \Magento\Framework\View\Page\Title $pageTitle,
+        Datalayer $datalayer,
+        array $data = []
     ) {
-        parent::__construct($context, $helper, $launchConfigProvider, $data);
+        parent::__construct($context, $data);
         $this->pageTitle = $pageTitle;
         $this->catalogHelper = $catalogHelper;
+        $this->datalayer = $datalayer;
     }
 
     /**
      * Datalayer for page.
      *
-     * @return array
+     * @return string
+     * @deprecated Due to redundancy
      */
-    public function datalayerPage()
+    private function datalayerPage(): string
     {
         $title = $this->pageTitle();
         $type = $this->pageType();
         $crumbs = $this->getBreadCrumbPath();
 
-        return $this->helper->pageLoadedPushData($title, $type, $crumbs);
+        return $this->datalayer->pageLoadedPushData($title, $type, $crumbs);
     }
 
     /**
@@ -66,27 +74,18 @@ class Page extends Base
      *
      * @return string
      */
-    public function datalayerPageJson()
+    public function datalayerPageJson(): string
     {
-        return $this->helper->jsonify($this->datalayerPage());
-    }
-
-    /**
-     * Add info to log.
-     *
-     * @param mixed $msg
-     */
-    public function log($msg)
-    {
-        $this->_logger->addInfo($msg);
+        return $this->datalayerPage();
     }
 
     /**
      * Get breadcrumbs path.
      *
      * @return array
+     * @deprecated Public APIs should be used instead of helpers where possible.
      */
-    protected function getBreadCrumbPath()
+    private function getBreadCrumbPath(): array
     {
         $titleArray = [];
         $breadCrumbs = $this->catalogHelper->getBreadcrumbPath();
@@ -101,9 +100,9 @@ class Page extends Base
     /**
      * Get short page title.
      *
-     * @return mixed
+     * @return string
      */
-    protected function pageTitle()
+    private function pageTitle(): string
     {
         return $this->pageTitle->getShort();
     }
@@ -114,9 +113,10 @@ class Page extends Base
      * @return mixed
      *
      * @SuppressWarnings(PHPMD.RequestAwareBlockMethod)
+     * @deprecated Request should not be used directly.
      */
-    protected function pageType()
+    private function pageType()
     {
-        return $this->_request->getFullActionName();
+        return $this->getRequest()->getFullActionName();
     }
 }

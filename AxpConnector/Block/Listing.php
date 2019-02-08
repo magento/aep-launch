@@ -7,29 +7,38 @@ declare(strict_types=1);
 
 namespace Adobe\AxpConnector\Block;
 
-use Adobe\AxpConnector\Model\LaunchConfigProvider;
+use Magento\Catalog\Block\Product\ListProduct;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\View\Element\Template;
+use Magento\Framework\View\Element\Template\Context;
+use Adobe\AxpConnector\Model\Datalayer;
 
 /**
  * Listing Block.
  *
  * @api
  */
-class Listing extends Base
+class Listing extends Template
 {
     /**
-     * @param \Magento\Framework\View\Element\Template\Context $context
-     * @param \Adobe\AxpConnector\Helper\Data $helper
-     * @param LaunchConfigProvider $launchConfigProvider
+     * @var Datalayer
+     */
+    private $datalayer;
+
+    /**
+     * @param Context $context
+     * @param Datalayer $datalayer
      * @param array $data
      */
     public function __construct(
-        \Magento\Framework\View\Element\Template\Context $context,
-        \Adobe\AxpConnector\Helper\Data $helper,
-        LaunchConfigProvider $launchConfigProvider,
-        array $data
+        Template\Context $context,
+        Datalayer $datalayer,
+        array $data = []
     ) {
-        parent::__construct($context, $helper, $launchConfigProvider, $data);
+        $this->datalayer = $datalayer;
+        parent::__construct($context, $data);
     }
+
 
     /**
      * Product listing sort direction
@@ -37,10 +46,11 @@ class Listing extends Base
      * @return string
      *
      * @SuppressWarnings(PHPMD.RequestAwareBlockMethod)
+     * @deprecated Must be refactored to avoid pulling data from request.
      */
-    public function getListDirection()
+    private function getListDirection(): string
     {
-        $sortOrder = $this->_request->getParam('product_list_dir');
+        $sortOrder = $this->getRequest()->getParam('product_list_dir');
         if ($sortOrder) {
             return $sortOrder;
         } else {
@@ -54,10 +64,11 @@ class Listing extends Base
      * @return string
      *
      * @SuppressWarnings(PHPMD.RequestAwareBlockMethod)
+     * @deprecated Must be refactored to avoid pulling data from request.
      */
-    public function getListOrder()
+    private function getListOrder(): string
     {
-        $listOrder = $this->_request->getParam('product_list_order');
+        $listOrder = $this->getRequest()->getParam('product_list_order');
         if ($listOrder) {
             return $listOrder;
         } else {
@@ -68,11 +79,14 @@ class Listing extends Base
     /**
      * Category page datalayer.
      *
-     * @return array
+     * @return string|null
+     * @throws LocalizedException
+     * @deprecated Due to redundancy
      */
-    public function datalayer()
+    private function datalayer(): ?string
     {
-        $categoryBlock = $this->_layout->getBlock('category.products.list');
+        /** @var ListProduct $categoryBlock */
+        $categoryBlock = $this->getLayout()->getBlock('category.products.list');
 
         if (empty($categoryBlock)) {
             return null;
@@ -84,17 +98,23 @@ class Listing extends Base
         $listOrder = $this->getListOrder();
         $sortDirection = $this->getListDirection();
 
-        return $this->helper->categoryViewedPushData($resultsShown, $resultsCount, $listOrder, $sortDirection);
+        return $this->datalayer->categoryViewedPushData($resultsShown, $resultsCount, $listOrder, $sortDirection);
     }
 
     /**
      * Json search results datalayer.
      *
-     * @return array
+     * @return string|null
+     * @depracated This method is only temporarily used as a part of refactoring routine.
      */
-    public function datalayerJson()
+    public function datalayerJson(): ?string
     {
-        $datalayer = $this->datalayer();
-        return $this->helper->jsonify($datalayer);
+        try {
+            $datalayer = $this->datalayer();
+        } catch (LocalizedException $exception) {
+            return null;
+        }
+
+        return $datalayer;
     }
 }

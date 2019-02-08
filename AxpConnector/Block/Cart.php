@@ -7,56 +7,54 @@ declare(strict_types=1);
 
 namespace Adobe\AxpConnector\Block;
 
-use Adobe\AxpConnector\Model\LaunchConfigProvider;
+use Adobe\AxpConnector\Model\Datalayer;
+use Magento\Framework\View\Element\Template;
+use Magento\Framework\View\Element\Template\Context;
+use Magento\Checkout\Model\Cart as CartModel;
 
 /**
  * Cart Block.
  *
  * @api
  */
-class Cart extends Base
+class Cart extends Template
 {
     /**
-     * @var \Magento\Checkout\Model\Cart $cartModel
+     * @var CartModel $cartModel
+     * @deprecated Model should not be used directly
      */
-    protected $cartModel;
+    private $cartModel;
 
     /**
-     * @param \Magento\Framework\View\Element\Template\Context $context
-     * @param \Adobe\AxpConnector\Helper\Data $helper
-     * @param LaunchConfigProvider $launchConfigProvider
+     * @var Datalayer
+     */
+    private $datalayer;
+
+    /**
+     * @param Context $context
+     * @param CartModel $cartModel
+     * @param Datalayer $datalayer
      * @param array $data
-     * @param \Magento\Checkout\Model\Cart $cartModel
      */
     public function __construct(
-        \Magento\Framework\View\Element\Template\Context $context,
-        \Adobe\AxpConnector\Helper\Data $helper,
-        LaunchConfigProvider $launchConfigProvider,
-        array $data,
-        \Magento\Checkout\Model\Cart $cartModel
+        Context $context,
+        CartModel $cartModel,
+        Datalayer $datalayer,
+        array $data = []
     ) {
-        parent::__construct($context, $helper, $launchConfigProvider, $data);
+        parent::__construct($context, $data);
         $this->cartModel = $cartModel;
-    }
-
-    /**
-     * Datalayer.
-     *
-     * @return array
-     */
-    public function datalayer()
-    {
-        return $this->helper->cartViewedPushData($this->cartModel);
+        $this->datalayer = $datalayer;
     }
 
     /**
      * Json Datalayer.
      *
      * @return string
+     * @depracated This method is only temporarily used as a part of refactoring routine.
      */
     public function datalayerJson()
     {
-        $datalayer = $this->datalayer();
-        return $this->helper->jsonify($datalayer);
+        return $this->datalayer->cartViewedPushData($this->cartModel);
     }
 }

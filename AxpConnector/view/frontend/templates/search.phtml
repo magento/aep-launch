@@ -6,12 +6,14 @@
 
 /**
  * @var \Adobe\AxpConnector\Block\Search $block
+ * @var \Adobe\AxpConnector\ViewModel\Js $viewModel
  */
-$dln = $block->datalayerName();
+$viewModel = $block->getViewModel();
+$datalayerName = $block->escapeJs($viewModel->getDatalayerName());
+$datalayerJson = $block->datalayerJson();
 ?>
 <script type="text/javascript" id="axpconnector-datalayer-search-results">
-    <?php $datalayerJson = $block->datalayerJson(); ?>
-        <?php if ($datalayerJson) : ?>
-            window.<?= /* @escapeNotVerified */ $dln ?>.push(<?= /* @escapeNotVerified */ $datalayerJson ?>);
-        <?php endif; ?>
+    <?php if ($datalayerJson) : ?>
+        window.<?= /* @noEscape */ $datalayerName ?>.push(<?= /* @noEscape */ $datalayerJson ?>);
+    <?php endif; ?>
 </script>

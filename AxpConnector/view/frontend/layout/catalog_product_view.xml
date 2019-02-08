@@ -3,9 +3,18 @@
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="after.body.start">
-            <block class="Adobe\AxpConnector\Block\Product" name="axpconnector_product_block"
-                   template="Adobe_AxpConnector::product.phtml" after="-"
-                   ifconfig="axpconnector_backend_config/general/enable" />
+            <block class="Adobe\AxpConnector\Block\Product"
+                   name="axpconnector_product_block"
+                   template="Adobe_AxpConnector::product.phtml"
+                   after="-"
+                   ifconfig="axpconnector_backend_config/general/enable"
+            >
+                <arguments>
+                    <argument name="view_model" xsi:type="object">
+                        Adobe\AxpConnector\ViewModel\Js
+                    </argument>
+                </arguments>
+            </block>
         </referenceContainer>
     </body>
 </page>

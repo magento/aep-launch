@@ -5,11 +5,13 @@
  */
 
 /**
- * @var $block \Adobe\AxpConnector\Block\Js
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Adobe\AxpConnector\ViewModel\Js $viewModel
  */
-$datalayerName = $block->getDatalayerName();
+$viewModel = $block->getViewModel();
+$datalayerName = $block->escapeJs($viewModel->getDatalayerName());
 ?>
 <script type="text/javascript">
     window.<?= /* @noEscape */ $datalayerName ?> = window.<?= /* @noEscape */ $datalayerName ?> || [];
 </script>
-<script src="<?= /* @noEscape */ $block->getScriptUrl(); ?>" async></script>
+<script src="<?= /* @noEscape */ $block->escapeUrl($viewModel->getScriptUrl()); ?>" async></script>
