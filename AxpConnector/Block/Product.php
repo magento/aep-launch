@@ -7,47 +7,55 @@ declare(strict_types=1);
 
 namespace Adobe\AxpConnector\Block;
 
-use Adobe\AxpConnector\Model\LaunchConfigProvider;
+use Magento\Framework\View\Element\Template;
+use Adobe\AxpConnector\Model\Datalayer;
+use Magento\Framework\View\Element\Template\Context;
+use Magento\Framework\Registry;
 
 /**
  * Product block.
  *
  * @api
  */
-class Product extends Base
+class Product extends Template
 {
     /**
-     * @var \Magento\Framework\Registry
+     * @var Registry
+     * @deprecated Registry is deprecated
      */
-    protected $registry;
+    private $registry;
 
     /**
-     * @param \Magento\Framework\View\Element\Template\Context $context
-     * @param \Adobe\AxpConnector\Helper\Data $helper
-     * @param LaunchConfigProvider $launchConfigProvider
+     * @var Datalayer
+     */
+    private $datalayer;
+
+    /**
+     * @param Context $context
+     * @param Datalayer $datalayer
+     * @param Registry $registry
      * @param array $data
-     * @param \Magento\Framework\Registry $registry
      */
     public function __construct(
-        \Magento\Framework\View\Element\Template\Context $context,
-        \Adobe\AxpConnector\Helper\Data $helper,
-        LaunchConfigProvider $launchConfigProvider,
-        array $data,
-        \Magento\Framework\Registry $registry
+        Context $context,
+        Datalayer $datalayer,
+        Registry $registry,
+        array $data = []
     ) {
-        parent::__construct($context, $helper, $launchConfigProvider, $data);
+        parent::__construct($context, $data);
         $this->registry = $registry;
-        $this->helper = $helper;
+        $this->datalayer = $datalayer;
     }
 
     /**
      * Product datalayer.
      *
-     * @return array
+     * @return string
+     * @deprecated Due to redundancy
      */
-    public function datalayerProduct()
+    private function datalayerProduct(): string
     {
-        return $this->helper->productViewedPushData($this->getCurrentProduct());
+        return $this->datalayer->productViewedPushData($this->getCurrentProduct());
     }
 
     /**
@@ -55,18 +63,18 @@ class Product extends Base
      *
      * @return string
      */
-    public function datalayerProductJson()
+    public function datalayerProductJson(): string
     {
-        $datalayerProd = $this->datalayerProduct();
-        return $this->helper->jsonify($datalayerProd);
+        return $this->datalayerProduct();
     }
 
     /**
      * Getter for current product.
      *
      * @return mixed
+     * @deprecated Due to usage of deprecated APIs
      */
-    protected function getCurrentProduct()
+    private function getCurrentProduct()
     {
         return $this->registry->registry('current_product');
     }

@@ -3,13 +3,22 @@
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceBlock name="head.additional">
-            <block class="Adobe\AxpConnector\Block\Js" name="axpconnector_launch_head_script" before="-" template="Adobe_AxpConnector::launch_head.phtml" ifconfig="axpconnector_backend_config/general/enable" />
+            <block class="Magento\Framework\View\Element\Template" name="axpconnector_launch_head_script" before="-" template="Adobe_AxpConnector::launch_head.phtml" ifconfig="axpconnector_backend_config/general/enable">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">
+                        Adobe\AxpConnector\ViewModel\Js
+                    </argument>
+                </arguments>
+            </block>
         </referenceBlock>
 
         <referenceContainer name="after.body.start">
-            <block class="Adobe\AxpConnector\Block\Display" name="axpconnector_datalayer_block"
-                   as="axpconnector_datalayer_block" template="Adobe_AxpConnector::datalayer.phtml" before=""
-                   ifconfig="axpconnector_backend_config/general/enable" />
+            <block class="Magento\Framework\View\Element\Template"
+                   name="axpconnector_datalayer_block"
+                   as="axpconnector_datalayer_block"
+                   template="Adobe_AxpConnector::datalayer.phtml"
+                   ifconfig="axpconnector_backend_config/general/enable"
+            />
 
             <block name="axpconnector_private_content_block"
                    template="Adobe_AxpConnector::private_content_datalayer.phtml"
@@ -25,9 +34,17 @@
                 </arguments>
             </block>
 
-            <block class="Adobe\AxpConnector\Block\Page" name="axpconnector_page_block"
+            <block class="Adobe\AxpConnector\Block\Page"
+                   name="axpconnector_page_block"
                    template="Adobe_AxpConnector::page.phtml"
-                   ifconfig="axpconnector_backend_config/general/enable" />
+                   ifconfig="axpconnector_backend_config/general/enable"
+            >
+                <arguments>
+                    <argument name="view_model" xsi:type="object">
+                        Adobe\AxpConnector\ViewModel\Js
+                    </argument>
+                </arguments>
+            </block>
         </referenceContainer>
     </body>
 </page>

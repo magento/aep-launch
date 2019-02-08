@@ -7,36 +7,44 @@ declare(strict_types=1);
 
 namespace Adobe\AxpConnector\Block;
 
-use Adobe\AxpConnector\Model\LaunchConfigProvider;
+use Magento\Framework\View\Element\Template;
+use Adobe\AxpConnector\Model\Datalayer;
+use Magento\Framework\View\Element\Template\Context;
+use Magento\CatalogSearch\Helper\Data as CatalogSearchHelper;
+use Magento\Catalog\Block\Product\ListProduct;
 
 /**
  * Search Block.
  *
  * @api
  */
-class Search extends Base
+class Search extends Template
 {
     /**
      * @var \Magento\CatalogSearch\Helper\Data
+     * @deprecated Public APIs should be used instead of helpers where possible
      */
-    protected $catalogSearchHelper;
+    private $catalogSearchHelper;
 
     /**
-     * @param \Magento\Framework\View\Element\Template\Context $context
-     * @param \Adobe\AxpConnector\Helper\Data $helper
-     * @param LaunchConfigProvider $launchConfigProvider
+     * @var Datalayer
+     */
+    private $datalayer;
+
+    /**
+     * @param Context $context
+     * @param Datalayer $datalayer
+     * @param CatalogSearchHelper $catalogSearchHelper
      * @param array $data
-     * @param \Magento\CatalogSearch\Helper\Data $catalogSearchHelper
      */
     public function __construct(
-        \Magento\Framework\View\Element\Template\Context $context,
-        \Adobe\AxpConnector\Helper\Data $helper,
-        LaunchConfigProvider $launchConfigProvider,
-        array $data,
-        \Magento\CatalogSearch\Helper\Data $catalogSearchHelper
+        Context $context,
+        Datalayer $datalayer,
+        CatalogSearchHelper $catalogSearchHelper,
+        array $data = []
     ) {
-        parent::__construct($context, $helper, $launchConfigProvider, $data);
-        $this->helper = $helper;
+        parent::__construct($context, $data);
+        $this->datalayer = $datalayer;
         $this->catalogSearchHelper = $catalogSearchHelper;
     }
 
@@ -45,7 +53,7 @@ class Search extends Base
      *
      * @return string
      */
-    public function getQueryText()
+    private function getQueryText(): string
     {
         return $this->catalogSearchHelper->getEscapedQueryText();
     }
@@ -56,10 +64,11 @@ class Search extends Base
      * @return string
      *
      * @SuppressWarnings(PHPMD.RequestAwareBlockMethod)
+     * @deprecated Request should not be used directly
      */
-    public function getListDirection()
+    private function getListDirection(): string
     {
-        $sortOrder = $this->_request->getParam('product_list_dir');
+        $sortOrder = $this->getRequest()->getParam('product_list_dir');
         if ($sortOrder) {
             return $sortOrder;
         } else {
@@ -73,10 +82,11 @@ class Search extends Base
      * @return string
      *
      * @SuppressWarnings(PHPMD.RequestAwareBlockMethod)
+     * @deprecated Request should not be used directly
      */
-    public function getListOrder()
+    private function getListOrder(): string
     {
-        $listOrder = $this->_request->getParam('product_list_order');
+        $listOrder = $this->getRequest()->getParam('product_list_order');
         if ($listOrder) {
             return $listOrder;
         } else {
@@ -87,10 +97,12 @@ class Search extends Base
     /**
      * Search results datalayer.
      *
-     * @return array
+     * @return string|null
+     * @deprecaed Due to redundancy
      */
-    public function datalayer()
+    private function datalayer(): ?string
     {
+        /** @var ListProduct $searchResultListBlock */
         $searchResultListBlock = $this->_layout->getBlock('search_result_list');
 
         if (empty($searchResultListBlock)) {
@@ -104,7 +116,7 @@ class Search extends Base
         $listOrder = $this->getListOrder();
         $listDirection = $this->getListDirection();
 
-        return $this->helper->searchResultsPushData(
+        return $this->datalayer->searchResultsPushData(
             $resultsShown,
             $resultsCount,
             $listOrder,
@@ -116,11 +128,10 @@ class Search extends Base
     /**
      * Json search results datalayer.
      *
-     * @return array
+     * @return string|null
      */
-    public function datalayerJson()
+    public function datalayerJson(): ?string
     {
-        $datalayer = $this->datalayer();
-        return $this->helper->jsonify($datalayer);
+        return $this->datalayer();
     }
 }

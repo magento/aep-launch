@@ -6,9 +6,11 @@
 
 /**
  * @var \Adobe\AxpConnector\Block\Page $block
+ * @var \Adobe\AxpConnector\ViewModel\Js $viewModel
  */
-$dln = $block->datalayerName();
+$viewModel = $block->getViewModel();
+$datalayerName = $block->escapeJs($viewModel->getDatalayerName());
 ?>
 <script type="text/javascript" id="axpconnector-datalayer-page-loaded">
-    window.<?= /* @escapeNotVerified */ $dln ?>.push(<?= /* @escapeNotVerified */ $block->datalayerPageJson() ?>);
+    window.<?= /* @noEscape */ $datalayerName ?>.push(<?= /* @noEscape */ $block->datalayerPageJson() ?>);
 </script>
