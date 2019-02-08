@@ -9,6 +9,7 @@ namespace Adobe\AxpConnector\Model;
 
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Framework\Serialize\Serializer\Json;
+use Magento\Sales\Api\Data\OrderInterface;
 
 /**
  * This is a prototype class, temporary introduced for refactoring purposes.
@@ -191,6 +192,110 @@ class Datalayer
             'sortOrder' => $sortDirection,
             'sortKey' => $listOrder
         ];
+
+        return $this->jsonSerializer->serialize($result);
+    }
+
+    /**
+     * Push data on add to cart (?)
+     *
+     * @param int $qty
+     * @param ProductInterface $product
+     * @return string
+     * @depracated This method is only temporarily used as a part of refactoring routine.
+     */
+    public function addToCartPushData($qty, $product): string
+    {
+        $result = [];
+
+        $result['event'] = 'Product Added';
+        $result['product'] = [];
+
+        $item = [];
+        $item['quantity'] = strval($qty);
+        $item['productInfo'] = [];
+        $item['productInfo']['sku'] = $product->getSku();
+        $item['productInfo']['productID'] = $product->getData('sku');
+
+        array_push($result['product'], $item);
+
+        return $this->jsonSerializer->serialize($result);
+    }
+
+    /**
+     * Push data on removal from the cart.
+     *
+     * @param int $qty
+     * @param ProductInterface $product
+     * @return string
+     * @depracated This method is only temporarily used as a part of refactoring routine.
+     */
+    public function removeFromCartPushData($qty, $product): string
+    {
+        // It's very similar to product added
+        $result = $this->jsonSerializer->unserialize($this->addToCartPushData($qty, $product));
+        $result['event'] = 'Product Removed';
+
+        return $this->jsonSerializer->serialize($result);
+    }
+
+    /**
+     * Push data on order placed.
+     *
+     * @param OrderInterface[] $orders
+     * @return string
+     * @depracated This method is only temporarily used as a part of refactoring routine.
+     */
+    public function orderPlacedPushData($orders): string
+    {
+        $result = [];
+
+        foreach ($orders as $order) {
+            $orderObject = [
+                'event' => 'Order Placed',
+                'transaction' => [
+                    'transactionID' => $order->getIncrementId(),
+                    'total' => [
+                        'currency' => $order->getOrderCurrencyCode()
+                    ],
+                    'shippingGroup' => [],
+                    'profile' => [
+                        'address' => []
+                    ],
+                    'item' => []
+                ]
+            ];
+
+            // TODO - Multi-shipping
+            $shippingGroup = [
+                'tax' => $order->getShippingTaxAmount(),
+                'shippingCost' => $order->getShippingAmount(),
+                'groupId' => '1'
+            ];
+            $orderObject['transaction']['shippingGroup'][] = $shippingGroup;
+
+            $billingAddress = $order->getBillingAddress();
+            $orderObject['transaction']['profile']['address']['stateProvince'] = $billingAddress->getRegionCode();
+            $orderObject['transaction']['profile']['address']['postalCode'] = $billingAddress->getPostcode();
+
+            foreach ($order->getAllVisibleItems() as $item) {
+                $itemData = [
+                    'shippingGroupID' => '1',
+                    'quantity' => $item->getQtyOrdered(),
+                    'productInfo' => [
+                        'sku' => $item->getSku(),
+                        'productID' => $item->getProduct()->getData('sku')
+                    ],
+                    'price' => [
+                        'sellingPrice' => $item->getPrice()
+                    ]
+                ];
+
+                $orderObject['transaction']['item'][] = $itemData;
+            }
+
+            $result[] = $orderObject;
+        }
 
         return $this->jsonSerializer->serialize($result);
     }

@@ -18,7 +18,13 @@
                    as="axpconnector_datalayer_block"
                    template="Adobe_AxpConnector::datalayer.phtml"
                    ifconfig="axpconnector_backend_config/general/enable"
-            />
+            >
+                <arguments>
+                    <argument name="view_model" xsi:type="object">
+                        Adobe\AxpConnector\ViewModel\Js
+                    </argument>
+                </arguments>
+            </block>
 
             <block name="axpconnector_private_content_block"
                    template="Adobe_AxpConnector::private_content_datalayer.phtml"

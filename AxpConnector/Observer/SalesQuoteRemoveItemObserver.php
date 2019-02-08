@@ -7,8 +7,10 @@ declare(strict_types=1);
 
 namespace Adobe\AxpConnector\Observer;
 
+use Adobe\AxpConnector\Model\Datalayer;
 use Magento\Framework\Event\ObserverInterface;
 use Adobe\AxpConnector\Model\LaunchConfigProvider;
+use Magento\Catalog\Api\ProductRepositoryInterface;
 
 /**
  * Observer for quote item remove.
@@ -16,10 +18,9 @@ use Adobe\AxpConnector\Model\LaunchConfigProvider;
 class SalesQuoteRemoveItemObserver implements ObserverInterface
 {
     /**
-     * @var \Adobe\AxpConnector\Helper\Data
-     * @deprecated
+     * @var Datalayer
      */
-    protected $helper;
+    private $datalayer;
 
     /**
      * @var LaunchConfigProvider
@@ -29,67 +30,56 @@ class SalesQuoteRemoveItemObserver implements ObserverInterface
     /**
      * @var \Magento\Checkout\Model\Session
      */
-    protected $_checkoutSession;
+    private $checkoutSession;
 
     /**
-     * @var \Magento\Catalog\Model\ProductRepository
+     * @var ProductRepositoryInterface
      */
-    protected $productRepository;
+    private $productRepository;
 
     /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    protected $logger;
-
-    /**
-     * @param \Adobe\AxpConnector\Helper\Data $helper
+     * @param Datalayer $datalayer
      * @param LaunchConfigProvider $launchConfigProvider
-     * @param \Magento\Catalog\Model\ProductRepository $productRepository
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param \Magento\Checkout\Model\Session $_checkoutSession
+     * @param ProductRepositoryInterface $productRepository
+     * @param \Magento\Checkout\Model\Session $checkoutSession
      */
     public function __construct(
-        \Adobe\AxpConnector\Helper\Data $helper,
+        Datalayer $datalayer,
         LaunchConfigProvider $launchConfigProvider,
-        \Magento\Catalog\Model\ProductRepository $productRepository,
-        \Psr\Log\LoggerInterface $logger,
-        \Magento\Checkout\Model\Session $_checkoutSession
+        ProductRepositoryInterface $productRepository,
+        \Magento\Checkout\Model\Session $checkoutSession
     ) {
-        $this->helper = $helper;
+        $this->datalayer = $datalayer;
         $this->launchConfigProvider = $launchConfigProvider;
-        $this->_checkoutSession = $_checkoutSession;
+        $this->checkoutSession = $checkoutSession;
         $this->productRepository = $productRepository;
-        $this->logger = $logger;
     }
 
     /**
      * @inheritdoc
      *
      * @param \Magento\Framework\Event\Observer $observer
-     * @return $this|void
+     * @return void
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         if (!$this->launchConfigProvider->isEnabled()) {
-            return $this;
+            return;
         }
 
         $quoteItem = $observer->getData('quote_item');
         $productId = $quoteItem->getData('product_id');
 
         if (!$productId) {
-            return $this;
+            return;
         }
 
         $product = $this->productRepository->getById($productId);
         $qty = $quoteItem->getData('qty');
 
-        $this->_checkoutSession->setRemoveFromCartDatalayerContent(
-            $this->helper->removeFromCartPushData($qty, $product)
+        $this->checkoutSession->setRemoveFromCartDatalayerContent(
+            $this->datalayer->removeFromCartPushData($qty, $product)
         );
-        $this->logger->addInfo('Remove From Cart Observer');
-
-        return $this;
     }
 }

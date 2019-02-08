@@ -3,11 +3,20 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Adobe\AxpConnector\ViewModel\Js $viewModel
+ */
+$viewModel = $block->getViewModel();
+$datalayerName = $block->escapeJs($viewModel->getDatalayerName());
 ?>
 <script type="text/x-magento-init">
 {
     "*": {
-        "axpconnector": {}
+        "axpconnector": {
+            "datalayerName": "<?= /** @noEscape */ $datalayerName ?>"
+        }
     }
 }
 </script>

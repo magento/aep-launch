@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Adobe\AxpConnector\Observer;
 
+use Adobe\AxpConnector\Model\Datalayer;
 use Magento\Framework\Event\ObserverInterface;
 use Adobe\AxpConnector\Model\LaunchConfigProvider;
 
@@ -16,10 +17,9 @@ use Adobe\AxpConnector\Model\LaunchConfigProvider;
 class CheckoutCartAddProductObserver implements ObserverInterface
 {
     /**
-     * @var \Adobe\AxpConnector\Helper\Data
-     * @deprecated
+     * @var Datalayer
      */
-    private $helper;
+    private $datalayer;
 
     /**
      * @var LaunchConfigProvider
@@ -37,21 +37,29 @@ class CheckoutCartAddProductObserver implements ObserverInterface
     private $checkoutSession;
 
     /**
-     * @param \Adobe\AxpConnector\Helper\Data $helper
+     * @var \Magento\Framework\Filter\LocalizedToNormalized
+     */
+    private $localizedToNormalized;
+
+    /**
+     * @param Datalayer $datalayer
      * @param LaunchConfigProvider $launchConfigProvider
      * @param \Magento\Framework\Locale\ResolverInterface $resolverInterface
      * @param \Magento\Checkout\Model\Session $checkoutSession
+     * @param \Magento\Framework\Filter\LocalizedToNormalized $localizedToNormalized
      */
     public function __construct(
-        \Adobe\AxpConnector\Helper\Data $helper,
+        Datalayer $datalayer,
         LaunchConfigProvider $launchConfigProvider,
         \Magento\Framework\Locale\ResolverInterface $resolverInterface,
-        \Magento\Checkout\Model\Session $checkoutSession
+        \Magento\Checkout\Model\Session $checkoutSession,
+        \Magento\Framework\Filter\LocalizedToNormalized $localizedToNormalized
     ) {
-        $this->helper = $helper;
+        $this->datalayer = $datalayer;
         $this->launchConfigProvider = $launchConfigProvider;
         $this->resolverInterface = $resolverInterface;
         $this->checkoutSession = $checkoutSession;
+        $this->localizedToNormalized = $localizedToNormalized;
     }
 
     /**
@@ -72,15 +80,13 @@ class CheckoutCartAddProductObserver implements ObserverInterface
         $params = $request->getParams();
 
         if (isset($params['qty'])) {
-            $filter = new \Zend_Filter_LocalizedToNormalized(
-                ['locale' => $this->resolverInterface->getLocale()]
-            );
-            $qty = $filter->filter($params['qty']);
+            $this->localizedToNormalized->setOptions(['locale' => $this->resolverInterface->getLocale()]);
+            $qty = $this->localizedToNormalized->filter($params['qty']);
         } else {
             $qty = 1;
         }
 
-        $datalayerContent = $this->helper->addToCartPushData($qty, $product);
+        $datalayerContent = $this->datalayer->addToCartPushData($qty, $product);
         $this->checkoutSession->setAddToCartDatalayerContent($datalayerContent);
 
         return $this;
