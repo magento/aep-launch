@@ -9,6 +9,7 @@ namespace Adobe\AxpConnector\CustomerData;
 
 use Magento\Customer\CustomerData\SectionSourceInterface;
 use Adobe\AxpConnector\Model\LaunchConfigProvider;
+use Magento\Checkout\Model\Session;
 
 /**
  * Launch private data section
@@ -16,7 +17,7 @@ use Adobe\AxpConnector\Model\LaunchConfigProvider;
 class Launch implements SectionSourceInterface
 {
     /**
-     * @var \Magento\Checkout\Model\Session
+     * @var Session
      */
     private $checkoutSession;
 
@@ -27,11 +28,11 @@ class Launch implements SectionSourceInterface
 
     /**
      * @param LaunchConfigProvider $launchConfigProvider
-     * @param \Magento\Checkout\Model\Session $checkoutSession
+     * @param Session $checkoutSession
      */
     public function __construct(
         LaunchConfigProvider $launchConfigProvider,
-        \Magento\Checkout\Model\Session $checkoutSession
+        Session $checkoutSession
     ) {
         $this->checkoutSession = $checkoutSession;
         $this->launchConfigProvider = $launchConfigProvider;
@@ -46,29 +47,13 @@ class Launch implements SectionSourceInterface
     {
         $data = [];
 
-        if ($this->checkoutSession->getAddToCartDatalayerContent()) {
-            $data[] = $this->checkoutSession->getAddToCartDatalayerContent();
-        }
-        $this->checkoutSession->setAddToCartDatalayerContent(null);
-
-        if ($this->checkoutSession->getRemoveFromCartDatalayerContent()) {
-            $data[] = $this->checkoutSession->getRemoveFromCartDatalayerContent();
-        }
-        $this->checkoutSession->setRemoveFromCartDatalayerContent(null);
-
-        // Get rid of nulls and empties
+        $data[] = $this->checkoutSession->getData('add_to_cart_datalayer_content', true);
+        $data[] = $this->checkoutSession->getData('remove_from_cart_datalayer_content', true);
         $data = array_filter($data);
 
-        $script = '<script type="text/javascript">';
-        if (count($data) > 0) {
-            foreach ($data as $event) {
-                $script .= sprintf("window.%s.push(%s)", $this->launchConfigProvider->getDatalayerName(), $event);
-            }
-            $script = $script . '</script>';
-        }
 
         return [
-            'datalayerScript' => $script
+            'datalayerEvents' => $data
         ];
     }
 }

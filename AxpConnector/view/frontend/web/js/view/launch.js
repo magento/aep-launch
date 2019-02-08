@@ -11,7 +11,12 @@ define([
     return Component.extend({
         initialize: function () {
             this._super();
-            this.launch = customerData.get('launch');
+
+            customerData.get('launch').subscribe(function (updatedEvents) {
+                for (var event in updatedEvents.datalayerEvents) {
+                    window[this.datalayerName].push(JSON.parse(updatedEvents.datalayerEvents[event]));
+                }
+            }, this);
         }
     });
 });
