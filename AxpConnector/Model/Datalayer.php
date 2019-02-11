@@ -201,10 +201,10 @@ class Datalayer
      *
      * @param int $qty
      * @param ProductInterface $product
-     * @return string
+     * @return array
      * @depracated This method is only temporarily used as a part of refactoring routine.
      */
-    public function addToCartPushData($qty, $product): string
+    public function addToCartPushData($qty, $product): array
     {
         $result = [];
 
@@ -219,7 +219,7 @@ class Datalayer
 
         array_push($result['product'], $item);
 
-        return $this->jsonSerializer->serialize($result);
+        return $result;
     }
 
     /**
@@ -227,26 +227,25 @@ class Datalayer
      *
      * @param int $qty
      * @param ProductInterface $product
-     * @return string
+     * @return array
      * @depracated This method is only temporarily used as a part of refactoring routine.
      */
-    public function removeFromCartPushData($qty, $product): string
+    public function removeFromCartPushData($qty, $product): array
     {
-        // It's very similar to product added
-        $result = $this->jsonSerializer->unserialize($this->addToCartPushData($qty, $product));
+        $result = $this->addToCartPushData($qty, $product);
         $result['event'] = 'Product Removed';
 
-        return $this->jsonSerializer->serialize($result);
+        return $result;
     }
 
     /**
      * Push data on order placed.
      *
      * @param OrderInterface[] $orders
-     * @return string
+     * @return array
      * @depracated This method is only temporarily used as a part of refactoring routine.
      */
-    public function orderPlacedPushData($orders): string
+    public function orderPlacedPushData($orders): array
     {
         $result = [];
 
@@ -297,6 +296,6 @@ class Datalayer
             $result[] = $orderObject;
         }
 
-        return $this->jsonSerializer->serialize($result);
+        return $result;
     }
 }

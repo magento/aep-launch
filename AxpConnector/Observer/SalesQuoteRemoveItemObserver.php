@@ -11,6 +11,7 @@ use Adobe\AxpConnector\Model\Datalayer;
 use Magento\Framework\Event\ObserverInterface;
 use Adobe\AxpConnector\Model\LaunchConfigProvider;
 use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Checkout\Model\Session;
 
 /**
  * Observer for quote item remove.
@@ -28,9 +29,9 @@ class SalesQuoteRemoveItemObserver implements ObserverInterface
     private $launchConfigProvider;
 
     /**
-     * @var \Magento\Checkout\Model\Session
+     * @var Session
      */
-    private $checkoutSession;
+    private $session;
 
     /**
      * @var ProductRepositoryInterface
@@ -41,17 +42,17 @@ class SalesQuoteRemoveItemObserver implements ObserverInterface
      * @param Datalayer $datalayer
      * @param LaunchConfigProvider $launchConfigProvider
      * @param ProductRepositoryInterface $productRepository
-     * @param \Magento\Checkout\Model\Session $checkoutSession
+     * @param Session $session
      */
     public function __construct(
         Datalayer $datalayer,
         LaunchConfigProvider $launchConfigProvider,
         ProductRepositoryInterface $productRepository,
-        \Magento\Checkout\Model\Session $checkoutSession
+        Session $session
     ) {
         $this->datalayer = $datalayer;
         $this->launchConfigProvider = $launchConfigProvider;
-        $this->checkoutSession = $checkoutSession;
+        $this->session = $session;
         $this->productRepository = $productRepository;
     }
 
@@ -78,7 +79,7 @@ class SalesQuoteRemoveItemObserver implements ObserverInterface
         $product = $this->productRepository->getById($productId);
         $qty = $quoteItem->getData('qty');
 
-        $this->checkoutSession->setRemoveFromCartDatalayerContent(
+        $this->session->setRemoveFromCartDatalayerContent(
             $this->datalayer->removeFromCartPushData($qty, $product)
         );
     }

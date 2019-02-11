@@ -9,11 +9,7 @@
         <observer name="Adobe_axpconnector_remove_from_cart"
                   instance="Adobe\AxpConnector\Observer\SalesQuoteRemoveItemObserver"/>
     </event>
-    <event name="checkout_onepage_controller_success_action">
-        <observer name="Adobe_axpconnector_order_success"
-                  instance="Adobe\AxpConnector\Observer\CheckoutOnepageControllerSuccessActionObserver"/>
-    </event>
-    <event name="multishipping_checkout_controller_success_action">
+    <event name="checkout_submit_all_after">
         <observer name="Adobe_axpconnector_order_success"
                   instance="Adobe\AxpConnector\Observer\CheckoutOnepageControllerSuccessActionObserver"/>
     </event>

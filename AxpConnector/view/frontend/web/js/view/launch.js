@@ -13,9 +13,20 @@ define([
             this._super();
 
             customerData.get('launch').subscribe(function (updatedEvents) {
-                for (var event in updatedEvents.datalayerEvents) {
-                    window[this.datalayerName].push(JSON.parse(updatedEvents.datalayerEvents[event]));
+                if (!updatedEvents.hasOwnProperty('datalayerEvents')) {
+                    return;
                 }
+
+                updatedEvents.datalayerEvents.forEach(function(event) {
+
+                    if (Array.isArray(event)) {
+                        event.forEach(function (item) {
+                            window[this.datalayerName].push(item);
+                        }, this);
+                    } else {
+                        window[this.datalayerName].push(event);
+                    }
+                }, this);
             }, this);
         }
     });

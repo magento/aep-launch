@@ -49,8 +49,8 @@ class Launch implements SectionSourceInterface
 
         $data[] = $this->checkoutSession->getData('add_to_cart_datalayer_content', true);
         $data[] = $this->checkoutSession->getData('remove_from_cart_datalayer_content', true);
-        $data = array_filter($data);
-
+        $data[] = $this->checkoutSession->getData('order_placed_datalayer_content', true);
+        $data = array_values(array_filter($data));
 
         return [
             'datalayerEvents' => $data
