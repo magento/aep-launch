@@ -9,6 +9,9 @@ define([
     'use strict';
 
     return Component.extend({
+        /**
+         * Process Launch events coming via Customer Data.
+         */
         initialize: function () {
             this._super();
 
@@ -17,8 +20,7 @@ define([
                     return;
                 }
 
-                updatedEvents.datalayerEvents.forEach(function(event) {
-
+                updatedEvents.datalayerEvents.forEach(function (event) {
                     if (Array.isArray(event)) {
                         event.forEach(function (item) {
                             window[this.datalayerName].push(item);
