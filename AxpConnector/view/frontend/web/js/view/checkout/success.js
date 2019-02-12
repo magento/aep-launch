@@ -9,6 +9,9 @@ define([
     'use strict';
 
     return Component.extend({
+        /**
+         * Reload Launch section of Customer Data when checkout is successful.
+         */
         initialize: function () {
             this._super();
 

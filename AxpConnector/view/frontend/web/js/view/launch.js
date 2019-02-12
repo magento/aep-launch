@@ -9,24 +9,33 @@ define([
     'use strict';
 
     return Component.extend({
+        /**
+         * Process Launch events coming via Customer Data.
+         */
         initialize: function () {
             this._super();
 
-            customerData.get('launch').subscribe(function (updatedEvents) {
-                if (!updatedEvents.hasOwnProperty('datalayerEvents')) {
-                    return;
+            customerData.get('launch').subscribe(this.onDatalayerUpdated, this);
+        },
+
+        /**
+         * Process datalayer updates.
+         *
+         * @param {Object} updatedEvents
+         */
+        onDatalayerUpdated: function (updatedEvents) {
+            if (!updatedEvents.hasOwnProperty('datalayerEvents')) {
+                return;
+            }
+
+            updatedEvents.datalayerEvents.forEach(function (event) {
+                if (Array.isArray(event)) {
+                    event.forEach(function (item) {
+                        window[this.datalayerName].push(item);
+                    }, this);
+                } else {
+                    window[this.datalayerName].push(event);
                 }
-
-                updatedEvents.datalayerEvents.forEach(function(event) {
-
-                    if (Array.isArray(event)) {
-                        event.forEach(function (item) {
-                            window[this.datalayerName].push(item);
-                        }, this);
-                    } else {
-                        window[this.datalayerName].push(event);
-                    }
-                }, this);
             }, this);
         }
     });

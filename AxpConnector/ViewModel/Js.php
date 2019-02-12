@@ -10,6 +10,9 @@ namespace Adobe\AxpConnector\ViewModel;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Adobe\AxpConnector\Model\LaunchConfigProvider;
 
+/**
+ * View Model for the Launch related blocks. Provides module configuration.
+ */
 class Js implements ArgumentInterface
 {
     /**

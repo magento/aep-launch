@@ -12,5 +12,5 @@ $viewModel = $block->getViewModel();
 $datalayerName = $block->escapeJs($viewModel->getDatalayerName());
 ?>
 <script type="text/javascript" id="axpconnector-datalayer-cart-viewed">
-    window.<?= /* @noEscape */ $datalayerName ?>.push(<?= /* @noEscape*/ $block->datalayerJson() ?>);
+    window.<?= /* @noEscape */ $datalayerName ?>.push(<?= /* @noEscape */ $block->datalayerJson() ?>);
 </script>

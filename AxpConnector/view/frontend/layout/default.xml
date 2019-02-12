@@ -14,19 +14,6 @@
 
         <referenceContainer name="after.body.start">
             <block class="Magento\Framework\View\Element\Template"
-                   name="axpconnector_datalayer_block"
-                   as="axpconnector_datalayer_block"
-                   template="Adobe_AxpConnector::datalayer.phtml"
-                   ifconfig="axpconnector_backend_config/general/enable"
-            >
-                <arguments>
-                    <argument name="view_model" xsi:type="object">
-                        Adobe\AxpConnector\ViewModel\Js
-                    </argument>
-                </arguments>
-            </block>
-
-            <block class="Magento\Framework\View\Element\Template"
                    name="axpconnector_private_content_block"
                    template="Adobe_AxpConnector::private_content_datalayer.phtml"
                    ifconfig="axpconnector_backend_config/general/enable">

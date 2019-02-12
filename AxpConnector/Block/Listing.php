@@ -39,7 +39,6 @@ class Listing extends Template
         parent::__construct($context, $data);
     }
 
-
     /**
      * Product listing sort direction
      *
