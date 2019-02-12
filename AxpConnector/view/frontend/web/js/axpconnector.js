@@ -1,6 +1,8 @@
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
+ *
+ * @deprecated CustomerData must be used
  */
 define([
         "jquery",
@@ -11,15 +13,12 @@ define([
 
         return function (opts) {
             var cookieContent = $.cookie('axpconnector_checkout_success');
+
             if (cookieContent) {
-                var parsedContent = JSON.parse(cookieContent);
-                var dln = parsedContent.datalayerName;
+                var events = JSON.parse(cookieContent);
 
-                window[dln] = window[dln] || [];
-
-                var events = parsedContent.datalayerContent;
                 events.forEach(function (event) {
-                    window[dln].push(event);
+                    window[opts.datalayerName].push(event);
                 });
             }
 

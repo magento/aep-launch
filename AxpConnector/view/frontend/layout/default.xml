@@ -18,18 +18,21 @@
                    as="axpconnector_datalayer_block"
                    template="Adobe_AxpConnector::datalayer.phtml"
                    ifconfig="axpconnector_backend_config/general/enable"
-            />
+            >
+                <arguments>
+                    <argument name="view_model" xsi:type="object">
+                        Adobe\AxpConnector\ViewModel\Js
+                    </argument>
+                </arguments>
+            </block>
 
-            <block name="axpconnector_private_content_block"
+            <block class="Magento\Framework\View\Element\Template"
+                   name="axpconnector_private_content_block"
                    template="Adobe_AxpConnector::private_content_datalayer.phtml"
                    ifconfig="axpconnector_backend_config/general/enable">
                 <arguments>
-                    <argument name="jsLayout" xsi:type="array">
-                        <item name="components" xsi:type="array">
-                            <item name="launch" xsi:type="array">
-                                <item name="component" xsi:type="string">Adobe_AxpConnector/js/view/launch</item>
-                            </item>
-                        </item>
+                    <argument name="view_model" xsi:type="object">
+                        Adobe\AxpConnector\ViewModel\Js
                     </argument>
                 </arguments>
             </block>

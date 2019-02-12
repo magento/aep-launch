@@ -11,7 +11,23 @@ define([
     return Component.extend({
         initialize: function () {
             this._super();
-            this.launch = customerData.get('launch');
+
+            customerData.get('launch').subscribe(function (updatedEvents) {
+                if (!updatedEvents.hasOwnProperty('datalayerEvents')) {
+                    return;
+                }
+
+                updatedEvents.datalayerEvents.forEach(function(event) {
+
+                    if (Array.isArray(event)) {
+                        event.forEach(function (item) {
+                            window[this.datalayerName].push(item);
+                        }, this);
+                    } else {
+                        window[this.datalayerName].push(event);
+                    }
+                }, this);
+            }, this);
         }
     });
 });

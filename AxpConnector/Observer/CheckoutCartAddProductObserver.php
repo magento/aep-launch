@@ -7,8 +7,12 @@ declare(strict_types=1);
 
 namespace Adobe\AxpConnector\Observer;
 
+use Adobe\AxpConnector\Model\Datalayer;
 use Magento\Framework\Event\ObserverInterface;
 use Adobe\AxpConnector\Model\LaunchConfigProvider;
+use Magento\Framework\Locale\ResolverInterface;
+use Magento\Checkout\Model\Session;
+use Magento\Framework\Filter\LocalizedToNormalized;
 
 /**
  * Observer for Product Add to Cart.
@@ -16,10 +20,9 @@ use Adobe\AxpConnector\Model\LaunchConfigProvider;
 class CheckoutCartAddProductObserver implements ObserverInterface
 {
     /**
-     * @var \Adobe\AxpConnector\Helper\Data
-     * @deprecated
+     * @var Datalayer
      */
-    private $helper;
+    private $datalayer;
 
     /**
      * @var LaunchConfigProvider
@@ -27,31 +30,39 @@ class CheckoutCartAddProductObserver implements ObserverInterface
     private $launchConfigProvider;
 
     /**
-     * @var \Magento\Framework\Locale\ResolverInterface
+     * @var ResolverInterface
      */
-    private $resolverInterface;
+    private $localeResolver;
 
     /**
-     * @var \Magento\Checkout\Model\Session
+     * @var Session
      */
-    private $checkoutSession;
+    private $session;
 
     /**
-     * @param \Adobe\AxpConnector\Helper\Data $helper
+     * @var LocalizedToNormalized
+     */
+    private $localizedToNormalized;
+
+    /**
+     * @param Datalayer $datalayer
      * @param LaunchConfigProvider $launchConfigProvider
-     * @param \Magento\Framework\Locale\ResolverInterface $resolverInterface
-     * @param \Magento\Checkout\Model\Session $checkoutSession
+     * @param ResolverInterface $localeResolver
+     * @param Session $session
+     * @param LocalizedToNormalized $localizedToNormalized
      */
     public function __construct(
-        \Adobe\AxpConnector\Helper\Data $helper,
+        Datalayer $datalayer,
         LaunchConfigProvider $launchConfigProvider,
-        \Magento\Framework\Locale\ResolverInterface $resolverInterface,
-        \Magento\Checkout\Model\Session $checkoutSession
+        ResolverInterface $localeResolver,
+        Session $session,
+        LocalizedToNormalized $localizedToNormalized
     ) {
-        $this->helper = $helper;
+        $this->datalayer = $datalayer;
         $this->launchConfigProvider = $launchConfigProvider;
-        $this->resolverInterface = $resolverInterface;
-        $this->checkoutSession = $checkoutSession;
+        $this->localeResolver = $localeResolver;
+        $this->session = $session;
+        $this->localizedToNormalized = $localizedToNormalized;
     }
 
     /**
@@ -72,16 +83,14 @@ class CheckoutCartAddProductObserver implements ObserverInterface
         $params = $request->getParams();
 
         if (isset($params['qty'])) {
-            $filter = new \Zend_Filter_LocalizedToNormalized(
-                ['locale' => $this->resolverInterface->getLocale()]
-            );
-            $qty = $filter->filter($params['qty']);
+            $this->localizedToNormalized->setOptions(['locale' => $this->localeResolver->getLocale()]);
+            $qty = $this->localizedToNormalized->filter($params['qty']);
         } else {
             $qty = 1;
         }
 
-        $datalayerContent = $this->helper->addToCartPushData($qty, $product);
-        $this->checkoutSession->setAddToCartDatalayerContent($datalayerContent);
+        $datalayerContent = $this->datalayer->addToCartPushData($qty, $product);
+        $this->session->setAddToCartDatalayerContent($datalayerContent);
 
         return $this;
     }
