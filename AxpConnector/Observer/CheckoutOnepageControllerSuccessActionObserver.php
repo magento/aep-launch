@@ -15,6 +15,8 @@ use Magento\Checkout\Model\Session;
 
 /**
  * Observer for checkout success event
+ *
+ * @SuppressWarnings(PHPMD.CookieAndSessionMisuse)
  */
 class CheckoutOnepageControllerSuccessActionObserver implements ObserverInterface
 {

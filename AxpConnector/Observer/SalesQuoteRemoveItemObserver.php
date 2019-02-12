@@ -15,6 +15,8 @@ use Magento\Checkout\Model\Session;
 
 /**
  * Observer for quote item remove.
+ *
+ * @SuppressWarnings(PHPMD.CookieAndSessionMisuse)
  */
 class SalesQuoteRemoveItemObserver implements ObserverInterface
 {

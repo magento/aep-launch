@@ -16,6 +16,8 @@ use Magento\Framework\Filter\LocalizedToNormalized;
 
 /**
  * Observer for Product Add to Cart.
+ *
+ * @SuppressWarnings(PHPMD.CookieAndSessionMisuse)
  */
 class CheckoutCartAddProductObserver implements ObserverInterface
 {

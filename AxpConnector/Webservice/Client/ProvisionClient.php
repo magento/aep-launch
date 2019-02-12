@@ -64,7 +64,8 @@ class ProvisionClient
     {
         try {
             $this->logger->debug(
-                'DebugProvisionRequestStart', [
+                'DebugProvisionRequestStart',
+                [
                     'request' => [
                         'uri' => $uri,
                         'body' => $body,

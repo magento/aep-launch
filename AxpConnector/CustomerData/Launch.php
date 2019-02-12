@@ -13,6 +13,8 @@ use Magento\Checkout\Model\Session;
 
 /**
  * Launch private data section
+ *
+ * @SuppressWarnings(PHPMD.CookieAndSessionMisuse)
  */
 class Launch implements SectionSourceInterface
 {
