@@ -15,20 +15,27 @@ define([
         initialize: function () {
             this._super();
 
-            customerData.get('launch').subscribe(function (updatedEvents) {
-                if (!updatedEvents.hasOwnProperty('datalayerEvents')) {
-                    return;
-                }
+            customerData.get('launch').subscribe(this.onDatalayerUpdated, this);
+        },
 
-                updatedEvents.datalayerEvents.forEach(function (event) {
-                    if (Array.isArray(event)) {
-                        event.forEach(function (item) {
-                            window[this.datalayerName].push(item);
-                        }, this);
-                    } else {
-                        window[this.datalayerName].push(event);
-                    }
-                }, this);
+        /**
+         * Process datalayer updates.
+         *
+         * @param {Object} updatedEvents
+         */
+        onDatalayerUpdated: function (updatedEvents) {
+            if (!updatedEvents.hasOwnProperty('datalayerEvents')) {
+                return;
+            }
+
+            updatedEvents.datalayerEvents.forEach(function (event) {
+                if (Array.isArray(event)) {
+                    event.forEach(function (item) {
+                        window[this.datalayerName].push(item);
+                    }, this);
+                } else {
+                    window[this.datalayerName].push(event);
+                }
             }, this);
         }
     });
