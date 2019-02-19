@@ -16,9 +16,9 @@ class LaunchConfigProvider
 {
     private const LAUNCH_INTEGRATION_ENABLED = 'axpconnector_backend_config/general/enable';
 
-    private const LAUNCH_SCRIPT_URL = 'axpconnector_backend_config/general/launch_script_url';
+    private const LAUNCH_SCRIPT_URL = 'axpconnector_backend_config_datalayer/datalayer/launch_script_url';
 
-    private const LAUNCH_DATALAYER_NAME = 'axpconnector_backend_config_advanced/advanced/datalayer_name';
+    private const LAUNCH_DATALAYER_NAME = 'axpconnector_backend_config_datalayer/datalayer/datalayer_name';
 
     /**
      * @var ScopeConfigInterface
