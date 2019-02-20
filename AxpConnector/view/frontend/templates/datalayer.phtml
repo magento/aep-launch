@@ -5,13 +5,14 @@
  */
 
 /**
- * @var \Adobe\AxpConnector\Block\Product $block
  * @var \Adobe\AxpConnector\ViewModel\Js $viewModel
  */
 $viewModel = $block->getViewModel();
 $datalayerName = $block->escapeJs($viewModel->getDatalayerName());
 ?>
 
-<script type="text/javascript" id="axpconnector-datalayer-product-viewed">
-    window.<?= /* @noEscape */ $datalayerName ?>.push(<?= /* @noEscape */ $block->datalayerProductJson() ?>);
+<script type="text/javascript" id="axpconnector-datalayer-content">
+    <?php foreach ($viewModel->getDatalayerEvents() as $event): ?>
+        window.<?= /* @noEscape */ $datalayerName ?>.push(<?= /* @noEscape */ $event ?>);
+    <?php endforeach; ?>
 </script>

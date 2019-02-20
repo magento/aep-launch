@@ -13,4 +13,8 @@
         <observer name="Adobe_axpconnector_order_success"
                   instance="Adobe\AxpConnector\Observer\CheckoutOnepageControllerSuccessActionObserver"/>
     </event>
+    <event name="layout_generate_blocks_after">
+        <observer name="Adobe_axpconnector_add_datalayer"
+                  instance="Adobe\AxpConnector\Observer\DatalayerObserver"/>
+    </event>
 </config>

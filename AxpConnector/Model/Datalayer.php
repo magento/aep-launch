@@ -22,11 +22,36 @@ class Datalayer
     private $jsonSerializer;
 
     /**
+     * @var array
+     */
+    private $datalayerEvents = [];
+
+    /**
      * @param Json $jsonSerializer
      */
     public function __construct(Json $jsonSerializer)
     {
         $this->jsonSerializer = $jsonSerializer;
+    }
+
+    /**
+     * @deprecated prototyping
+     *
+     * @param string $eventData
+     */
+    public function push(string $eventData): void
+    {
+        $this->datalayerEvents[] = $eventData;
+    }
+
+    /**
+     * @deprecated prototyping
+     *
+     * @return array
+     */
+    public function emit(): array
+    {
+        return $this->datalayerEvents;
     }
 
     /**
