@@ -33,7 +33,7 @@ class Js implements ArgumentInterface
      *
      * @return string
      */
-    public function getScriptUrl(): string
+    public function getScriptUrl(): ?string
     {
         return $this->launchConfigProvider->getScriptUrl();
     }
@@ -43,7 +43,7 @@ class Js implements ArgumentInterface
      *
      * @return string
      */
-    public function getDatalayerName(): string
+    public function getDatalayerName(): ?string
     {
         return $this->launchConfigProvider->getDatalayerName();
     }
