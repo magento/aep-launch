@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="\Adobe\AxpConnector\Observer\DatalayerObserver">
+        <arguments>
+            <argument name="datalayerProcessors" xsi:type="array">
+                <item name="checkout_cart_index" xsi:type="array">
+                    <item name="launch_checkout_cart_viewed" xsi:type="object">Adobe\LaunchCheckout\Model\CartViewedEvent\Proxy</item>
+                </item>
+                <item name="checkout_index_index" xsi:type="array">
+                    <item name="launch_checkout_started" xsi:type="object">Adobe\LaunchCheckout\Model\CheckoutStartedEvent\Proxy</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>

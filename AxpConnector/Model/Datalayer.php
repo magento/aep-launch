@@ -55,54 +55,6 @@ class Datalayer
     }
 
     /**
-     * Push data on cart view.
-     *
-     * @param mixed $cartModel
-     * @return string
-     * @depracated This method is only temporarily used as a part of refactoring routine.
-     */
-    public function cartViewedPushData($cartModel): string
-    {
-        $collection = $cartModel->getQuote()->getAllVisibleItems();
-        $result = [];
-        $cart = [];
-
-        $items = [];
-        foreach ($collection as $item) {
-            $items[] = [
-                'quantity' => $item->getQty(),
-                'productInfo' => [
-                    'sku' => $item->getSku(),
-                    'productID' => $item->getProduct()->getData('sku')
-                ],
-                'price' => [
-                    'sellingPrice' => $item->getPrice()
-                ]
-            ];
-        }
-        $cart['item'] = $items;
-        $result['event'] = 'Cart Viewed';
-        $result['cart'] = $cart;
-
-        return $this->jsonSerializer->serialize($result);
-    }
-
-    /**
-     * Push data on checkout start.
-     *
-     * @param mixed $cartModel
-     * @return string
-     * @depracated This method is only temporarily used as a part of refactoring routine.
-     */
-    public function checkoutStartedPushData($cartModel): string
-    {
-        $result = $this->jsonSerializer->unserialize($this->cartViewedPushData($cartModel));
-        $result['event'] = 'Checkout Started';
-
-        return $this->jsonSerializer->serialize($result);
-    }
-
-    /**
      * Push data when page is loaded (?)
      *
      * @param string $pageTitle

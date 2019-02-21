@@ -14,6 +14,6 @@ $datalayerName = $block->escapeJs($viewModel->getDatalayerName());
 
 <script type="text/javascript" id="axpconnector-datalayer-content">
     <?php foreach ($viewModel->getDatalayerEvents() as $event) : ?>
-        window.<?= /* @noEscape */ $datalayerName ?>.push(<?= /* @noEscape */ $block->escapeJs($event) ?>);
+        window.<?= /* @noEscape */ $datalayerName ?>.push(<?= /* @noEscape */ $event ?>);
     <?php endforeach; ?>
 </script>
