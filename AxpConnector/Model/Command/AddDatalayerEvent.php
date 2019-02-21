@@ -38,6 +38,8 @@ class AddDatalayerEvent
     }
 
     /**
+     * Append an event to the Datalayer.
+     *
      * @param array $eventData
      */
     public function execute(array $eventData): void

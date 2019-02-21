@@ -5,6 +5,7 @@
  */
 
 /**
+ * @var \Magento\Framework\View\Element\Template $block
  * @var \Adobe\AxpConnector\ViewModel\Js $viewModel
  */
 $viewModel = $block->getViewModel();
@@ -12,7 +13,7 @@ $datalayerName = $block->escapeJs($viewModel->getDatalayerName());
 ?>
 
 <script type="text/javascript" id="axpconnector-datalayer-content">
-    <?php foreach ($viewModel->getDatalayerEvents() as $event): ?>
-        window.<?= /* @noEscape */ $datalayerName ?>.push(<?= /* @noEscape */ $event ?>);
+    <?php foreach ($viewModel->getDatalayerEvents() as $event) : ?>
+        window.<?= /* @noEscape */ $datalayerName ?>.push(<?= /* @noEscape */ $block->escapeJs($event) ?>);
     <?php endforeach; ?>
 </script>

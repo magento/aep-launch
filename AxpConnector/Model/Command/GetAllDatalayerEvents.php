@@ -28,6 +28,8 @@ class GetAllDatalayerEvents
     }
 
     /**
+     * Return all events stored in the datalayer.
+     *
      * @return array
      */
     public function execute()

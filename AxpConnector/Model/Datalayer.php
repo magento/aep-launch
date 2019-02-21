@@ -35,7 +35,7 @@ class Datalayer
     }
 
     /**
-     * @deprecated prototyping
+     * Push event data entry into the datalayer.
      *
      * @param string $eventData
      */
@@ -45,7 +45,7 @@ class Datalayer
     }
 
     /**
-     * @deprecated prototyping
+     * Return all events stored in the datalayer.
      *
      * @return array
      */

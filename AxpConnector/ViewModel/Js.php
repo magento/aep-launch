@@ -7,9 +7,8 @@ declare(strict_types=1);
 
 namespace Adobe\AxpConnector\ViewModel;
 
-use Adobe\AxpConnector\Model\Command\GetAllDatalayerEvents;
-use Adobe\AxpConnector\Model\Datalayer;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
+use Adobe\AxpConnector\Model\Command\GetAllDatalayerEvents;
 use Adobe\AxpConnector\Model\LaunchConfigProvider;
 
 /**
@@ -29,11 +28,11 @@ class Js implements ArgumentInterface
 
     /**
      * @param LaunchConfigProvider $launchConfigProvider
-     * @param Datalayer $datalayer
+     * @param GetAllDatalayerEvents $getAllDatalayerEvents
      */
     public function __construct(
         LaunchConfigProvider $launchConfigProvider,
-        \Adobe\AxpConnector\Model\Command\GetAllDatalayerEvents $getAllDatalayerEvents
+        GetAllDatalayerEvents $getAllDatalayerEvents
     ) {
         $this->launchConfigProvider = $launchConfigProvider;
         $this->getAllDatalayerEvents = $getAllDatalayerEvents;
@@ -59,7 +58,12 @@ class Js implements ArgumentInterface
         return $this->launchConfigProvider->getDatalayerName();
     }
 
-    public function getDatalayerEvents()
+    /**
+     * Return all events stored in the datalayer.
+     *
+     * @return array
+     */
+    public function getDatalayerEvents(): array
     {
         return $this->getAllDatalayerEvents->execute();
     }
