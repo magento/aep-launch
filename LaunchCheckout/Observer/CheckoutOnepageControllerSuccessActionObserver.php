@@ -5,13 +5,14 @@
  */
 declare(strict_types=1);
 
-namespace Adobe\AxpConnector\Observer;
+namespace Adobe\LaunchCheckout\Observer;
 
-use Adobe\AxpConnector\Model\Datalayer;
 use Magento\Framework\Event\ObserverInterface;
-use Adobe\AxpConnector\Model\LaunchConfigProvider;
+use Magento\Framework\Event\Observer;
 use Magento\Sales\Api\OrderRepositoryInterface;
-use Magento\Checkout\Model\Session;
+use Magento\Framework\Session\Generic as Session;
+use Adobe\AxpConnector\Model\LaunchConfigProvider;
+use Adobe\AxpConnector\Model\Datalayer;
 
 /**
  * Observer for checkout success event
@@ -61,20 +62,23 @@ class CheckoutOnepageControllerSuccessActionObserver implements ObserverInterfac
     /**
      * @inheritdoc
      *
-     * @param \Magento\Framework\Event\Observer $observer
+     * @param Observer $observer
      */
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    public function execute(Observer $observer)
     {
-        $orders = [];
-
-        $checkoutOrder = $observer->getEvent()->getOrder();
-        $multishippingOrders = $observer->getEvent()->getOrders();
-
-        if ($checkoutOrder) {
-            $orders = array_merge($orders, [$checkoutOrder]);
+        if (!$this->launchConfigProvider->isEnabled()) {
+            return;
         }
-        if ($multishippingOrders) {
-            $orders = array_merge($orders, $multishippingOrders);
+
+        $orders = [];
+        $singleOrder = $observer->getEvent()->getData('order');
+        $multipleOrders = $observer->getEvent()->getData('orders');
+
+        if ($singleOrder) {
+            $orders = array_merge($orders, [$singleOrder]);
+        }
+        if ($multipleOrders) {
+            $orders = array_merge($orders, $multipleOrders);
         }
         if (empty($orders)) {
             return;

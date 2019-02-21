@@ -5,14 +5,15 @@
  */
 declare(strict_types=1);
 
-namespace Adobe\AxpConnector\Observer;
+namespace Adobe\LaunchCheckout\Observer;
 
-use Adobe\AxpConnector\Model\Datalayer;
 use Magento\Framework\Event\ObserverInterface;
-use Adobe\AxpConnector\Model\LaunchConfigProvider;
+use Magento\Framework\Event\Observer;
 use Magento\Framework\Locale\ResolverInterface;
-use Magento\Checkout\Model\Session;
+use Magento\Framework\Session\Generic as Session;
 use Magento\Framework\Filter\LocalizedToNormalized;
+use Adobe\AxpConnector\Model\Datalayer;
+use Adobe\AxpConnector\Model\LaunchConfigProvider;
 
 /**
  * Observer for Product Add to Cart.
@@ -70,20 +71,19 @@ class CheckoutCartAddProductObserver implements ObserverInterface
     /**
      * @inheritdoc
      *
-     * @param \Magento\Framework\Event\Observer $observer
-     * @return self
+     * @param Observer $observer
+     * @return void
      */
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    public function execute(Observer $observer)
     {
         if (!$this->launchConfigProvider->isEnabled()) {
-            return $this;
+            return;
         }
 
         $product = $observer->getData('product');
         $request = $observer->getData('request');
 
         $params = $request->getParams();
-
         if (isset($params['qty'])) {
             $this->localizedToNormalized->setOptions(['locale' => $this->localeResolver->getLocale()]);
             $qty = $this->localizedToNormalized->filter($params['qty']);
@@ -93,7 +93,5 @@ class CheckoutCartAddProductObserver implements ObserverInterface
 
         $datalayerContent = $this->datalayer->addToCartPushData($qty, $product);
         $this->session->setAddToCartDatalayerContent($datalayerContent);
-
-        return $this;
     }
 }

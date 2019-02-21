@@ -5,13 +5,15 @@
  */
 declare(strict_types=1);
 
-namespace Adobe\AxpConnector\Observer;
+namespace Adobe\LaunchCheckout\Observer;
 
-use Adobe\AxpConnector\Model\Datalayer;
 use Magento\Framework\Event\ObserverInterface;
-use Adobe\AxpConnector\Model\LaunchConfigProvider;
+use Magento\Framework\Event\Observer;
 use Magento\Catalog\Api\ProductRepositoryInterface;
-use Magento\Checkout\Model\Session;
+use Magento\Framework\Session\Generic as Session;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Adobe\AxpConnector\Model\Datalayer;
+use Adobe\AxpConnector\Model\LaunchConfigProvider;
 
 /**
  * Observer for quote item remove.
@@ -61,11 +63,10 @@ class SalesQuoteRemoveItemObserver implements ObserverInterface
     /**
      * @inheritdoc
      *
-     * @param \Magento\Framework\Event\Observer $observer
+     * @param Observer $observer
      * @return void
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    public function execute(Observer $observer)
     {
         if (!$this->launchConfigProvider->isEnabled()) {
             return;
@@ -78,7 +79,12 @@ class SalesQuoteRemoveItemObserver implements ObserverInterface
             return;
         }
 
-        $product = $this->productRepository->getById($productId);
+        try {
+            $product = $this->productRepository->getById($productId);
+        } catch (NoSuchEntityException $exception) {
+            return;
+        }
+
         $qty = $quoteItem->getData('qty');
 
         $this->session->setRemoveFromCartDatalayerContent(

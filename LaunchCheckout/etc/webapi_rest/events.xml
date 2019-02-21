@@ -3,6 +3,6 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
     <event name="checkout_submit_all_after">
         <observer name="Adobe_axpconnector_order_success"
-                  instance="Adobe\AxpConnector\Observer\CheckoutOnepageControllerSuccessActionObserver"/>
+                  instance="\Adobe\LaunchCheckout\Observer\CheckoutOnepageControllerSuccessActionObserver" />
     </event>
 </config>
