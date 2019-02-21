@@ -8,11 +8,4 @@
             </argument>
         </arguments>
     </type>
-    <type name="\Adobe\AxpConnector\Observer\DatalayerObserver">
-        <arguments>
-            <argument name="datalayerProcessors" xsi:type="array">
-                <item name="catalog_product_view" xsi:type="object">\Adobe\AxpConnector\Model\Processor\ProductProcessor</item>
-            </argument>
-        </arguments>
-    </type>
 </config>

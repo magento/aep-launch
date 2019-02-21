@@ -35,7 +35,8 @@
                     </argument>
                 </arguments>
             </block>
-
+        </referenceContainer>
+        <referenceContainer name="before.body.end">
             <block class="Magento\Framework\View\Element\Template"
                    name="axp_connector_datalayer"
                    template="Adobe_AxpConnector::datalayer.phtml"

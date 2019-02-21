@@ -1,0 +1,1 @@
+Module `LaunchCatalogSearch` introduces Adobe Launch Tag management capabilities to the `Search` module.

@@ -103,39 +103,6 @@ class Datalayer
     }
 
     /**
-     * Push data on category page view.
-     *
-     * @param int $resultsShown
-     * @param int $resultsCount
-     * @param string $listOrder
-     * @param string $sortDirection
-     * @return string
-     * @depracated This method is only temporarily used as a part of refactoring routine.
-     */
-    public function categoryViewedPushData($resultsShown, $resultsCount, $listOrder, $sortDirection): string
-    {
-        $result = [
-            'event' => 'Listing Viewed',
-            'listing' => [
-                'listingResults' => [
-                    'resultsShown' => $resultsShown,
-                    'resultsCount' => $resultsCount
-                ],
-                'listingParams' => [
-                    'sorts' => []
-                ]
-            ]
-        ];
-
-        $result['listing']['listingParams']['sorts'][] = [
-            'sortOrder' => $sortDirection,
-            'sortKey' => $listOrder
-        ];
-
-        return $this->jsonSerializer->serialize($result);
-    }
-
-    /**
      * Push data when page is loaded (?)
      *
      * @param string $pageTitle
@@ -154,31 +121,6 @@ class Datalayer
                 'breadcrumbs' => $breadcrumbs
             ]
         ];
-
-        return $this->jsonSerializer->serialize($result);
-    }
-
-    /**
-     * Data for product view (?)
-     *
-     * @param ProductInterface $product
-     * @return string
-     * @depracated This method is only temporarily used as a part of refactoring routine.
-     */
-    public function productViewedPushData($product): string
-    {
-        $result = [
-            'event' => 'Product Viewed',
-            'product' => []
-        ];
-
-        $item = [
-            'productInfo' => [
-                'productID' => $product->getSku()
-            ]
-        ];
-
-        $result['product'][] = $item;
 
         return $this->jsonSerializer->serialize($result);
     }

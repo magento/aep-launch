@@ -2,6 +2,8 @@
   "name": "adobe/axp-connector",
   "type": "metapackage",
   "require": {
-    "adobe/module-axp-connector": "*"
+    "adobe/module-axp-connector": "*",
+    "adobe/module-launch-catalog": "*",
+    "adobe/module-launch-catalog-search": "*"
   }
 }
