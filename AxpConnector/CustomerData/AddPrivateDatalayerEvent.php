@@ -12,6 +12,8 @@ use Magento\Framework\Session\Generic as Session;
 
 /**
  * Add event to the datalayer.
+ *
+ * @SuppressWarnings(PHPMD.CookieAndSessionMisuse)
  */
 class AddPrivateDatalayerEvent implements AddPrivateDatalayerEventInterface
 {
