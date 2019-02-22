@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Adobe\LaunchCheckout\Model;
 
-use Adobe\AxpConnector\Model\Command\AddDatalayerEvent;
+use Adobe\AxpConnector\Api\AddDatalayerEventInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\LayoutInterface;
 use Magento\Checkout\Block\Onepage as CheckoutBlock;
@@ -20,7 +20,7 @@ use Magento\Quote\Api\GuestCartRepositoryInterface;
 class CheckoutStartedEvent
 {
     /**
-     * @var AddDatalayerEvent
+     * @var AddDatalayerEventInterface
      */
     private $addDatalayerEvent;
 
@@ -40,13 +40,13 @@ class CheckoutStartedEvent
     private $guestCartRepository;
 
     /**
-     * @param AddDatalayerEvent $addDatalayerEvent
+     * @param AddDatalayerEventInterface $addDatalayerEvent
      * @param FormatCartViewedEvent $formatCartViewedEvent
      * @param CartRepositoryInterface $cartRepository
      * @param GuestCartRepositoryInterface $guestCartRepository
      */
     public function __construct(
-        AddDatalayerEvent $addDatalayerEvent,
+        AddDatalayerEventInterface $addDatalayerEvent,
         FormatCartViewedEvent $formatCartViewedEvent,
         CartRepositoryInterface $cartRepository,
         GuestCartRepositoryInterface $guestCartRepository

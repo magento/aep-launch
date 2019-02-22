@@ -7,9 +7,10 @@ declare(strict_types=1);
 
 namespace Adobe\AxpConnector\Block;
 
+use Adobe\AxpConnector\Api\AddDatalayerEventInterface;
 use Magento\Framework\View\Element\Template;
-use Adobe\AxpConnector\Model\Datalayer;
 use Magento\Framework\View\Element\Template\Context;
+use Adobe\AxpConnector\Model\FormatPageLoadedEvent;
 
 /**
  * Class Page.
@@ -30,53 +31,56 @@ class Page extends Template
     private $catalogHelper;
 
     /**
-     * @var Datalayer
+     * @var FormatPageLoadedEvent
      */
-    private $datalayer;
+    private $formatPageLoadedEvent;
+
+    /**
+     * @var AddDatalayerEventInterface
+     */
+    private $addDatalayerEvent;
 
     /**
      * @param Context $context
      * @param \Magento\Catalog\Helper\Data $catalogHelper
      * @param \Magento\Framework\View\Page\Title $pageTitle
-     * @param Datalayer $datalayer
+     * @param FormatPageLoadedEvent $formatPageLoadedEvent
+     * @param AddDatalayerEventInterface $addDatalayerEvent
      * @param array $data
      */
     public function __construct(
         Context $context,
         \Magento\Catalog\Helper\Data $catalogHelper,
         \Magento\Framework\View\Page\Title $pageTitle,
-        Datalayer $datalayer,
+        FormatPageLoadedEvent $formatPageLoadedEvent,
+        AddDatalayerEventInterface $addDatalayerEvent,
         array $data = []
     ) {
         parent::__construct($context, $data);
         $this->pageTitle = $pageTitle;
         $this->catalogHelper = $catalogHelper;
-        $this->datalayer = $datalayer;
-    }
-
-    /**
-     * Datalayer for page.
-     *
-     * @return string
-     * @deprecated Due to redundancy
-     */
-    private function datalayerPage(): string
-    {
-        $title = $this->pageTitle();
-        $type = $this->pageType();
-        $crumbs = $this->getBreadCrumbPath();
-
-        return $this->datalayer->pageLoadedPushData($title, $type, $crumbs);
+        $this->formatPageLoadedEvent = $formatPageLoadedEvent;
+        $this->addDatalayerEvent = $addDatalayerEvent;
     }
 
     /**
      * Json Datalayer for Page.
      *
      * @return string
+     * @deprecated
      */
-    public function datalayerPageJson(): string
+    public function toHtml()
     {
-        return $this->datalayerPage();
+        $result = parent::toHtml();
+
+        $title = $this->pageTitle();
+        $type = $this->pageType();
+        $crumbs = $this->getBreadCrumbPath();
+
+        $eventData = $this->formatPageLoadedEvent->execute($title, $type, $crumbs);
+        $this->addDatalayerEvent->execute($eventData);
+
+        return $result;
     }
 
     /**

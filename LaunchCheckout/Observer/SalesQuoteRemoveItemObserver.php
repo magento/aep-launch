@@ -10,15 +10,14 @@ namespace Adobe\LaunchCheckout\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Event\Observer;
 use Magento\Catalog\Api\ProductRepositoryInterface;
-use Magento\Framework\Session\Generic as Session;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Adobe\AxpConnector\Api\AddPrivateDatalayerEventInterface;
 use Adobe\AxpConnector\Model\Datalayer;
 use Adobe\AxpConnector\Model\LaunchConfigProvider;
+use Adobe\LaunchCheckout\Model\FormatAddToCartEvent;
 
 /**
  * Observer for quote item remove.
- *
- * @SuppressWarnings(PHPMD.CookieAndSessionMisuse)
  */
 class SalesQuoteRemoveItemObserver implements ObserverInterface
 {
@@ -33,9 +32,9 @@ class SalesQuoteRemoveItemObserver implements ObserverInterface
     private $launchConfigProvider;
 
     /**
-     * @var Session
+     * @var AddPrivateDatalayerEventInterface
      */
-    private $session;
+    private $addPrivateDatalayerEvent;
 
     /**
      * @var ProductRepositoryInterface
@@ -43,21 +42,29 @@ class SalesQuoteRemoveItemObserver implements ObserverInterface
     private $productRepository;
 
     /**
+     * @var FormatAddToCartEvent
+     */
+    private $formatAddToCartEvent;
+
+    /**
      * @param Datalayer $datalayer
      * @param LaunchConfigProvider $launchConfigProvider
      * @param ProductRepositoryInterface $productRepository
-     * @param Session $session
+     * @param AddPrivateDatalayerEventInterface $addPrivateDatalayerEvent
+     * @param FormatAddToCartEvent $formatAddToCartEvent
      */
     public function __construct(
         Datalayer $datalayer,
         LaunchConfigProvider $launchConfigProvider,
         ProductRepositoryInterface $productRepository,
-        Session $session
+        AddPrivateDatalayerEventInterface $addPrivateDatalayerEvent,
+        FormatAddToCartEvent $formatAddToCartEvent
     ) {
         $this->datalayer = $datalayer;
         $this->launchConfigProvider = $launchConfigProvider;
-        $this->session = $session;
+        $this->addPrivateDatalayerEvent = $addPrivateDatalayerEvent;
         $this->productRepository = $productRepository;
+        $this->formatAddToCartEvent = $formatAddToCartEvent;
     }
 
     /**
@@ -87,8 +94,9 @@ class SalesQuoteRemoveItemObserver implements ObserverInterface
 
         $qty = $quoteItem->getData('qty');
 
-        $this->session->setRemoveFromCartDatalayerContent(
-            $this->datalayer->removeFromCartPushData($qty, $product)
-        );
+        $eventData = $this->formatAddToCartEvent->execute($qty, $product);
+        $eventData['event'] = 'Product Removed';
+
+        $this->addPrivateDatalayerEvent->execute('removeFromCartDatalayerContent', $eventData);
     }
 }

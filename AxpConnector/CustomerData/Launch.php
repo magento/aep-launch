@@ -8,8 +8,8 @@ declare(strict_types=1);
 namespace Adobe\AxpConnector\CustomerData;
 
 use Magento\Customer\CustomerData\SectionSourceInterface;
-use Adobe\AxpConnector\Model\LaunchConfigProvider;
 use Magento\Framework\Session\Generic as Session;
+use Adobe\AxpConnector\Model\LaunchConfigProvider;
 
 /**
  * Launch private data section
@@ -55,6 +55,10 @@ class Launch implements SectionSourceInterface
      */
     public function getSectionData()
     {
+        if (!$this->launchConfigProvider->isEnabled()) {
+            return [];
+        }
+
         $datalayerEvents = [];
         foreach ($this->launchSections as $section) {
             $datalayerEvents[] = $this->session->getData($section, true);

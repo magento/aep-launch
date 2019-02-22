@@ -9,7 +9,7 @@ namespace Adobe\LaunchCheckout\Model;
 
 use Magento\Framework\View\LayoutInterface;
 use Magento\Checkout\Block\Cart as CartBlock;
-use Adobe\AxpConnector\Model\Command\AddDatalayerEvent;
+use Adobe\AxpConnector\Api\AddDatalayerEventInterface;
 
 /**
  * Add datalayer events to the Cart View page.
@@ -17,7 +17,7 @@ use Adobe\AxpConnector\Model\Command\AddDatalayerEvent;
 class CartViewedEvent
 {
     /**
-     * @var AddDatalayerEvent
+     * @var AddDatalayerEventInterface
      */
     private $addDatalayerEvent;
 
@@ -27,11 +27,11 @@ class CartViewedEvent
     private $formatCartViewedEvent;
 
     /**
-     * @param AddDatalayerEvent $addDatalayerEvent
+     * @param AddDatalayerEventInterface $addDatalayerEvent
      * @param FormatCartViewedEvent $formatCartViewedEvent
      */
     public function __construct(
-        AddDatalayerEvent $addDatalayerEvent,
+        AddDatalayerEventInterface $addDatalayerEvent,
         FormatCartViewedEvent $formatCartViewedEvent
     ) {
         $this->addDatalayerEvent = $addDatalayerEvent;

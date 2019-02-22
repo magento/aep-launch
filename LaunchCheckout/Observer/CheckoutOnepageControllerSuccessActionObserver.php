@@ -10,14 +10,12 @@ namespace Adobe\LaunchCheckout\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Event\Observer;
 use Magento\Sales\Api\OrderRepositoryInterface;
-use Magento\Framework\Session\Generic as Session;
+use Adobe\AxpConnector\Api\AddPrivateDatalayerEventInterface;
 use Adobe\AxpConnector\Model\LaunchConfigProvider;
-use Adobe\AxpConnector\Model\Datalayer;
+use Adobe\LaunchCheckout\Model\FormatOrderPlacedEvent;
 
 /**
  * Observer for checkout success event
- *
- * @SuppressWarnings(PHPMD.CookieAndSessionMisuse)
  */
 class CheckoutOnepageControllerSuccessActionObserver implements ObserverInterface
 {
@@ -32,31 +30,31 @@ class CheckoutOnepageControllerSuccessActionObserver implements ObserverInterfac
     private $orderRepository;
 
     /**
-     * @var Datalayer
+     * @var FormatOrderPlacedEvent
      */
-    private $datalayer;
+    private $formatOrderPlacedEvent;
 
     /**
-     * @var Session
+     * @var AddPrivateDatalayerEventInterface
      */
-    private $session;
+    private $addPrivateDatalayerEvent;
 
     /**
      * @param LaunchConfigProvider $launchConfigProvider
-     * @param Session $session
+     * @param AddPrivateDatalayerEventInterface $addPrivateDatalayerEvent
      * @param OrderRepositoryInterface $orderRepository
-     * @param Datalayer $datalayer
+     * @param FormatOrderPlacedEvent $formatOrderPlacedEvent
      */
     public function __construct(
         LaunchConfigProvider $launchConfigProvider,
-        Session $session,
+        AddPrivateDatalayerEventInterface $addPrivateDatalayerEvent,
         OrderRepositoryInterface $orderRepository,
-        Datalayer $datalayer
+        FormatOrderPlacedEvent $formatOrderPlacedEvent
     ) {
-        $this->session = $session;
+        $this->addPrivateDatalayerEvent = $addPrivateDatalayerEvent;
         $this->launchConfigProvider = $launchConfigProvider;
         $this->orderRepository = $orderRepository;
-        $this->datalayer = $datalayer;
+        $this->formatOrderPlacedEvent = $formatOrderPlacedEvent;
     }
 
     /**
@@ -84,7 +82,7 @@ class CheckoutOnepageControllerSuccessActionObserver implements ObserverInterfac
             return;
         }
 
-        $datalayerContent = $this->datalayer->orderPlacedPushData($orders);
-        $this->session->setOrderPlacedDatalayerContent($datalayerContent);
+        $datalayerContent = $this->formatOrderPlacedEvent->execute($orders);
+        $this->addPrivateDatalayerEvent->execute('OrderPlacedDatalayerContent', $datalayerContent);
     }
 }

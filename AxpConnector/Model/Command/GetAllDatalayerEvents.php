@@ -7,12 +7,13 @@ declare(strict_types=1);
 
 namespace Adobe\AxpConnector\Model\Command;
 
+use Adobe\AxpConnector\Api\GetAllDatalayerEventsInterface;
 use Adobe\AxpConnector\Model\Datalayer;
 
 /**
  * Get all events form the datalayer.
  */
-class GetAllDatalayerEvents
+class GetAllDatalayerEvents implements GetAllDatalayerEventsInterface
 {
     /**
      * @var Datalayer
@@ -32,7 +33,7 @@ class GetAllDatalayerEvents
      *
      * @return array
      */
-    public function execute()
+    public function execute(): array
     {
         return $this->datalayer->emit();
     }

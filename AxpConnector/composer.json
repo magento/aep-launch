@@ -6,10 +6,8 @@
     "magento/framework": "*",
     "magento/module-config": "*",
     "magento/module-customer": "*",
-    "magento/module-checkout": "*",
     "magento/module-catalog": "*",
-    "magento/module-backend": "*",
-    "magento/module-sales": "*"
+    "magento/module-backend": "*"
   },
   "type": "magento2-module",
   "license": [

@@ -10,15 +10,14 @@ namespace Adobe\LaunchCheckout\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Locale\ResolverInterface;
-use Magento\Framework\Session\Generic as Session;
 use Magento\Framework\Filter\LocalizedToNormalized;
+use Adobe\AxpConnector\Api\AddPrivateDatalayerEventInterface;
 use Adobe\AxpConnector\Model\Datalayer;
 use Adobe\AxpConnector\Model\LaunchConfigProvider;
+use Adobe\LaunchCheckout\Model\FormatAddToCartEvent;
 
 /**
  * Observer for Product Add to Cart.
- *
- * @SuppressWarnings(PHPMD.CookieAndSessionMisuse)
  */
 class CheckoutCartAddProductObserver implements ObserverInterface
 {
@@ -38,9 +37,9 @@ class CheckoutCartAddProductObserver implements ObserverInterface
     private $localeResolver;
 
     /**
-     * @var Session
+     * @var AddPrivateDatalayerEventInterface
      */
-    private $session;
+    private $addPrivateDatalayerEvent;
 
     /**
      * @var LocalizedToNormalized
@@ -48,24 +47,32 @@ class CheckoutCartAddProductObserver implements ObserverInterface
     private $localizedToNormalized;
 
     /**
+     * @var FormatAddToCartEvent
+     */
+    private $formatAddToCartEvent;
+
+    /**
      * @param Datalayer $datalayer
      * @param LaunchConfigProvider $launchConfigProvider
      * @param ResolverInterface $localeResolver
-     * @param Session $session
+     * @param AddPrivateDatalayerEventInterface $addPrivateDatalayerEvent
      * @param LocalizedToNormalized $localizedToNormalized
+     * @param FormatAddToCartEvent $formatAddToCartEvent
      */
     public function __construct(
         Datalayer $datalayer,
         LaunchConfigProvider $launchConfigProvider,
         ResolverInterface $localeResolver,
-        Session $session,
-        LocalizedToNormalized $localizedToNormalized
+        AddPrivateDatalayerEventInterface $addPrivateDatalayerEvent,
+        LocalizedToNormalized $localizedToNormalized,
+        FormatAddToCartEvent $formatAddToCartEvent
     ) {
         $this->datalayer = $datalayer;
         $this->launchConfigProvider = $launchConfigProvider;
         $this->localeResolver = $localeResolver;
-        $this->session = $session;
+        $this->addPrivateDatalayerEvent = $addPrivateDatalayerEvent;
         $this->localizedToNormalized = $localizedToNormalized;
+        $this->formatAddToCartEvent = $formatAddToCartEvent;
     }
 
     /**
@@ -91,7 +98,7 @@ class CheckoutCartAddProductObserver implements ObserverInterface
             $qty = 1;
         }
 
-        $datalayerContent = $this->datalayer->addToCartPushData($qty, $product);
-        $this->session->setAddToCartDatalayerContent($datalayerContent);
+        $datalayerContent = $this->formatAddToCartEvent->execute($qty, $product);
+        $this->addPrivateDatalayerEvent->execute('AddToCartDatalayerContent', $datalayerContent);
     }
 }

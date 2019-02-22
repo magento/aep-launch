@@ -9,7 +9,7 @@ namespace Adobe\LaunchCatalogSearch\Plugin;
 
 use Magento\CatalogSearch\Block\Result as SearchResultBlock;
 use Magento\Search\Helper\Data as SearchData;
-use Adobe\AxpConnector\Model\Command\AddDatalayerEvent;
+use Adobe\AxpConnector\Api\AddDatalayerEventInterface;
 use Adobe\AxpConnector\Model\LaunchConfigProvider;
 use Adobe\LaunchCatalog\Model\FormatCategoryViewedEvent;
 use Adobe\LaunchCatalogSearch\Model\FormatCatalogSearchViewedEvent;
@@ -25,7 +25,7 @@ class CatalogSearchViewedEvent
     private $launchConfigProvider;
 
     /**
-     * @var AddDatalayerEvent
+     * @var AddDatalayerEventInterface
      */
     private $addDatalayerEvent;
 
@@ -46,14 +46,14 @@ class CatalogSearchViewedEvent
 
     /**
      * @param LaunchConfigProvider $launchConfigProvider
-     * @param AddDatalayerEvent $addDatalayerEvent
+     * @param AddDatalayerEventInterface $addDatalayerEvent
      * @param FormatCategoryViewedEvent $formatCategoryViewedEvent
      * @param FormatCatalogSearchViewedEvent $formatCatalogSearchViewedEvent
      * @param SearchData $searchData
      */
     public function __construct(
         LaunchConfigProvider $launchConfigProvider,
-        AddDatalayerEvent $addDatalayerEvent,
+        AddDatalayerEventInterface $addDatalayerEvent,
         FormatCategoryViewedEvent $formatCategoryViewedEvent,
         FormatCatalogSearchViewedEvent $formatCatalogSearchViewedEvent,
         SearchData $searchData

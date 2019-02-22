@@ -7,13 +7,14 @@ declare(strict_types=1);
 
 namespace Adobe\AxpConnector\Model\Command;
 
+use Adobe\AxpConnector\Api\AddDatalayerEventInterface;
 use Adobe\AxpConnector\Model\Datalayer;
 use Magento\Framework\Serialize\Serializer\Json;
 
 /**
  * Add event to the datalayer.
  */
-class AddDatalayerEvent
+class AddDatalayerEvent implements AddDatalayerEventInterface
 {
     /**
      * @var Datalayer

@@ -8,7 +8,7 @@ declare(strict_types=1);
 namespace Adobe\LaunchCatalog\Plugin;
 
 use Magento\Catalog\Block\Product\ListProduct as CategoryViewBlock;
-use Adobe\AxpConnector\Model\Command\AddDatalayerEvent;
+use Adobe\AxpConnector\Api\AddDatalayerEventInterface;
 use Adobe\AxpConnector\Model\LaunchConfigProvider;
 use Adobe\LaunchCatalog\Model\FormatCategoryViewedEvent;
 
@@ -23,7 +23,7 @@ class CategoryViewedEvent
     private $launchConfigProvider;
 
     /**
-     * @var AddDatalayerEvent
+     * @var AddDatalayerEventInterface
      */
     private $addDatalayerEvent;
 
@@ -34,12 +34,12 @@ class CategoryViewedEvent
 
     /**
      * @param LaunchConfigProvider $launchConfigProvider
-     * @param AddDatalayerEvent $addDatalayerEvent
+     * @param AddDatalayerEventInterface $addDatalayerEvent
      * @param FormatCategoryViewedEvent $formatCategoryViewedEvent
      */
     public function __construct(
         LaunchConfigProvider $launchConfigProvider,
-        AddDatalayerEvent $addDatalayerEvent,
+        AddDatalayerEventInterface $addDatalayerEvent,
         FormatCategoryViewedEvent $formatCategoryViewedEvent
     ) {
         $this->launchConfigProvider = $launchConfigProvider;
