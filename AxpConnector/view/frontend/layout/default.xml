@@ -11,8 +11,7 @@
                 </arguments>
             </block>
         </referenceBlock>
-
-        <referenceContainer name="after.body.start">
+        <referenceContainer name="before.body.end">
             <block class="Magento\Framework\View\Element\Template"
                    name="axpconnector_private_content_block"
                    template="Adobe_AxpConnector::private_content_datalayer.phtml"
@@ -23,10 +22,9 @@
                     </argument>
                 </arguments>
             </block>
-
-            <block class="Adobe\AxpConnector\Block\Page"
-                   name="axpconnector_page_block"
-                   template="Adobe_AxpConnector::page.phtml"
+            <block class="Magento\Framework\View\Element\Template"
+                   name="axp_connector_datalayer"
+                   template="Adobe_AxpConnector::datalayer.phtml"
                    ifconfig="axpconnector_backend_config/general/enable"
             >
                 <arguments>

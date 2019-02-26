@@ -8,20 +8,20 @@ declare(strict_types=1);
 namespace Adobe\AxpConnector\CustomerData;
 
 use Magento\Customer\CustomerData\SectionSourceInterface;
+use Magento\Framework\Session\Generic as Session;
 use Adobe\AxpConnector\Model\LaunchConfigProvider;
-use Magento\Checkout\Model\Session;
 
 /**
  * Launch private data section
  *
- * @SuppressWarnings(PHPMD.CookieAndSessionMisuse)
+ * @SuppressWarnings(PHPMD.CookieAndSessionMisuse) False-positive test. CustomerData is a presentation layer.
  */
 class Launch implements SectionSourceInterface
 {
     /**
      * @var Session
      */
-    private $checkoutSession;
+    private $session;
 
     /**
      * @var LaunchConfigProvider
@@ -29,33 +29,44 @@ class Launch implements SectionSourceInterface
     private $launchConfigProvider;
 
     /**
+     * @var array
+     */
+    private $launchSections = [];
+
+    /**
      * @param LaunchConfigProvider $launchConfigProvider
-     * @param Session $checkoutSession
+     * @param Session $session
+     * @param array $launchSections
      */
     public function __construct(
         LaunchConfigProvider $launchConfigProvider,
-        Session $checkoutSession
+        Session $session,
+        array $launchSections = []
     ) {
-        $this->checkoutSession = $checkoutSession;
+        $this->session = $session;
         $this->launchConfigProvider = $launchConfigProvider;
+        $this->launchSections = $launchSections;
     }
 
     /**
-     * Get section data.
+     * Load all Launch related section data.
      *
      * @return array
      */
     public function getSectionData()
     {
-        $data = [];
+        if (!$this->launchConfigProvider->isEnabled()) {
+            return [];
+        }
 
-        $data[] = $this->checkoutSession->getData('add_to_cart_datalayer_content', true);
-        $data[] = $this->checkoutSession->getData('remove_from_cart_datalayer_content', true);
-        $data[] = $this->checkoutSession->getData('order_placed_datalayer_content', true);
-        $data = array_values(array_filter($data));
+        $datalayerEvents = [];
+        foreach ($this->launchSections as $section) {
+            $datalayerEvents[] = $this->session->getData($section, true);
+        }
+        $datalayerEvents = array_values(array_filter($datalayerEvents));
 
         return [
-            'datalayerEvents' => $data
+            'datalayerEvents' => $datalayerEvents
         ];
     }
 }

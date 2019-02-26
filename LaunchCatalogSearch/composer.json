@@ -1,0 +1,25 @@
+{
+    "name": "adobe/module-launch-catalog-search",
+    "description": "Launch datalayer for Catalog Search module",
+    "require": {
+        "php": "~7.1.3||~7.2.0",
+        "magento/framework": "*",
+        "magento/module-search": "*",
+        "magento/module-catalog-search": "*",
+        "adobe/module-axp-connector": "*",
+        "adobe/module-launch-catalog": "*"
+    },
+    "type": "magento2-module",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Adobe\\LaunchCatalogSearch\\": ""
+        }
+    }
+}

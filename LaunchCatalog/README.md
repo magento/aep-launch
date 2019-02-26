@@ -1,0 +1,1 @@
+Module `LaunchCatalog` introduces Adobe Launch Tag management capabilities to the `Catalog` module.

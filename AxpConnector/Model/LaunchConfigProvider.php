@@ -36,33 +36,30 @@ class LaunchConfigProvider
     /**
      * Check if module is enabled in configuration.
      *
-     * @param string $scope
      * @return bool
      */
-    public function isEnabled(?string $scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT): bool
+    public function isEnabled(): bool
     {
-        return $this->scopeConfig->isSetFlag(self::LAUNCH_INTEGRATION_ENABLED, $scope);
+        return $this->scopeConfig->isSetFlag(self::LAUNCH_INTEGRATION_ENABLED);
     }
 
     /**
      * Get Url for the Launch script from configuration.
      *
-     * @param string $scope
      * @return string|null
      */
-    public function getScriptUrl(?string $scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT): ?string
+    public function getScriptUrl(): ?string
     {
-        return $this->scopeConfig->getValue(self::LAUNCH_SCRIPT_URL, $scope);
+        return $this->scopeConfig->getValue(self::LAUNCH_SCRIPT_URL);
     }
 
     /**
      * Get datalayer name from configuration.
      *
-     * @param string $scope
      * @return string|null
      */
-    public function getDatalayerName(?string $scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT): ?string
+    public function getDatalayerName(): ?string
     {
-        return $this->scopeConfig->getValue(self::LAUNCH_DATALAYER_NAME, $scope);
+        return $this->scopeConfig->getValue(self::LAUNCH_DATALAYER_NAME);
     }
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Adobe\AxpConnector\Api\AddDatalayerEventInterface"
+                type="Adobe\AxpConnector\Model\Command\AddDatalayerEvent" />
+    <preference for="Adobe\AxpConnector\Api\AddPrivateDatalayerEventInterface"
+                type="Adobe\AxpConnector\CustomerData\AddPrivateDatalayerEvent" />
+    <preference for="Adobe\AxpConnector\Api\GetAllDatalayerEventsInterface"
+                type="Adobe\AxpConnector\Model\Command\GetAllDatalayerEvents" />
+</config>
