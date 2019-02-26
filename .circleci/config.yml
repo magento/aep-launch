@@ -1,7 +1,7 @@
 defaults: &defaults
   working_directory: ~/magento
   environment:
-    MDE_COMPOSER_MODULE: adobe/axp-connector;adobe/module-axp-connector;adobe/module-launch-catalog;adobe/module-launch-catalog-search;adobe/module-launch-checkout
+    MDE_COMPOSER_MODULE: adobe/axp-connector;adobe/module-axp-connector;adobe/module-launch-catalog;adobe/module-launch-catalog-search;adobe/module-launch-checkout;adobe/module-launch-theme
     MDE_COMPOSER_METAPACKAGE: adobe/axp-connector
     CORE_GIT_REPOSITORY: magento/magento2
     CORE_GIT_BRANCH: 2.3-develop

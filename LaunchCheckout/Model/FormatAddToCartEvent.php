@@ -18,7 +18,6 @@ class FormatAddToCartEvent
      * @param int $qty
      * @param mixed $product
      * @return array
-     * @deprecated Needs logic to be reviewed once more
      */
     public function execute($qty, $product): array
     {

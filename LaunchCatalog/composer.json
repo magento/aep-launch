@@ -1,23 +1,23 @@
 {
-  "name": "adobe/module-launch-catalog",
-  "description": "Launch datalayer for Catalog module",
-  "require": {
-    "php": "~7.1.3||~7.2.0",
-    "magento/framework": "*",
-    "magento/module-catalog": "*",
-    "adobe/module-axp-connector": "*"
-  },
-  "type": "magento2-module",
-  "license": [
-    "OSL-3.0",
-    "AFL-3.0"
-  ],
-  "autoload": {
-    "files": [
-      "registration.php"
+    "name": "adobe/module-launch-catalog",
+    "description": "Launch datalayer for Catalog module",
+    "require": {
+        "php": "~7.1.3||~7.2.0",
+        "magento/framework": "*",
+        "magento/module-catalog": "*",
+        "adobe/module-axp-connector": "*"
+    },
+    "type": "magento2-module",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
     ],
-    "psr-4": {
-      "Adobe\\LaunchCatalog\\": ""
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Adobe\\LaunchCatalog\\": ""
+        }
     }
-  }
 }

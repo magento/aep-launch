@@ -1,24 +1,24 @@
 {
-  "name": "adobe/module-axp-connector",
-  "description": "Adobe Experience Cloud connector",
-  "require": {
-    "php": "~7.1.3||~7.2.0",
-    "magento/framework": "*",
-    "magento/module-config": "*",
-    "magento/module-customer": "*",
-    "magento/module-backend": "*"
-  },
-  "type": "magento2-module",
-  "license": [
-    "OSL-3.0",
-    "AFL-3.0"
-  ],
-  "autoload": {
-    "files": [
-      "registration.php"
+    "name": "adobe/module-axp-connector",
+    "description": "Adobe Experience Cloud connector",
+    "require": {
+        "php": "~7.1.3||~7.2.0",
+        "magento/framework": "*",
+        "magento/module-config": "*",
+        "magento/module-customer": "*",
+        "magento/module-backend": "*"
+    },
+    "type": "magento2-module",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
     ],
-    "psr-4": {
-      "Adobe\\AxpConnector\\": ""
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Adobe\\AxpConnector\\": ""
+        }
     }
-  }
 }

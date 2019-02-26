@@ -13,7 +13,7 @@
     </event>
     <event name="sales_quote_remove_item">
         <observer name="Adobe_axpconnector_remove_from_cart"
-                  instance="Adobe\LaunchCheckout\Observer\SalesQuoteRemoveItemObserver" />
+                  instance="Adobe\LaunchCheckout\Observer\CheckoutCartRemoveProductObserver" />
     </event>
     <event name="checkout_submit_all_after">
         <observer name="Adobe_axpconnector_order_success"

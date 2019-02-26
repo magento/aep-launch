@@ -9,7 +9,6 @@ namespace Adobe\LaunchCheckout\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Event\Observer;
-use Magento\Sales\Api\OrderRepositoryInterface;
 use Adobe\AxpConnector\Api\AddPrivateDatalayerEventInterface;
 use Adobe\AxpConnector\Model\LaunchConfigProvider;
 use Adobe\LaunchCheckout\Model\FormatOrderPlacedEvent;
@@ -25,11 +24,6 @@ class CheckoutOnepageControllerSuccessActionObserver implements ObserverInterfac
     private $launchConfigProvider;
 
     /**
-     * @var OrderRepositoryInterface
-     */
-    private $orderRepository;
-
-    /**
      * @var FormatOrderPlacedEvent
      */
     private $formatOrderPlacedEvent;
@@ -42,18 +36,15 @@ class CheckoutOnepageControllerSuccessActionObserver implements ObserverInterfac
     /**
      * @param LaunchConfigProvider $launchConfigProvider
      * @param AddPrivateDatalayerEventInterface $addPrivateDatalayerEvent
-     * @param OrderRepositoryInterface $orderRepository
      * @param FormatOrderPlacedEvent $formatOrderPlacedEvent
      */
     public function __construct(
         LaunchConfigProvider $launchConfigProvider,
         AddPrivateDatalayerEventInterface $addPrivateDatalayerEvent,
-        OrderRepositoryInterface $orderRepository,
         FormatOrderPlacedEvent $formatOrderPlacedEvent
     ) {
         $this->addPrivateDatalayerEvent = $addPrivateDatalayerEvent;
         $this->launchConfigProvider = $launchConfigProvider;
-        $this->orderRepository = $orderRepository;
         $this->formatOrderPlacedEvent = $formatOrderPlacedEvent;
     }
 
