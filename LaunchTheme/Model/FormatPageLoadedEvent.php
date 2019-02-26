@@ -5,24 +5,22 @@
  */
 declare(strict_types=1);
 
-namespace Adobe\AxpConnector\Model;
+namespace Adobe\LaunchTheme\Model;
 
 /**
- * Page loaded event
- * @deprecated
+ * Page loaded event data formatter.
  */
 class FormatPageLoadedEvent
 {
     /**
-     * Push data when page is loaded (?)
+     * Format data for the Page Loaded event.
      *
      * @param string $pageTitle
      * @param string $pageType
      * @param array $breadcrumbs
      * @return array
-     * @depracated This method is only temporarily used as a part of refactoring routine.
      */
-    public function execute($pageTitle, $pageType, $breadcrumbs): array
+    public function execute(string $pageTitle, string $pageType, array $breadcrumbs = []): array
     {
         return [
             'event' => 'Page Loaded',
