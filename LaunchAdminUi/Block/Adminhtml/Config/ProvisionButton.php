@@ -14,8 +14,6 @@ use Adobe\AxpConnector\Model\ProvisioningConfigProvider;
 
 /**
  * Class ProvisionButton
- *
- * @package Adobe\AxpConnector\Block\Adminhtml\Config
  */
 class ProvisionButton extends Field
 {
@@ -73,7 +71,7 @@ class ProvisionButton extends Field
      */
     public function getAjaxUrl()
     {
-        return $this->getUrl('adobe_axpconnector/config/provision');
+        return $this->getUrl('adobe_launchadminui/config/provision');
     }
 
     /**

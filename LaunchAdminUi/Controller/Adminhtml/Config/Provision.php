@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Adobe\AxpConnector\Controller\Adminhtml\Config;
+namespace Adobe\LaunchAdminUi\Controller\Adminhtml\Config;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
@@ -19,8 +19,6 @@ use Magento\Framework\Serialize\Serializer\Json;
 
 /**
  * Class Provision
- *
- * @package Adobe\AxpConnector\Controller\Adminhtml\Config
  */
 class Provision extends Action implements HttpPostActionInterface
 {

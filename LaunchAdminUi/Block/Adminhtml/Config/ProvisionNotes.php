@@ -12,8 +12,6 @@ use Magento\Framework\Data\Form\Element\AbstractElement;
 
 /**
  * Class ProvisionNotes
- *
- * @package Adobe\AxpConnector\Block\Adminhtml\Config
  */
 class ProvisionNotes extends Field
 {

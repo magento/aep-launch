@@ -2,8 +2,8 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
     <router id="admin">
-        <route id="adobe_axpconnector" frontName="adobe_axpconnector">
-            <module name="Adobe_AxpConnector" before="Magento_Backend" />
+        <route id="adobe_launchadminui" frontName="adobe_launchadminui">
+            <module name="Adobe_LaunchAdminUi" before="Magento_Backend" />
         </route>
     </router>
 </config>
