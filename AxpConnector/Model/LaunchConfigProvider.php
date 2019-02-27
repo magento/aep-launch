@@ -15,8 +15,8 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 class LaunchConfigProvider
 {
     private const LAUNCH_INTEGRATION_ENABLED = 'launch_general_config/general/enable';
-    private const LAUNCH_SCRIPT_URL = 'launch_backend_config_datalayer/datalayer/launch_script_url';
-    private const LAUNCH_DATALAYER_NAME = 'launch_backend_config_datalayer/datalayer/datalayer_name';
+    private const LAUNCH_SCRIPT_URL = 'launch_datalayer_config/general/launch_script_url';
+    private const LAUNCH_DATALAYER_NAME = 'launch_datalayer_config/general/datalayer_name';
 
     /**
      * @var ScopeConfigInterface
