@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <launch_general_config>
+            <general>
+                <enable>0</enable>
+            </general>
+        </launch_general_config>
+        <launch_property_config>
+            <launch_property>
+                <adobe_org_id>your-org-id-here@AdobeOrg</adobe_org_id>
+            </launch_property>
+        </launch_property_config>
+        <launch_backend_config_datalayer>
+            <datalayer>
+                <datalayer_name>AppEventData</datalayer_name>
+                <launch_script_url>&lt;script src="//assets.adobedtm.com/your-script-here.js async&gt;&lt;/script&gt;</launch_script_url>
+            </datalayer>
+        </launch_backend_config_datalayer>
+    </default>
+</config>

@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Adobe\AxpConnector\Block\Adminhtml\Config;
+namespace Adobe\LaunchAdminUi\Block\Adminhtml\Config;
 
 use Magento\Backend\Block\Template\Context;
 use Magento\Config\Block\System\Config\Form\Field;
@@ -22,7 +22,7 @@ class ProvisionButton extends Field
     /**
      * @var string
      */
-    protected $_template = 'Adobe_AxpConnector::provision_button.phtml';
+    protected $_template = 'Adobe_LaunchAdminUi::provision_button.phtml';
 
     /**
      * @var ProvisioningConfigProvider

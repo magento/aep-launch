@@ -11,7 +11,7 @@
             <block class="Magento\Framework\View\Element\Template"
                    name="axpconnector_checkout_success"
                    template="Adobe_LaunchCheckout::checkout_success.phtml"
-                   ifconfig="axpconnector_backend_config/general/enable"
+                   ifconfig="launch_general_config/general/enable"
             />
         </referenceContainer>
     </body>

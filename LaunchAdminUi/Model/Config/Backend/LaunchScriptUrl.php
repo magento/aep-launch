@@ -5,30 +5,33 @@
  */
 declare(strict_types=1);
 
-namespace Adobe\AxpConnector\Model\Config\Backend;
+namespace Adobe\LaunchAdminUi\Model\Config\Backend;
+
+use Magento\Framework\App\Config\Value;
+use Magento\Framework\Exception\ValidatorException;
 
 /**
  * Launch Script Url configuration.
  */
-class LaunchScriptUrl extends \Magento\Framework\App\Config\Value
+class LaunchScriptUrl extends Value
 {
     /**
      * Did they paste the script tag?
      *
      * Ex: <script src="//assets.adobedtm.com/launch-EN5ea69d1bda314cdeacd364XXXXXXX-development.min.js" async></script>
      */
-    const SCRIPT_TAG_REGEX = '/<script src="(.*)"/';
+    private const SCRIPT_TAG_REGEX = '/<script src="(.*)"/';
 
     /**
      * Matches URLs, even those that are protocol-relative (ie. "//" without http(s)).
      */
-    const MISSING_SCHEME_REGEX = '/^(http(s)?:)?\/\/(.*)/';
+    private const MISSING_SCHEME_REGEX = '/^(http(s)?:)?\/\/(.*)/';
 
     /**
      * @inheritdoc
      *
-     * @return \Magento\Framework\App\Config\Value|void
-     * @throws \Magento\Framework\Exception\ValidatorException
+     * @return Value
+     * @throws ValidatorException
      */
     public function beforeSave()
     {
@@ -40,27 +43,27 @@ class LaunchScriptUrl extends \Magento\Framework\App\Config\Value
 
         // FILTER_VALIDATE_URL requires a protocol, so we'll have to prepend one if it's not there
         // Note: This also is the case for protocol-relative URLs, like "//foo.bar.com"
-        $testVal = $this->getValue();
-        if (preg_match(self::MISSING_SCHEME_REGEX, $testVal, $matches)) {
+        $testValue = $this->getValue();
+        if (preg_match(self::MISSING_SCHEME_REGEX, $testValue, $matches)) {
             // Protocol found, but it could be relative, so to pass the FILTER_VALIDATE_URL we need to prefix
             // with http. However, storing it as relative is fine for our purposes.
-            $testVal = 'http://' . $matches[3];
+            $testValue = 'http://' . $matches[3];
         } else {
             // No protocol found, so prefix prior to testing
-            $testVal = 'http://' . $testVal;
+            $testValue = 'http://' . $testValue;
 
             // We need to store it with a protocol prefix as well
             $this->setValue('//' . $this->getValue());
         }
 
-        if (!filter_var($testVal, FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED | FILTER_FLAG_PATH_REQUIRED)) {
-            throw new \Magento\Framework\Exception\ValidatorException(__(
+        if (!filter_var($testValue, FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED | FILTER_FLAG_PATH_REQUIRED)) {
+            throw new ValidatorException(__(
                 '%1 must either be a &lt;script&gt; tag for the Launch JavaScript snippet, ' .
                 'or the URL to the snippet.',
                 $label
             ));
         }
 
-        parent::beforeSave();
+        return parent::beforeSave();
     }
 }

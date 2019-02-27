@@ -5,12 +5,15 @@
  */
 declare(strict_types=1);
 
-namespace Adobe\AxpConnector\Model\Config\Backend;
+namespace Adobe\LaunchAdminUi\Model\Config\Backend;
+
+use Magento\Framework\App\Config\Value;
+use Magento\Framework\Exception\ValidatorException;
 
 /**
- * Datalayer name configuration
+ * Datalayer name configuration source
  */
-class DatalayerName extends \Magento\Framework\App\Config\Value
+class DatalayerName extends Value
 {
     /**
      * Test for a valid JavaScript variable name.
@@ -22,25 +25,22 @@ class DatalayerName extends \Magento\Framework\App\Config\Value
      * Example invalid: "001Datalayer", "My Data Layer", "My<Data>Layer"
      *
      */
-    const JS_VARIABLE_REGEX = '/^[a-zA-Z_$][0-9a-zA-Z_$]*$/';
+    private const JS_VARIABLE_REGEX = '/^[a-zA-Z_$][0-9a-zA-Z_$]*$/';
 
     /**
      * @inheritdoc
      *
-     * @return \Magento\Framework\App\Config\Value|void
-     * @throws \Magento\Framework\Exception\ValidatorException
+     * @return Value
+     * @throws ValidatorException
      */
     public function beforeSave()
     {
         $label = $this->getData('field_config/label');
 
         if (!preg_match(self::JS_VARIABLE_REGEX, $this->getValue())) {
-            throw new \Magento\Framework\Exception\ValidatorException(__(
-                $label .
-                ' must be a valid JavaScript identifier'
-            ));
+            throw new ValidatorException(__('%1 must be a valid JavaScript identifier', $label));
         }
 
-        parent::beforeSave();
+        return parent::beforeSave();
     }
 }
