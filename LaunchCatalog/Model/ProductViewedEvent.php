@@ -5,23 +5,17 @@
  */
 declare(strict_types=1);
 
-namespace Adobe\LaunchCatalog\Plugin;
+namespace Adobe\LaunchCatalog\Model;
 
 use Magento\Catalog\Block\Product\View as ProductViewBlock;
 use Adobe\AxpConnector\Model\Command\AddDatalayerEvent;
-use Adobe\AxpConnector\Model\LaunchConfigProvider;
-use Adobe\LaunchCatalog\Model\FormatProductViewedEvent;
+use Magento\Framework\View\LayoutInterface;
 
 /**
  * Add datalayer information to the Product View page.
  */
 class ProductViewedEvent
 {
-    /**
-     * @var LaunchConfigProvider
-     */
-    private $launchConfigProvider;
-
     /**
      * @var AddDatalayerEvent
      */
@@ -33,36 +27,27 @@ class ProductViewedEvent
     private $formatProductViewedEvent;
 
     /**
-     * @param LaunchConfigProvider $launchConfigProvider
      * @param FormatProductViewedEvent $formatProductViewedEvent
      * @param AddDatalayerEvent $addDatalayerEvent
      */
     public function __construct(
-        LaunchConfigProvider $launchConfigProvider,
         FormatProductViewedEvent $formatProductViewedEvent,
         AddDatalayerEvent $addDatalayerEvent
     ) {
-        $this->launchConfigProvider = $launchConfigProvider;
         $this->formatProductViewedEvent = $formatProductViewedEvent;
         $this->addDatalayerEvent = $addDatalayerEvent;
     }
 
     /**
-     * Add datalayer information to the Product View page.
+     * Add product viewed event to the Datalayer.
      *
-     * @param ProductViewBlock $subject
-     * @param string $html
-     * @return string
+     * @param LayoutInterface $layout
      */
-    public function afterToHtml(ProductViewBlock $subject, string $html)
+    public function execute(LayoutInterface $layout)
     {
-        if (!$this->launchConfigProvider->isEnabled()) {
-            return $html;
-        }
-
-        $product = $subject->getProduct();
+        /** @var ProductViewBlock $productViewBlock */
+        $productViewBlock = $layout->getBlock('product.info');
+        $product = $productViewBlock->getProduct();
         $this->addDatalayerEvent->execute($this->formatProductViewedEvent->execute($product));
-
-        return $html;
     }
 }
