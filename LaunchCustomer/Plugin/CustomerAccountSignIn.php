@@ -7,16 +7,16 @@ declare(strict_types=1);
 
 namespace Adobe\LaunchCustomer\Plugin;
 
-use Adobe\LaunchCustomer\Model\FormatCustomerEvent;
+use Magento\Customer\Api\AccountManagementInterface;
 use Magento\Customer\Api\Data\CustomerInterface;
+use Adobe\LaunchCustomer\Model\FormatCustomerEvent;
 use Adobe\AxpConnector\Api\AddPrivateDatalayerEventInterface;
 use Adobe\AxpConnector\Model\LaunchConfigProvider;
-use Magento\Customer\Api\AccountManagementInterface;
 
 /**
- * Plugin for Customer Account Created event.
+ * Plugin for Customer Login event.
  */
-class CustomerAccountCreate
+class CustomerAccountSignIn
 {
     /**
      * @var LaunchConfigProvider
@@ -49,7 +49,7 @@ class CustomerAccountCreate
     }
 
     /**
-     * Process "User Registered" datalayer event.
+     * Process "User Sign In" datalayer event.
      *
      * @param AccountManagementInterface $subject
      * @param CustomerInterface $customer
@@ -57,15 +57,15 @@ class CustomerAccountCreate
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function afterCreateAccount(AccountManagementInterface $subject, CustomerInterface $customer)
+    public function afterAuthenticate(AccountManagementInterface $subject, CustomerInterface $customer)
     {
         if (!$this->launchConfigProvider->isEnabled()) {
             return $customer;
         }
 
         $datalayerContent = $this->formatCustomerEvent->execute($customer);
-        $datalayerContent['event'] = 'User Registered';
-        $this->addPrivateDatalayerEvent->execute('CustomerAccountCreateDatalayerContent', $datalayerContent);
+        $datalayerContent['event'] = 'User Signed In';
+        $this->addPrivateDatalayerEvent->execute('CustomerSignInDatalayerContent', $datalayerContent);
         return $customer;
     }
 }

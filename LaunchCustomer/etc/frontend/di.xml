@@ -11,10 +11,12 @@
         <arguments>
             <argument name="launchSections" xsi:type="array">
                 <item name="launch_customer_account_created" xsi:type="string">customer_account_create_datalayer_content</item>
+                <item name="launch_customer_sign_in" xsi:type="string">customer_sign_in_datalayer_content</item>
             </argument>
         </arguments>
     </type>
     <type name="Magento\Customer\Api\AccountManagementInterface">
         <plugin name="customer_account_create_datalayer_event" type="Adobe\LaunchCustomer\Plugin\CustomerAccountCreate"/>
+        <plugin name="customer_login_datalayer_event" type="Adobe\LaunchCustomer\Plugin\CustomerAccountSignIn"/>
     </type>
 </config>

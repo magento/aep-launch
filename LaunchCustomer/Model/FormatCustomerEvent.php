@@ -24,7 +24,7 @@ class FormatCustomerEvent
     {
         $result = [];
 
-        $result['event'] = 'User Registered';
+        $result['event'] = '';
         $result['user']['userType'] = $customer->getGroupId();
         $result['user']['custKey'] = $customer->getId();
 

@@ -10,4 +10,10 @@
     <action name="customer/account/createPost">
         <section name="launch" />
     </action>
+    <action name="customer/account/loginPost">
+        <section name="launch" />
+    </action>
+    <action name="customer/ajax/login">
+        <section name="launch" />
+    </action>
 </config>
