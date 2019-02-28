@@ -1,0 +1,1 @@
+Module `LaunchCustomer` introduces Adobe Launch Tag management capabilities to the `Customer` module.
