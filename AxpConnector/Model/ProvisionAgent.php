@@ -5,26 +5,42 @@
  */
 declare(strict_types=1);
 
-namespace Adobe\AxpConnector\Helper;
+namespace Adobe\AxpConnector\Model;
 
 use Adobe\AxpConnector\Webservice\Client\ProvisionClient;
-use Adobe\AxpConnector\Model\LaunchConfigProvider;
-use Magento\Framework\App\Helper\AbstractHelper;
-use Magento\Framework\App\Helper\Context;
 use Psr\Log\LoggerInterface;
-use Adobe\AxpConnector\Model\ProvisioningConfigProvider;
 use Magento\Framework\Serialize\Serializer\Json;
 
 /**
- * Class ProvisionHelper
+ * Launch Property Provisioning
  *
- * @package Adobe\AxpConnector\Helper
- *
- * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
- * @deprecated
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity) Class has to be redesigned.
  */
-class ProvisionHelper extends AbstractHelper
+class ProvisionAgent
 {
+    private const TOKEN_URI = 'https://ims-na1.adobelogin.com/ims/exchange/jwt/';
+
+    private const ADOBE_IO_LAUNCH_HOSTNAME = 'mc-api-activation-reactor.adobe.io';
+
+    private const ADOBE_LAUNCH_HOSTNAME = 'launch.adobe.com';
+
+    private const LAUNCH_PROPERTY_NAME_PREFIX = 'Magento Auto-Provisioned';
+
+    private const AA_RS_PROD = 'rs_prod';
+
+    private const AA_RS_STAGE = 'rs_stage';
+
+    private const AA_RS_DEV = 'rs_dev';
+
+    private const EXTENSION_MAP = [
+        ['src' => 'adobe-analytics', 'target' => 'LAUNCH_EXT_PACKAGE_ID_ADOBE_ANALYTICS'],
+        ['src' => 'adobe-target', 'target' => 'LAUNCH_EXT_PACKAGE_ID_ADOBE_TARGET'],
+        ['src' => 'adobe-mcid', 'target' => 'LAUNCH_EXT_PACKAGE_ID_ADOBE_EXPERIENCE_CLOUD'],
+        ['src' => 'aa-product-string-search-discovery', 'target' => 'LAUNCH_EXT_PACKAGE_ID_SDI_PRODUCT_STR'],
+        ['src' => 'sdi-toolkit', 'target' => 'LAUNCH_EXT_PACKAGE_ID_SDI_TOOLKIT'],
+        ['src' => 'data-layer-manager-search-discovery', 'target' => 'LAUNCH_EXT_PACKAGE_ID_SDI_DATALAYER_MGR'],
+    ];
+
     /**
      * @var ProvisionClient
      */
@@ -34,53 +50,6 @@ class ProvisionHelper extends AbstractHelper
      * @var LoggerInterface
      */
     private $logger;
-
-    /**
-     * @var string
-     */
-    const TOKEN_URI = 'https://ims-na1.adobelogin.com/ims/exchange/jwt/';
-
-    /**
-     * @var string
-     */
-    const ADOBE_IO_LAUNCH_HOSTNAME = 'mc-api-activation-reactor.adobe.io';
-
-    /**
-     * @var string
-     */
-    const ADOBE_LAUNCH_HOSTNAME = 'launch.adobe.com';
-
-    /**
-     * @var string
-     */
-    const LAUNCH_PROPERTY_NAME_PREFIX = 'Magento Auto-Provisioned';
-
-    /**
-     * @var string
-     */
-    const AA_RS_PROD = 'rs_prod';
-
-    /**
-     * @var string
-     */
-    const AA_RS_STAGE = 'rs_stage';
-
-    /**
-     * @var string
-     */
-    const AA_RS_DEV = 'rs_dev';
-
-    /**
-     * @var array
-     */
-    const EXTENSION_MAP = [
-        ['src' => 'adobe-analytics', 'target' => 'LAUNCH_EXT_PACKAGE_ID_ADOBE_ANALYTICS'],
-        ['src' => 'adobe-target', 'target' => 'LAUNCH_EXT_PACKAGE_ID_ADOBE_TARGET'],
-        ['src' => 'adobe-mcid', 'target' => 'LAUNCH_EXT_PACKAGE_ID_ADOBE_EXPERIENCE_CLOUD'],
-        ['src' => 'aa-product-string-search-discovery', 'target' => 'LAUNCH_EXT_PACKAGE_ID_SDI_PRODUCT_STR'],
-        ['src' => 'sdi-toolkit', 'target' => 'LAUNCH_EXT_PACKAGE_ID_SDI_TOOLKIT'],
-        ['src' => 'data-layer-manager-search-discovery', 'target' => 'LAUNCH_EXT_PACKAGE_ID_SDI_DATALAYER_MGR'],
-    ];
 
     /**
      * @var LaunchConfigProvider
@@ -98,7 +67,6 @@ class ProvisionHelper extends AbstractHelper
     private $jsonSerializer;
 
     /**
-     * @param Context $context
      * @param ProvisionClient $provisionClient
      * @param LaunchConfigProvider $launchConfigProvider
      * @param Json $jsonSerializer
@@ -106,7 +74,6 @@ class ProvisionHelper extends AbstractHelper
      * @param LoggerInterface $logger
      */
     public function __construct(
-        Context $context,
         ProvisionClient $provisionClient,
         LaunchConfigProvider $launchConfigProvider,
         Json $jsonSerializer,
@@ -118,7 +85,6 @@ class ProvisionHelper extends AbstractHelper
         $this->jsonSerializer = $jsonSerializer;
         $this->logger = $logger;
         $this->launchConfigProvider = $launchConfigProvider;
-        parent::__construct($context);
     }
 
     /**
