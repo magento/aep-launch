@@ -14,13 +14,11 @@ use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Module\Dir\Reader;
 use Magento\Framework\Filesystem\Driver\File;
 use Magento\Framework\Exception\FileSystemException;
-use Adobe\AxpConnector\Helper\ProvisionHelper;
+use Adobe\AxpConnector\Model\ProvisionAgent;
 use Magento\Framework\Serialize\Serializer\Json;
 
 /**
- * Class Provision
- *
- * @package Adobe\AxpConnector\Controller\Adminhtml\Config
+ * Launch Property provisioning.
  */
 class Provision extends Action implements HttpPostActionInterface
 {
@@ -40,9 +38,9 @@ class Provision extends Action implements HttpPostActionInterface
     private $file;
 
     /**
-     * @var ProvisionHelper
+     * @var ProvisionAgent
      */
-    private $provisionHelper;
+    private $provisionAgent;
 
     /**
      * @var Json
@@ -54,7 +52,7 @@ class Provision extends Action implements HttpPostActionInterface
      * @param JsonFactory $resultJsonFactory
      * @param Reader $moduleReader
      * @param File $file
-     * @param ProvisionHelper $provisionHelper
+     * @param ProvisionAgent $provisionAgent
      * @param Json $jsonSerializer
      */
     public function __construct(
@@ -62,13 +60,13 @@ class Provision extends Action implements HttpPostActionInterface
         JsonFactory $resultJsonFactory,
         Reader $moduleReader,
         File $file,
-        ProvisionHelper $provisionHelper,
+        ProvisionAgent $provisionAgent,
         Json $jsonSerializer
     ) {
         $this->resultJsonFactory = $resultJsonFactory;
         $this->moduleReader = $moduleReader;
         $this->file = $file;
-        $this->provisionHelper = $provisionHelper;
+        $this->provisionAgent = $provisionAgent;
         $this->jsonSerializer = $jsonSerializer;
         parent::__construct($context);
     }
@@ -116,6 +114,6 @@ class Provision extends Action implements HttpPostActionInterface
      */
     private function _sendAPIRequests($config)
     {
-        return $this->provisionHelper->makeRequests($config);
+        return $this->provisionAgent->makeRequests($config);
     }
 }
