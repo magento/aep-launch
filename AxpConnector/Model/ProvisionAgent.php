@@ -13,6 +13,8 @@ use Magento\Framework\Serialize\Serializer\Json;
 
 /**
  * Launch Property Provisioning
+ *
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity) Class has to be redesigned.
  */
 class ProvisionAgent
 {
