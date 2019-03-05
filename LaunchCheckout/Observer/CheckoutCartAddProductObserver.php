@@ -12,7 +12,6 @@ use Magento\Framework\Event\Observer;
 use Magento\Framework\Locale\ResolverInterface;
 use Magento\Framework\Filter\LocalizedToNormalized;
 use Adobe\AxpConnector\Api\AddPrivateDatalayerEventInterface;
-use Adobe\AxpConnector\Model\Datalayer;
 use Adobe\AxpConnector\Model\LaunchConfigProvider;
 use Adobe\LaunchCheckout\Model\FormatAddToCartEvent;
 
@@ -21,11 +20,6 @@ use Adobe\LaunchCheckout\Model\FormatAddToCartEvent;
  */
 class CheckoutCartAddProductObserver implements ObserverInterface
 {
-    /**
-     * @var Datalayer
-     */
-    private $datalayer;
-
     /**
      * @var LaunchConfigProvider
      */
@@ -52,7 +46,6 @@ class CheckoutCartAddProductObserver implements ObserverInterface
     private $formatAddToCartEvent;
 
     /**
-     * @param Datalayer $datalayer
      * @param LaunchConfigProvider $launchConfigProvider
      * @param ResolverInterface $localeResolver
      * @param AddPrivateDatalayerEventInterface $addPrivateDatalayerEvent
@@ -60,14 +53,12 @@ class CheckoutCartAddProductObserver implements ObserverInterface
      * @param FormatAddToCartEvent $formatAddToCartEvent
      */
     public function __construct(
-        Datalayer $datalayer,
         LaunchConfigProvider $launchConfigProvider,
         ResolverInterface $localeResolver,
         AddPrivateDatalayerEventInterface $addPrivateDatalayerEvent,
         LocalizedToNormalized $localizedToNormalized,
         FormatAddToCartEvent $formatAddToCartEvent
     ) {
-        $this->datalayer = $datalayer;
         $this->launchConfigProvider = $launchConfigProvider;
         $this->localeResolver = $localeResolver;
         $this->addPrivateDatalayerEvent = $addPrivateDatalayerEvent;

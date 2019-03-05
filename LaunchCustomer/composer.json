@@ -1,0 +1,23 @@
+{
+    "name": "adobe/module-launch-customer",
+    "description": "Launch datalayer for Customer module",
+    "require": {
+        "php": "~7.1.3||~7.2.0",
+        "magento/framework": "*",
+        "magento/module-customer": "*",
+        "adobe/module-axp-connector": "*"
+    },
+    "type": "magento2-module",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Adobe\\LaunchCustomer\\": ""
+        }
+    }
+}
