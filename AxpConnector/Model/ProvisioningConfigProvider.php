@@ -15,21 +15,21 @@ use Magento\Framework\Encryption\EncryptorInterface;
  */
 class ProvisioningConfigProvider
 {
-    private const LAUNCH_PROVISION_ADOBE_ORG_ID = 'axpconnector_launch_property_config/launch_property/adobe_org_id';
+    private const LAUNCH_PROVISION_ADOBE_ORG_ID = 'launch_api_config/credentials/adobe_org_id';
 
-    private const LAUNCH_PROVISION_CLIENT_ID = 'axpconnector_launch_property_config/launch_property/client_id';
+    private const LAUNCH_PROVISION_CLIENT_ID = 'launch_api_config/credentials/client_id';
 
-    private const LAUNCH_PROVISION_CLIENT_SECRET = 'axpconnector_launch_property_config/launch_property/client_secret';
+    private const LAUNCH_PROVISION_CLIENT_SECRET = 'launch_api_config/credentials/client_secret';
 
-    private const LAUNCH_PROVISION_CLIENT_JWT = 'axpconnector_launch_property_config/launch_property/jwt';
+    private const LAUNCH_PROVISION_CLIENT_JWT = 'launch_api_config/credentials/jwt';
 
-    private const LAUNCH_PROVISION_PROD_SUITE= 'axpconnector_launch_property_config/launch_property/prod_suite';
+    private const LAUNCH_PROVISION_PROD_SUITE= 'launch_api_config/adobe_analytics/prod_suite';
 
-    private const LAUNCH_PROVISION_STAGING_SUITE = 'axpconnector_launch_property_config/launch_property/stage_suite';
+    private const LAUNCH_PROVISION_STAGING_SUITE = 'launch_api_config/adobe_analytics/stage_suite';
 
-    private const LAUNCH_PROVISION_DEV_SUITE = 'axpconnector_launch_property_config/launch_property/dev_suite';
+    private const LAUNCH_PROVISION_DEV_SUITE = 'launch_api_config/adobe_analytics/dev_suite';
 
-    private const LAUNCH_PROVISION_PROPERTY_NAME = 'axpconnector_launch_property_config/launch_property/property_name';
+    private const LAUNCH_PROVISION_PROPERTY_NAME = 'launch_api_config/launch/property_name';
 
     /**
      * @var ScopeConfigInterface

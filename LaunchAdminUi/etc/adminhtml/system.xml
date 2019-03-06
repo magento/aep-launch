@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="launch" translate="label" sortOrder="2000">
+            <label>Adobe Experience Platform</label>
+        </tab>
+        <section id="launch_api_config" translate="label" type="text" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="10">
+            <label>API Configuration</label>
+            <tab>launch</tab>
+            <resource>Adobe_LaunchAdminUi::launch_config</resource>
+            <group id="credentials" translate="label" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>API Credentials</label>
+                <field id="adobe_org_id" translate="label" type="text" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="100">
+                    <label>Adobe Org ID</label>
+                    <validate>required-entry</validate>
+                    <comment>The Adobe Org ID associated with the Adobe I/O Integration.</comment>
+                    <backend_model>Adobe\LaunchAdminUi\Model\Config\Backend\AdobeOrgId</backend_model>
+                </field>
+                <field id="client_id" translate="label" type="text" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="200">
+                    <label>Client ID</label>
+                    <validate>required-entry</validate>
+                    <comment>The client ID (API Key) associated with the Adobe I/O Integration.</comment>
+                </field>
+                <field id="client_secret" translate="label" type="obscure" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="300">
+                    <label>Client Secret</label>
+                    <validate>required-entry</validate>
+                    <comment>The client secret associated with the Adobe I/O Integration.</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="jwt" translate="label" type="textarea" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="400">
+                    <label>JWT (JSON Web Token)</label>
+                    <validate>required-entry</validate>
+                    <comment>The JWT associated with the Adobe I/O Integration.</comment>
+                </field>
+            </group>
+            <group id="launch" translate="label" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Launch Configuration</label>
+                <field id="property_name" translate="label" type="text" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="100">
+                    <label>Launch Property Name</label>
+                    <validate>required-entry</validate>
+                    <comment>The name to be given to the property.</comment>
+                </field>
+                <field id="datalayer_name" translate="label" type="text" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="200">
+                    <label>Datalayer Name</label>
+                    <validate>required-entry</validate>
+                    <comment>The name of the JavaScript variable used for the datalayer.</comment>
+                    <backend_model>Adobe\LaunchAdminUi\Model\Config\Backend\DatalayerName</backend_model>
+                </field>
+            </group>
+            <group id="adobe_analytics" translate="label" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Adobe Analytics Configuration</label>
+                <field id="prod_suite" translate="label" type="text" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="100">
+                    <label>Production Report Suite ID</label>
+                    <comment>The Adobe Analytics report suite ID associated with the production report suite.</comment>
+                </field>
+                <field id="stage_suite" translate="label" type="text" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="200">
+                    <label>Staging Report Suite ID</label>
+                    <comment>The Adobe Analytics report suite ID associated with the staging report suite.</comment>
+                </field>
+                <field id="dev_suite" translate="label" type="text" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="300">
+                    <label>Dev Report Suite ID</label>
+                    <comment>The Adobe Analytics report suite ID associated with the dev report suite.</comment>
+                </field>
+            </group>
+        </section>
+        <section id="launch_provisioning" translate="label" type="text" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="20">
+            <label>Launch Provisioning</label>
+            <tab>launch</tab>
+            <resource>Adobe_LaunchAdminUi::launch_config</resource>
+            <group id="launch_property_provision" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="start_provision" translate="label" type="button" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="100">
+                    <frontend_model>Adobe\LaunchAdminUi\Block\Adminhtml\Config\ProvisionButton</frontend_model>
+                    <comment>Be sure to save the configuration first if any changes have been made, then click to create a new Launch property.</comment>
+                </field>
+                <field id="provision_notes" translate="label" type="note" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="200">
+                    <frontend_model>Adobe\LaunchAdminUi\Block\Adminhtml\Config\ProvisionNotes</frontend_model>
+                </field>
+            </group>
+        </section>
+        <section id="launch_general_config" translate="label" type="text" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="30" >
+            <label>Module Configuration</label>
+            <tab>launch</tab>
+            <resource>Adobe_LaunchAdminUi::launch_config</resource>
+            <group id="general" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="enable" translate="label" type="select" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="100">
+                    <label>Module Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="launch_script_url" translate="label" type="text" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="200">
+                    <label>Launch Script URL</label>
+                    <validate>required-entry</validate>
+                    <comment>The script URL (or script tag) from the Launch interface. (Must create Launch property first)</comment>
+                    <backend_model>Adobe\LaunchAdminUi\Model\Config\Backend\LaunchScriptUrl</backend_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

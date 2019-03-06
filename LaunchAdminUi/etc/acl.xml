@@ -1,4 +1,10 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
     <acl>
@@ -7,8 +13,7 @@
                 <resource id="Magento_Backend::stores">
                     <resource id="Magento_Backend::stores_settings">
                         <resource id="Magento_Config::config">
-                            <resource id="Adobe_AxpConnector::axpconnector_config" title="Launch By Adobe"
-                                      sortOrder="310"/>
+                            <resource id="Adobe_LaunchAdminUi::launch_config" title="Launch By Adobe" sortOrder="310"/>
                         </resource>
                     </resource>
                 </resource>

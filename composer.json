@@ -7,6 +7,7 @@
         "adobe/module-launch-catalog-search": "*",
         "adobe/module-launch-checkout": "*",
         "adobe/module-launch-theme": "*",
-        "adobe/module-launch-customer": "*"
+        "adobe/module-launch-customer": "*",
+        "adobe/module-launch-admin-ui": "*"
     }
 }

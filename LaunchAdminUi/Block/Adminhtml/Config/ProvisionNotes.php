@@ -5,22 +5,20 @@
  */
 declare(strict_types=1);
 
-namespace Adobe\AxpConnector\Block\Adminhtml\Config;
+namespace Adobe\LaunchAdminUi\Block\Adminhtml\Config;
 
 use Magento\Config\Block\System\Config\Form\Field;
 use Magento\Framework\Data\Form\Element\AbstractElement;
 
 /**
  * Class ProvisionNotes
- *
- * @package Adobe\AxpConnector\Block\Adminhtml\Config
  */
 class ProvisionNotes extends Field
 {
     /**
      * @var string
      */
-    protected $_template = 'Adobe_AxpConnector::provision_notes.phtml';
+    protected $_template = 'Adobe_LaunchAdminUi::provision_notes.phtml';
 
     /**
      * Remove scope label
