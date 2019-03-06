@@ -14,8 +14,8 @@ use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Module\Dir\Reader;
 use Magento\Framework\Filesystem\Driver\File;
 use Magento\Framework\Exception\FileSystemException;
-use Adobe\AxpConnector\Model\ProvisionAgent;
 use Magento\Framework\Serialize\Serializer\Json;
+use Adobe\AxpConnector\Model\ProvisionAgent;
 
 /**
  * Launch Property provisioning.
@@ -80,8 +80,8 @@ class Provision extends Action implements HttpPostActionInterface
     {
         /** @var \Magento\Framework\Controller\Result\Json $result */
         $result = $this->resultJsonFactory->create();
-        $config = $this->_getJsonConfig();
-        $requestResponse = $this->_sendAPIRequests($config);
+        $config = $this->getJsonConfig();
+        $requestResponse = $this->sendAPIRequests($config);
 
         return $result->setData($requestResponse);
     }
@@ -91,7 +91,7 @@ class Provision extends Action implements HttpPostActionInterface
      *
      * @return mixed
      */
-    private function _getJsonConfig()
+    private function getJsonConfig()
     {
         $etcDir = $this->moduleReader->getModuleDir(
             \Magento\Framework\Module\Dir::MODULE_ETC_DIR,
@@ -112,7 +112,7 @@ class Provision extends Action implements HttpPostActionInterface
      * @param array $config
      * @return array
      */
-    private function _sendAPIRequests($config)
+    private function sendAPIRequests($config)
     {
         return $this->provisionAgent->makeRequests($config);
     }

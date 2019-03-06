@@ -8,17 +8,19 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
+        <launch_api_config>
+            <credentials>
+                <adobe_org_id>your-org-id-here@AdobeOrg</adobe_org_id>
+            </credentials>
+            <launch>
+                <datalayer_name>AppEventData</datalayer_name>
+            </launch>
+        </launch_api_config>
         <launch_general_config>
             <general>
                 <enable>0</enable>
-                <adobe_org_id>your-org-id-here@AdobeOrg</adobe_org_id>
-            </general>
-        </launch_general_config>
-        <launch_datalayer_config>
-            <general>
-                <datalayer_name>AppEventData</datalayer_name>
                 <launch_script_url>&lt;script src="//assets.adobedtm.com/your-script-here.js async&gt;&lt;/script&gt;</launch_script_url>
             </general>
-        </launch_datalayer_config>
+        </launch_general_config>
     </default>
 </config>

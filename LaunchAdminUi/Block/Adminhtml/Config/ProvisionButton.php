@@ -10,10 +10,12 @@ namespace Adobe\LaunchAdminUi\Block\Adminhtml\Config;
 use Magento\Backend\Block\Template\Context;
 use Magento\Config\Block\System\Config\Form\Field;
 use Magento\Framework\Data\Form\Element\AbstractElement;
+use Magento\Backend\Block\Widget\Button;
+use Magento\Framework\Exception\LocalizedException;
 use Adobe\AxpConnector\Model\ProvisioningConfigProvider;
 
 /**
- * Class ProvisionButton
+ * Launch Property Provisioning button
  */
 class ProvisionButton extends Field
 {
@@ -40,9 +42,9 @@ class ProvisionButton extends Field
     }
 
     /**
-     * Remove scope label
+     * Remove scope label.
      *
-     * @param  AbstractElement $element
+     * @param AbstractElement $element
      * @return string
      */
     public function render(AbstractElement $element)
@@ -75,35 +77,34 @@ class ProvisionButton extends Field
     }
 
     /**
-     * Return if the config values have been saved
+     * Return if the config values have been saved.
      *
      * @return boolean
      */
     public function isConfigSaved()
     {
-        $isValid = 0;
         if ($this->provisioningConfigProvider->getOrgID() !== null &&
             $this->provisioningConfigProvider->getClientID() !== null &&
             $this->provisioningConfigProvider->getClientSecret() !== null &&
             $this->provisioningConfigProvider->getJWT() !== null
         ) {
-            $isValid = 1;
+            return true;
         }
 
-        return $isValid;
+        return false;
     }
 
     /**
      * Generate button html
      *
      * @return string
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     public function getButtonHtml()
     {
         $disabled = $this->isConfigSaved() ? '' : 'disabled';
         $button = $this->getLayout()->createBlock(
-            \Magento\Backend\Block\Widget\Button::class
+            Button::class
         )->setData([
             'id' => 'provision_button',
             'label' => __('Create Launch Property')
