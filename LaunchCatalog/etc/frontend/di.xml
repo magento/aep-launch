@@ -10,7 +10,7 @@
     <type name="Magento\Catalog\Block\Product\ListProduct">
         <plugin name="catalog_category_view_datalayer" type="Adobe\LaunchCatalog\Plugin\CategoryViewedEvent" />
     </type>
-    <type name="Adobe\AxpConnector\Observer\DatalayerObserver">
+    <type name="Adobe\Launch\Observer\DatalayerObserver">
         <arguments>
             <argument name="datalayerProcessors" xsi:type="array">
                 <item name="catalog_product_view" xsi:type="array">

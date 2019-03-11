@@ -6,7 +6,7 @@
         "magento/framework": "*",
         "magento/module-config": "*",
         "magento/module-backend": "*",
-        "adobe/module-axp-connector": "*"
+        "adobe/module-launch": "*"
     },
     "type": "magento2-module",
     "license": [

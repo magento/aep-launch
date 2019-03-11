@@ -10,8 +10,8 @@ namespace Adobe\LaunchCustomer\Plugin;
 use Magento\Customer\Api\AccountManagementInterface;
 use Magento\Customer\Api\Data\CustomerInterface;
 use Adobe\LaunchCustomer\Model\FormatCustomerEvent;
-use Adobe\AxpConnector\Api\AddPrivateDatalayerEventInterface;
-use Adobe\AxpConnector\Model\LaunchConfigProvider;
+use Adobe\Launch\Api\AddPrivateDatalayerEventInterface;
+use Adobe\Launch\Model\LaunchConfigProvider;
 
 /**
  * Plugin for Customer Login event.

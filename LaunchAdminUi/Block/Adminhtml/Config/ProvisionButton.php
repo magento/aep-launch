@@ -12,7 +12,7 @@ use Magento\Config\Block\System\Config\Form\Field;
 use Magento\Framework\Data\Form\Element\AbstractElement;
 use Magento\Backend\Block\Widget\Button;
 use Magento\Framework\Exception\LocalizedException;
-use Adobe\AxpConnector\Model\ProvisioningConfigProvider;
+use Adobe\Launch\Model\ProvisioningConfigProvider;
 
 /**
  * Launch Property Provisioning button

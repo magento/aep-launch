@@ -1,0 +1,19 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Adobe\Launch\ViewModel\Js $viewModel
+ */
+$viewModel = $block->getViewModel();
+$datalayerName = $block->escapeJs($viewModel->getDatalayerName());
+?>
+
+<script type="text/javascript" id="launch-datalayer-content">
+    <?php foreach ($viewModel->getDatalayerEvents() as $event) : ?>
+        window.<?= /* @noEscape */ $datalayerName ?>.push(<?= /* @noEscape */ $event ?>);
+    <?php endforeach; ?>
+</script>

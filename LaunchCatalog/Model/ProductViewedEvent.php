@@ -8,7 +8,7 @@ declare(strict_types=1);
 namespace Adobe\LaunchCatalog\Model;
 
 use Magento\Catalog\Block\Product\View as ProductViewBlock;
-use Adobe\AxpConnector\Model\Command\AddDatalayerEvent;
+use Adobe\Launch\Model\Command\AddDatalayerEvent;
 use Magento\Framework\View\LayoutInterface;
 
 /**

@@ -9,7 +9,7 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
     <module name="Adobe_LaunchTheme" setup_version="1.0.0">
         <sequence>
-            <module name="Adobe_AxpConnector"/>
+            <module name="Adobe_Launch"/>
         </sequence>
     </module>
 </config>

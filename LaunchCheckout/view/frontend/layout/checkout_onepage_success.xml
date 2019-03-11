@@ -9,7 +9,7 @@
     <body>
         <referenceContainer name="before.body.end">
             <block class="Magento\Framework\View\Element\Template"
-                   name="axpconnector_checkout_success"
+                   name="launch_checkout_success"
                    template="Adobe_LaunchCheckout::checkout_success.phtml"
                    ifconfig="launch_general_config/general/enable"
             />

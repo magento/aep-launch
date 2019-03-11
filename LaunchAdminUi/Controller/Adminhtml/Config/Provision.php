@@ -15,7 +15,7 @@ use Magento\Framework\Module\Dir\Reader;
 use Magento\Framework\Filesystem\Driver\File;
 use Magento\Framework\Exception\FileSystemException;
 use Magento\Framework\Serialize\Serializer\Json;
-use Adobe\AxpConnector\Model\ProvisionAgent;
+use Adobe\Launch\Model\ProvisionAgent;
 
 /**
  * Launch Property provisioning.
@@ -95,7 +95,7 @@ class Provision extends Action implements HttpPostActionInterface
     {
         $etcDir = $this->moduleReader->getModuleDir(
             \Magento\Framework\Module\Dir::MODULE_ETC_DIR,
-            'Adobe_AxpConnector'
+            'Adobe_Launch'
         );
         $file = $etcDir . '/adminhtml/provision_config.json';
         try {

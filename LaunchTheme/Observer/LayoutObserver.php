@@ -11,8 +11,8 @@ use Adobe\LaunchTheme\Model\RenderedBreadcrumbs;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\View\Page\Title as PageTitle;
-use Adobe\AxpConnector\Model\LaunchConfigProvider;
-use Adobe\AxpConnector\Api\AddDatalayerEventInterface;
+use Adobe\Launch\Model\LaunchConfigProvider;
+use Adobe\Launch\Api\AddDatalayerEventInterface;
 use Adobe\LaunchTheme\Model\FormatPageLoadedEvent;
 
 /**

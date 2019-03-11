@@ -8,8 +8,8 @@ declare(strict_types=1);
 namespace Adobe\LaunchCatalog\Plugin;
 
 use Magento\Catalog\Block\Product\ListProduct as CategoryViewBlock;
-use Adobe\AxpConnector\Api\AddDatalayerEventInterface;
-use Adobe\AxpConnector\Model\LaunchConfigProvider;
+use Adobe\Launch\Api\AddDatalayerEventInterface;
+use Adobe\Launch\Model\LaunchConfigProvider;
 use Adobe\LaunchCatalog\Model\FormatCategoryViewedEvent;
 
 /**
