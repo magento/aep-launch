@@ -6,7 +6,7 @@
         "magento/framework": "*",
         "magento/module-search": "*",
         "magento/module-catalog-search": "*",
-        "adobe/module-axp-connector": "*",
+        "adobe/module-launch": "*",
         "adobe/module-launch-catalog": "*"
     },
     "type": "magento2-module",

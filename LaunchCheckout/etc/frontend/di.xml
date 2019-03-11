@@ -7,7 +7,7 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <type name="Adobe\AxpConnector\CustomerData\Launch">
+    <type name="Adobe\Launch\CustomerData\Launch">
         <arguments>
             <argument name="launchSections" xsi:type="array">
                 <item name="launch_checkout_added_to_cart" xsi:type="string">add_to_cart_datalayer_content</item>
@@ -16,7 +16,7 @@
             </argument>
         </arguments>
     </type>
-    <type name="Adobe\AxpConnector\Observer\DatalayerObserver">
+    <type name="Adobe\Launch\Observer\DatalayerObserver">
         <arguments>
             <argument name="datalayerProcessors" xsi:type="array">
                 <item name="checkout_cart_index" xsi:type="array">

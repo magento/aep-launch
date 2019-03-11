@@ -9,8 +9,8 @@ namespace Adobe\LaunchCatalogSearch\Plugin;
 
 use Magento\CatalogSearch\Block\Result as SearchResultBlock;
 use Magento\Search\Helper\Data as SearchData;
-use Adobe\AxpConnector\Api\AddDatalayerEventInterface;
-use Adobe\AxpConnector\Model\LaunchConfigProvider;
+use Adobe\Launch\Api\AddDatalayerEventInterface;
+use Adobe\Launch\Model\LaunchConfigProvider;
 use Adobe\LaunchCatalog\Model\FormatCategoryViewedEvent;
 use Adobe\LaunchCatalogSearch\Model\FormatCatalogSearchViewedEvent;
 

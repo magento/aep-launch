@@ -9,7 +9,7 @@ namespace Adobe\LaunchCheckout\Model;
 
 use Magento\Framework\View\LayoutInterface;
 use Magento\Checkout\Block\Cart as CartBlock;
-use Adobe\AxpConnector\Api\AddDatalayerEventInterface;
+use Adobe\Launch\Api\AddDatalayerEventInterface;
 
 /**
  * Add datalayer events to the Cart View page.

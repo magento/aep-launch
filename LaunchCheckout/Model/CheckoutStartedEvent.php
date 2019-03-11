@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Adobe\LaunchCheckout\Model;
 
-use Adobe\AxpConnector\Api\AddDatalayerEventInterface;
+use Adobe\Launch\Api\AddDatalayerEventInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\View\LayoutInterface;
 use Magento\Checkout\Block\Onepage as CheckoutBlock;

@@ -11,8 +11,8 @@ use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Locale\ResolverInterface;
 use Magento\Framework\Filter\LocalizedToNormalized;
-use Adobe\AxpConnector\Api\AddPrivateDatalayerEventInterface;
-use Adobe\AxpConnector\Model\LaunchConfigProvider;
+use Adobe\Launch\Api\AddPrivateDatalayerEventInterface;
+use Adobe\Launch\Model\LaunchConfigProvider;
 use Adobe\LaunchCheckout\Model\FormatAddToCartEvent;
 
 /**

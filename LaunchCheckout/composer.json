@@ -6,7 +6,7 @@
         "magento/framework": "*",
         "magento/module-checkout": "*",
         "magento/module-quote": "*",
-        "adobe/module-axp-connector": "*"
+        "adobe/module-launch": "*"
     },
     "type": "magento2-module",
     "license": [
