@@ -36,6 +36,7 @@ class ProvisionAgent
         ['src' => 'adobe-analytics', 'target' => 'LAUNCH_EXT_PACKAGE_ID_ADOBE_ANALYTICS'],
         ['src' => 'adobe-target', 'target' => 'LAUNCH_EXT_PACKAGE_ID_ADOBE_TARGET'],
         ['src' => 'adobe-mcid', 'target' => 'LAUNCH_EXT_PACKAGE_ID_ADOBE_EXPERIENCE_CLOUD'],
+        ['src' => 'constant-dataelement', 'target' => 'LAUNCH_EXT_PACKAGE_ID_CONSTANT_DATA_ELEMENT'],
         ['src' => 'aa-product-string-search-discovery', 'target' => 'LAUNCH_EXT_PACKAGE_ID_SDI_PRODUCT_STR'],
         ['src' => 'sdi-toolkit', 'target' => 'LAUNCH_EXT_PACKAGE_ID_SDI_TOOLKIT'],
         ['src' => 'data-layer-manager-search-discovery', 'target' => 'LAUNCH_EXT_PACKAGE_ID_SDI_DATALAYER_MGR'],
@@ -462,6 +463,26 @@ class ProvisionAgent
         $response = $this->makeStandardRequest($request);
         if ($response && array_key_exists('data', $response)) {
             $config['LAUNCH_EXT_ID_ADOBE_EXPERIENCE_CLOUD'] = $response['data']['id'];
+        }
+
+        return $response;
+    }
+
+    /**
+     * Create Constant Data Element ext
+     *
+     * @param array $request
+     * @param array $config
+     * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
+     */
+    private function createConstantDataElementExtension($request, &$config)
+    {
+        $request['code'] = 201;
+        $response = $this->makeStandardRequest($request);
+        if ($response && array_key_exists('data', $response)) {
+            $config['LAUNCH_EXT_ID_CONSTANT_DATA_ELEMENT'] = $response['data']['id'];
         }
 
         return $response;
