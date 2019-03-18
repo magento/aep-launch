@@ -1,5 +1,6 @@
 {
     "name": "adobe/aep-launch",
+    "description": "Adobe Experience Platform Launch integration",
     "type": "metapackage",
     "require": {
         "adobe/module-launch": "*",
