@@ -38,7 +38,6 @@ jobs:
           name: Installing MDE
           command: |
             composer config minimum-stability dev
-            composer config repositories.metapackage path "./*"
             composer config repositories.modules path "./*/*/"
             composer require $MDE_COMPOSER_METAPACKAGE
 

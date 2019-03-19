@@ -9,5 +9,3 @@ Here is our [ZenHub board](https://app.zenhub.com/workspace/o/magento/aep-launch
 
 To join the project, attend a regular meeting (timing TBD for now) or join [#aep-launch](https://magentocommeng.slack.com/messages/CD4EGUYEB) slack channel (sign up for EngCom Slack workspace [here](https://tinyurl.com/engcom-signup))
 
-# Development Guide
-Please refer to the wiki page on local installation for development: https://github.com/magento/aep-launch/wiki/Project-set-up-for-development-in-a-local-environment
