@@ -10,7 +10,7 @@ define([], function () {
      *
      * @param {Object} options
      */
-    return function(options) {
+    return function (options) {
         window[options.datalayerName] = window[options.datalayerName] || [];
 
         options.datalayer.forEach(function (item) {
