@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Adobe\Launch\ViewModel;
 
+use Magento\Framework\Serialize\Serializer\JsonHexTag;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Adobe\Launch\Api\GetAllDatalayerEventsInterface;
 use Adobe\Launch\Model\LaunchConfigProvider;
@@ -27,15 +28,23 @@ class Js implements ArgumentInterface
     private $getAllDatalayerEvents;
 
     /**
+     * @var JsonHexTag
+     */
+    private $json;
+
+    /**
      * @param LaunchConfigProvider $launchConfigProvider
      * @param GetAllDatalayerEventsInterface $getAllDatalayerEvents
+     * @param JsonHexTag $json
      */
     public function __construct(
         LaunchConfigProvider $launchConfigProvider,
-        GetAllDatalayerEventsInterface $getAllDatalayerEvents
+        GetAllDatalayerEventsInterface $getAllDatalayerEvents,
+        JsonHexTag $json
     ) {
         $this->launchConfigProvider = $launchConfigProvider;
         $this->getAllDatalayerEvents = $getAllDatalayerEvents;
+        $this->json = $json;
     }
 
     /**
@@ -61,10 +70,10 @@ class Js implements ArgumentInterface
     /**
      * Return all events stored in the datalayer.
      *
-     * @return array
+     * @return string
      */
-    public function getDatalayerEvents(): array
+    public function getDatalayerEvents(): string
     {
-        return $this->getAllDatalayerEvents->execute();
+        return $this->json->serialize($this->getAllDatalayerEvents->execute());
     }
 }

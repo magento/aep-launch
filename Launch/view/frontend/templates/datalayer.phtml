@@ -12,8 +12,13 @@ $viewModel = $block->getViewModel();
 $datalayerName = $block->escapeJs($viewModel->getDatalayerName());
 ?>
 
-<script type="text/javascript" id="launch-datalayer-content">
-    <?php foreach ($viewModel->getDatalayerEvents() as $event) : ?>
-        window.<?= /* @noEscape */ $datalayerName ?>.push(<?= /* @noEscape */ $event ?>);
-    <?php endforeach; ?>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Adobe_Launch/js/view/datalayer": {
+                "datalayerName": "<?= /* @noEscape */ $datalayerName ?>",
+                "datalayer": <?= /* @noEscape */ $viewModel->getDatalayerEvents() ?>
+            }
+        }
+    }
 </script>

@@ -9,9 +9,5 @@
  * @var \Adobe\Launch\ViewModel\Js $viewModel
  */
 $viewModel = $block->getViewModel();
-$datalayerName = $block->escapeJs($viewModel->getDatalayerName());
 ?>
-<script type="text/javascript">
-    window.<?= /* @noEscape */ $datalayerName ?> = window.<?= /* @noEscape */ $datalayerName ?> || [];
-</script>
 <script src="<?= /* @noEscape */ $block->escapeUrl($viewModel->getScriptUrl()); ?>" async></script>
