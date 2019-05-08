@@ -106,5 +106,5 @@
 
 <?= $block->getButtonHtml() ?>
 
-<div id="provision_status" hidden="hidden">Processing...</div>
+<div id="provision_status" hidden="hidden"><?= $block->escapeHtml(__('Processing...')) ?></div>
 <div id="provision_result" hidden="hidden"></div>
