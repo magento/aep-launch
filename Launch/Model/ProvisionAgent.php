@@ -20,7 +20,7 @@ class ProvisionAgent
 {
     private const TOKEN_URI = 'https://ims-na1.adobelogin.com/ims/exchange/jwt/';
 
-    private const ADOBE_IO_LAUNCH_HOSTNAME = 'mc-api-activation-reactor.adobe.io';
+    private const ADOBE_IO_LAUNCH_HOSTNAME = 'reactor.adobe.io';
 
     private const ADOBE_LAUNCH_HOSTNAME = 'launch.adobe.com';
 
