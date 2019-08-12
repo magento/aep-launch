@@ -27,7 +27,7 @@ class FormatAddToCartEvent
         $result['product'] = [];
 
         $item = [];
-        $item['quantity'] = strval($qty);
+        $item['quantity'] = (string)$qty;
         $item['productInfo'] = [];
         $item['productInfo']['sku'] = $product->getSku();
         $item['productInfo']['productID'] = $product->getData('sku');
