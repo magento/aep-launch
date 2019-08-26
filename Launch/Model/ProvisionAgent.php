@@ -130,7 +130,8 @@ class ProvisionAgent
             'EXTENSION_IDS' => [],
             'LAUNCH_PROPERTY_NAME' => $propertyName.' '.date("Y-m-d H:i:s"),
             'LAUNCH_COMPANY_ID' => '',
-            'DATA_LAYER_OBJECT_NAME' => $this->launchConfigProvider->getDatalayerName()
+            'DATA_LAYER_OBJECT_NAME' => $this->launchConfigProvider->getDatalayerName(),
+            'RULE_COMPONENT_REQUEST' => $this->findRuleComponentRequest($conf['item'])
         ];
 
         foreach ($conf['item'] as $request) {
@@ -642,7 +643,6 @@ class ProvisionAgent
             $newBody = $this->replaceValues($this->jsonSerializer->serialize($ruleCall['body']), $config);
             $request['body'] = $newBody;
             $response = $this->makeStandardRequest($request);
-
             if ($response && array_key_exists('error', $response)) {
                 break;
             } elseif ($response && array_key_exists('data', $response)) {
@@ -672,6 +672,7 @@ class ProvisionAgent
         $response = [];
         foreach ($config['RULE_COMPONENT_CALLS'] as $componentCall) {
             if ($componentCall['ruleName'] === $ruleName) {
+                $config['Launch_Rule_name'] = $ruleName;
                 $componentRequest = $this->makeRuleComponentRequest($componentCall, $ruleRequest, $config);
                 if ($componentRequest && array_key_exists('error', $componentRequest)) {
                     $response['error'] = 'There was a problem creating the rule component request for '
@@ -688,6 +689,23 @@ class ProvisionAgent
         }
 
         return $response;
+    }
+
+    /**
+     * Find the rule component request
+     *
+     * @param array $conf
+     * @return array $request
+     */
+    private function findRuleComponentRequest($conf)
+    {
+        $req = [];
+        foreach ($conf as $request) {
+            if ($request['name'] === 'createRuleComponent') {
+                $req = $request['request'];
+            }
+        }
+        return $req;
     }
 
     /**
@@ -787,17 +805,15 @@ class ProvisionAgent
         $request = [];
         if (is_array($componentCall)) {
             try {
-                $idKey = $componentCall['body']['data']['relationships']['extension']['data']['name'];
-                $componentCall['body']['data']['relationships']['extension']['data']['id'] = $config[$idKey];
-                $request['url'] = 'https://'.self::ADOBE_IO_LAUNCH_HOSTNAME
-                    .$this->replaceValues($componentCall['endpoint'], $config);
-                $request['method'] = 'POST';
-                $request['header'] = $ruleRequest['header'];
+                $config['Rule_Component_settings'] = $this->jsonSerializer->serialize($componentCall['body']['data']['attributes']['settings']);
+                $config['Rule_Component_order'] = $componentCall['body']['data']['attributes']['order'];
+                $config['Rule_Component_extension_id'] = $this->replaceValues($componentCall['body']['data']['relationships']['extension']['data']['name'], $config);
+                $config['Rule_Component_name'] = $componentCall['body']['data']['attributes']['name'];
+                $config['Rule_Component_delegate_descriptor_id'] = $componentCall['body']['data']['attributes']
+                ['delegate_descriptor_id'];
+
+                $request = $this->normalizeRequest($config['RULE_COMPONENT_REQUEST'], $config);
                 $request['code'] = 201;
-                $request['body'] = $this->replaceValues(
-                    $this->jsonSerializer->serialize($componentCall['body']),
-                    $config
-                );
                 $request['enctype'] = $ruleRequest['enctype'];
             } catch (\Exception $e) {
                 return ['error' => $e->getMessage()];
