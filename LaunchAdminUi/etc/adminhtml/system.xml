@@ -17,6 +17,9 @@
             <resource>Adobe_LaunchAdminUi::launch_config</resource>
             <group id="credentials" translate="label" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>API Credentials</label>
+                <field id="provision_notes" translate="label" type="note" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="50">
+                    <frontend_model>Adobe\LaunchAdminUi\Block\Adminhtml\Config\ProvisionNotes</frontend_model>
+                </field>
                 <field id="adobe_org_id" translate="label" type="text" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="100">
                     <label>Adobe Org ID</label>
                     <validate>required-entry</validate>
@@ -78,9 +81,6 @@
                 <field id="start_provision" translate="label" type="button" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="100">
                     <frontend_model>Adobe\LaunchAdminUi\Block\Adminhtml\Config\ProvisionButton</frontend_model>
                     <comment>Be sure to save the configuration first if any changes have been made, then click to create a new Launch property.</comment>
-                </field>
-                <field id="provision_notes" translate="label" type="note" showInDefault="1" showInWebsite="0" showInStore="0" sortOrder="200">
-                    <frontend_model>Adobe\LaunchAdminUi\Block\Adminhtml\Config\ProvisionNotes</frontend_model>
                 </field>
             </group>
         </section>
