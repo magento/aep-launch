@@ -56,7 +56,7 @@ class LaunchScriptUrl extends Value
             $this->setValue('//' . $this->getValue());
         }
 
-        if (!filter_var($testValue, FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED | FILTER_FLAG_PATH_REQUIRED)) {
+        if (!filter_var($testValue, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED)) {
             throw new ValidatorException(__(
                 '%1 must either be a &lt;script&gt; tag for the Launch JavaScript snippet, ' .
                 'or the URL to the snippet.',
