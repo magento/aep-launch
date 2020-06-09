@@ -141,7 +141,6 @@ class ProvisionAgent
             if ($result['complete'] === true) {
                 break;
             }
-            // Send notification to the front end
             // phpcs:ignore Magento2.Functions.DiscouragedFunction
             print $request['request']['description'] . '|';
             flush();
