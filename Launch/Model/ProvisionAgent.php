@@ -142,12 +142,15 @@ class ProvisionAgent
                 break;
             }
             // Send notification to the front end
-            print $request['request']['description'].'|';
+            // phpcs:ignore Magento2.Functions.DiscouragedFunction
+            print $request['request']['description'] . '|';
             flush();
             ob_flush();
             $requestName = $request['name'];
-            $this->logger->debug('DebugMakeRequests', ['requestName' => $requestName,
-                'method_exists' => method_exists($this, $requestName)]);
+            $this->logger->debug(
+                'DebugMakeRequests',
+                ['requestName' => $requestName, 'method_exists' => method_exists($this, $requestName)]
+            );
             $result = $this->executeRequestMethod($requestName, $request['request'], $result, $config);
         }
         if (!$result['complete']) {
@@ -856,9 +859,14 @@ class ProvisionAgent
         $request = [];
         if (is_array($componentCall)) {
             try {
-                $config['Rule_Component_settings'] = $this->jsonSerializer->serialize($componentCall['body']['data']['attributes']['settings']);
+                $config['Rule_Component_settings'] = $this->jsonSerializer->serialize(
+                    $componentCall['body']['data']['attributes']['settings']
+                );
                 $config['Rule_Component_order'] = $componentCall['body']['data']['attributes']['order'];
-                $config['Rule_Component_extension_id'] = $this->replaceValues($componentCall['body']['data']['relationships']['extension']['data']['name'], $config);
+                $config['Rule_Component_extension_id'] = $this->replaceValues(
+                    $componentCall['body']['data']['relationships']['extension']['data']['name'],
+                    $config
+                );
                 $config['Rule_Component_name'] = $componentCall['body']['data']['attributes']['name'];
                 $config['Rule_Component_delegate_descriptor_id'] = $componentCall['body']['data']['attributes']
                 ['delegate_descriptor_id'];
