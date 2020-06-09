@@ -131,20 +131,25 @@ class ProvisionAgent
             'LAUNCH_PROPERTY_NAME' => $propertyName.' '.date("Y-m-d H:i:s"),
             'LAUNCH_COMPANY_ID' => '',
             'DATA_LAYER_OBJECT_NAME' => $this->launchConfigProvider->getDatalayerName(),
-            'RULE_COMPONENT_REQUEST' => $this->findRuleComponentRequest($conf['item'])
+            'RULE_COMPONENT_REQUEST' => $this->findRuleComponentRequest($conf['item']),
+            'rules' => '[]',
+            'data_elements' => '[]',
+            'extensions' => '[]',
         ];
 
         foreach ($conf['item'] as $request) {
             if ($result['complete'] === true) {
                 break;
             }
-            // Send notification to the front end
-            print $request['request']['description'].'|';
+            // phpcs:ignore Magento2.Functions.DiscouragedFunction
+            print $request['request']['description'] . '|';
             flush();
             ob_flush();
             $requestName = $request['name'];
-            $this->logger->debug('DebugMakeRequests', ['requestName' => $requestName,
-                'method_exists' => method_exists($this, $requestName)]);
+            $this->logger->debug(
+                'DebugMakeRequests',
+                ['requestName' => $requestName, 'method_exists' => method_exists($this, $requestName)]
+            );
             $result = $this->executeRequestMethod($requestName, $request['request'], $result, $config);
         }
         if (!$result['complete']) {
@@ -768,7 +773,55 @@ class ProvisionAgent
      *
      * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
      */
-    private function setUnpublishedResources($request)
+    private function setUnpublishedRules($request)
+    {
+        $request['code'] = 200;
+        $response = $this->makeStandardRequest($request);
+
+        return $response;
+    }
+
+    /**
+     * Set unpublished resources
+     *
+     * @param array $request
+     * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
+     */
+    private function setUnpublishedDataElements($request)
+    {
+        $request['code'] = 200;
+        $response = $this->makeStandardRequest($request);
+
+        return $response;
+    }
+
+    /**
+     * Set unpublished resources
+     *
+     * @param array $request
+     * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
+     */
+    private function setUnpublishedExtensions($request)
+    {
+        $request['code'] = 200;
+        $response = $this->makeStandardRequest($request);
+
+        return $response;
+    }
+
+    /**
+     * Set unpublished resources
+     *
+     * @param array $request
+     * @return array
+     *
+     * @SuppressWarnings(PHPMD.UnusedPrivateMethod)
+     */
+    private function setUnpublishedEnvironments($request)
     {
         $request['code'] = 200;
         $response = $this->makeStandardRequest($request);
@@ -805,9 +858,14 @@ class ProvisionAgent
         $request = [];
         if (is_array($componentCall)) {
             try {
-                $config['Rule_Component_settings'] = $this->jsonSerializer->serialize($componentCall['body']['data']['attributes']['settings']);
+                $config['Rule_Component_settings'] = $this->jsonSerializer->serialize(
+                    $componentCall['body']['data']['attributes']['settings']
+                );
                 $config['Rule_Component_order'] = $componentCall['body']['data']['attributes']['order'];
-                $config['Rule_Component_extension_id'] = $this->replaceValues($componentCall['body']['data']['relationships']['extension']['data']['name'], $config);
+                $config['Rule_Component_extension_id'] = $this->replaceValues(
+                    $componentCall['body']['data']['relationships']['extension']['data']['name'],
+                    $config
+                );
                 $config['Rule_Component_name'] = $componentCall['body']['data']['attributes']['name'];
                 $config['Rule_Component_delegate_descriptor_id'] = $componentCall['body']['data']['attributes']
                 ['delegate_descriptor_id'];
@@ -849,21 +907,39 @@ class ProvisionAgent
      */
     private function handleResourceResponse($response, &$config)
     {
-        if (!array_key_exists('resources', $config)) {
-            $config['resources'] = '[]';
-        }
-
-        $resources = $this->jsonSerializer->unserialize($config['resources']);
-
         if ($response && array_key_exists('data', $response) && !array_key_exists('error', $response)) {
+            $rules = $this->jsonSerializer->unserialize($config['rules']);
+            $dataElements = $this->jsonSerializer->unserialize($config['data_elements']);
+            $extensions = $this->jsonSerializer->unserialize($config['extensions']);
+
             foreach ($response['data'] as $resource) {
-                $resources[] = [
-                    'id' => $resource['id'],
-                    'type' => $resource['type'],
-                    'meta' => ['action' => 'revise']
-                ];
+                switch ($resource['type']) {
+                    case 'rules':
+                        $rules[] = [
+                            'id' => $resource['id'],
+                            'type' => $resource['type'],
+                            'meta' => ['action' => 'revise']
+                        ];
+                        break;
+                    case 'data_elements':
+                        $dataElements[] = [
+                            'id' => $resource['id'],
+                            'type' => $resource['type'],
+                            'meta' => ['action' => 'revise']
+                        ];
+                        break;
+                    case 'extensions':
+                        $extensions[] = [
+                            'id' => $resource['id'],
+                            'type' => $resource['type'],
+                            'meta' => ['action' => 'revise']
+                        ];
+                        break;
+                }
             }
-            $config['resources'] = $this->jsonSerializer->serialize($resources);
+            $config['rules'] = $this->jsonSerializer->serialize($rules);
+            $config['data_elements'] = $this->jsonSerializer->serialize($dataElements);
+            $config['extensions'] = $this->jsonSerializer->serialize($extensions);
         }
         return $response;
     }

@@ -1,6 +1,17 @@
 <?php
-$urlHtml = '<a href="https://developer.adobelaunch.com/api/guides/access_tokens/" target="_blank">' . __('here') . '</a>';
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+$urlHtml = '<a href="https://developer.adobelaunch.com/api/guides/access_tokens/" target="_blank">'
+    . __('here')
+    . '</a>';
 ?>
 <div>
-    <p><?= $block->escapeHtml(__('For additional information about where to find the required values, please look %1', $urlHtml), ['a']) ?></p>
+    <p>
+        <?= $block->escapeHtml(
+            __('For additional information about where to find the required values, please look %1', $urlHtml),
+            ['a']
+        ) ?>
+    </p>
 </div>

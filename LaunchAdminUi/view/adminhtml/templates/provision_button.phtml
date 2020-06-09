@@ -1,3 +1,9 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
 <style>
     #provision_result {
         display: none;
@@ -67,9 +73,12 @@
                                 message('error', 'An error occurred during provisioning. '+data.error);
                             } else {
                                 provisionStatus.hide();
-                                message('success', 'Provisioning has successfully completed. You can retrieve the embed' +
-                                    ' code from your environment <a href="'+data.link+'" target="_blank">here</a>. Click' +
-                                    ' the install link next to the environment that you choose.');
+                                message(
+                                    'success',
+                                    'Provisioning has successfully completed. You can retrieve the embed' +
+                                    ' code from your environment <a href="'+data.link+'" target="_blank">here</a>.' +
+                                    'Click the install link next to the environment that you choose.'
+                                );
                             }
                         } else {
                             message('error', 'An error occurred during provisioning.');
