@@ -27,6 +27,9 @@ class FormatCustomerEvent
         $result['event'] = '';
         $result['user']['userType'] = $customer->getGroupId();
         $result['user']['custKey'] = $customer->getId();
+        $result['user']['custEmail'] = $customer->getEmail();
+        $result['user']['custFirstname'] = $customer->getFirstname();
+        $result['user']['custLastname'] = $customer->getLastname();
 
         return $result;
     }

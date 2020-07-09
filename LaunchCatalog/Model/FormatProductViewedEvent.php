@@ -29,7 +29,10 @@ class FormatProductViewedEvent
 
         $item = [
             'productInfo' => [
-                'productID' => $product->getSku()
+                'productName'   =>$product->getName(),
+                'productID' => $product->getSku(),
+                'productPrice' => $product ->getPrice(),
+                'productImage' => $product ->getthumbnail()
             ]
         ];
 

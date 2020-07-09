@@ -31,6 +31,8 @@ class FormatAddToCartEvent
         $item['productInfo'] = [];
         $item['productInfo']['sku'] = $product->getSku();
         $item['productInfo']['productID'] = $product->getData('sku');
+        $item['productInfo']['productName'] = $product->getName();
+        $item['productInfo']['productImage'] = $product ->getthumbnail();
 
         array_push($result['product'], $item);
 
