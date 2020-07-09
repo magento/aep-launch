@@ -82,7 +82,7 @@ class CatalogSearchViewedEvent
         $productCollection = $productListBlock->getLoadedProductCollection();
         $toolbar = $productListBlock->getToolbarBlock();
 
-        $catalogEventData = $this->formatCategoryViewedEvent->execute(
+        $categoryViewedEventData = $this->formatCategoryViewedEvent->execute(
             $productCollection->count(),
             $productCollection->getSize(),
             $toolbar->getCurrentOrder(),
@@ -90,7 +90,7 @@ class CatalogSearchViewedEvent
         );
         $searchEventData = $this->formatCatalogSearchViewedEvent->execute($this->searchData->getEscapedQueryText());
 
-        $this->addDatalayerEvent->execute(array_merge_recursive($catalogEventData, $searchEventData));
+        $this->addDatalayerEvent->execute(array_merge_recursive($categoryViewedEventData, $searchEventData));
 
         return $html;
     }
